@@ -15,13 +15,30 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settingStore: SettingStore
     
+    func saveCalibrePath(_ url: URL) {
+        print(url.path)
+        
+        do {
+            let shouldStopAccessing = url.startAccessingSecurityScopedResource()
+            defer { if shouldStopAccessing { url.stopAccessingSecurityScopedResource() } }
+            
+            let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+            
+            self.settingStore.calibreRoot = bookmark
+        } catch let error {
+            
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
                 Button(action: {
-                    print("Settings button clicked")
+                    self.show_modal = true
                 }) {
                     Text("Select Calibre Directory")
+                }.sheet(isPresented: self.$show_modal) {
+                    DirectoryPickerView(callback: self.saveCalibrePath)
                 }
             }
                 

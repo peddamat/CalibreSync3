@@ -17,6 +17,7 @@
 		8CB3CDDA23939803008B30F6 /* CalibreSync3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDD923939803008B30F6 /* CalibreSync3UITests.swift */; };
 		8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* SettingStore.swift */; };
 		8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */; };
+		8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		8CB3CDDB23939803008B30F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CB3CDE7239398A6008B30F6 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			children = (
 				8CB3CDE7239398A6008B30F6 /* SettingStore.swift */,
 				8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */,
+				8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,

@@ -20,7 +20,7 @@ struct ContentView: View {
             Text("Open Settings Screen")
         }
         .sheet(isPresented: $showSettings) {
-            SettingsView()
+            SettingsView().environmentObject(self.settingStore)
         }
     }
 }
