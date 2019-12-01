@@ -21,6 +21,7 @@
 		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
 		8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* Book.swift */; };
 		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
+		8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDF82393D04E008B30F6 /* QGrid */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +197,7 @@
 			name = CalibreSync3;
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
+				8CB3CDF82393D04E008B30F6 /* QGrid */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -270,6 +273,7 @@
 			mainGroup = 8CB3CDAB239397FD008B30F6;
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -656,6 +660,14 @@
 				minimumVersion = 4.6.2;
 			};
 		};
+		8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -663,6 +675,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		8CB3CDF82393D04E008B30F6 /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
