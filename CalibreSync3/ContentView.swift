@@ -9,13 +9,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var settingStore: SettingStore
+    @State private var showSettings = false
+
     var body: some View {
-        Text("Hello, World!")
+
+        Button(action: {
+            self.showSettings.toggle()
+        }) {
+            Text("Open Settings Screen")
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(SettingStore())
     }
 }

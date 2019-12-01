@@ -15,6 +15,8 @@
 		8CB3CDC423939803008B30F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */; };
 		8CB3CDCF23939803008B30F6 /* CalibreSync3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDCE23939803008B30F6 /* CalibreSync3Tests.swift */; };
 		8CB3CDDA23939803008B30F6 /* CalibreSync3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDD923939803008B30F6 /* CalibreSync3UITests.swift */; };
+		8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* SettingStore.swift */; };
+		8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		8CB3CDD523939803008B30F6 /* CalibreSync3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalibreSync3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3CDD923939803008B30F6 /* CalibreSync3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreSync3UITests.swift; sourceTree = "<group>"; };
 		8CB3CDDB23939803008B30F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CB3CDE7239398A6008B30F6 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
+		8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 				8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */,
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
+				8CB3CDE9239399CE008B30F6 /* Settings */,
 				8CB3CDBD23939803008B30F6 /* Assets.xcassets */,
 				8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */,
 				8CB3CDC523939803008B30F6 /* Info.plist */,
@@ -134,6 +139,15 @@
 				8CB3CDDB23939803008B30F6 /* Info.plist */,
 			);
 			path = CalibreSync3UITests;
+			sourceTree = "<group>";
+		};
+		8CB3CDE9239399CE008B30F6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8CB3CDE7239398A6008B30F6 /* SettingStore.swift */,
+				8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
+				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
