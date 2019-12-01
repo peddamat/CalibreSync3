@@ -11,21 +11,26 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
     @State private var showSettings = false
-
-    var body: some View {
-        
-        VStack {
-            Text(self.settingStore.getCalibrePath())
-
-            Button(action: {
-                self.showSettings.toggle()
-            }) {
-                Text("Open Settings Screen")
-            }
+    
+    var profileButton: some View {
+        Button(action: { self.showSettings.toggle() }) {
+            Image(systemName: "person.crop.circle")
+                .imageScale(.large)
+                .accessibility(label: Text("User Profile"))
+                .padding()
         }
-
-        .sheet(isPresented: $showSettings) {
-            SettingsView().environmentObject(self.settingStore)
+    }
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text(self.settingStore.getCalibrePath())
+            }
+            .navigationBarTitle("CalibreSync")
+            .navigationBarItems(trailing: profileButton)
+            .sheet(isPresented: $showSettings) {
+                SettingsView().environmentObject(self.settingStore)
+            }
         }
     }
 }
