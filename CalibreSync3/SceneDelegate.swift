@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+            setupFileCoordination()
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
@@ -59,7 +60,45 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    func readCalibrePath() -> URL {
+        var urlResult = false
+        let url = self.settingStore.calibreRoot
+        
+        let folderURL = try! URL(resolvingBookmarkData: url, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
+        
+        print(folderURL)
+        return folderURL
+    }
 
+    func setupFileCoordination() {
+        let error: NSErrorPointer = nil
+        let filePath = readCalibrePath().path
+        
+        let pickedFolderURL = URL(fileURLWithPath: filePath)
+        let shouldStopAccessing = pickedFolderURL.startAccessingSecurityScopedResource()
+        defer { if shouldStopAccessing { pickedFolderURL.stopAccessingSecurityScopedResource() }}
+        
+        NSFileCoordinator().coordinate(readingItemAt: pickedFolderURL, error: error)
+        { (folderURL) in
+                        do {
+                            print("hi.")
+                            print(folderURL.path)
+                            let keys : [URLResourceKey] = [.nameKey, .isDirectoryKey]
+                            let fileList = try FileManager.default.enumerator(at: folderURL, includingPropertiesForKeys: keys)
+                            for file  in fileList! {
+            //                    let h: URL = file
+                                print(file)
+            //                    getFileSize(filePath: file as! URL)
+                            }
+                            //                for case let file as URL in fileList! {
+                            //                    print(".")
+                            //                }
+                        } catch let error {
+                            print("fucked")
+                        }
+        }
+    }
 
 }
 

@@ -109,19 +109,10 @@ struct ImageView: View {
 struct GridCell: View {
     var book: Book
     var calibreLibraryPath: String
-    //    let bookCoverPath = "file:///private/var/mobile/Library/Mobile%20Documents/com~apple~CloudDocs/Calibre%20Library/By%20Joshua%20Greene/iOS%20Test-Driven%20Development%20by%20Tutorials%20(2)/cover.jpg"
 
     var body: some View {
         VStack() {
-            //        Image(book.path + "/cover.jpg")
-            //            ImageView(withURL: bookCoverPath)
             ImageView(withURL: URL(fileURLWithPath: calibreLibraryPath + "/" + book.path + "/cover.jpg").absoluteString)
-//            ImageView(withURL: calibreLibraryPath + "/" + book.path + "/cover.jpg")
-//            Text(calibreLibraryPath + "/" + book.path + "/cover.jpg")
-                //        .resizable()
-                //        .scaledToFit()
-                //        .clipShape(Circle())
-                //            .shadow(color: .primary, radius: 5.0)
                 .padding([.horizontal, .top], 2.0)
             Text(book.title)
         }
