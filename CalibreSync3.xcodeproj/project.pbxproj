@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,9 @@
 		8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* SettingStore.swift */; };
 		8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */; };
 		8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */; };
+		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
+		8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* Book.swift */; };
+		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,8 @@
 		8CB3CDE7239398A6008B30F6 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryPickerView.swift; sourceTree = "<group>"; };
+		8CB3CDF12393BE8C008B30F6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		8CB3CDF42393C159008B30F6 /* CalibreDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreDB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +114,8 @@
 				8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */,
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
+				8CB3CDF62393C178008B30F6 /* Database */,
+				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CB3CDE9239399CE008B30F6 /* Settings */,
 				8CB3CDBD23939803008B30F6 /* Assets.xcassets */,
 				8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */,
@@ -153,6 +161,22 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		8CB3CDF32393BFB4008B30F6 /* Books */ = {
+			isa = PBXGroup;
+			children = (
+				8CB3CDF12393BE8C008B30F6 /* Book.swift */,
+			);
+			path = Books;
+			sourceTree = "<group>";
+		};
+		8CB3CDF62393C178008B30F6 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				8CB3CDF42393C159008B30F6 /* CalibreDB.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,6 +193,9 @@
 			dependencies = (
 			);
 			name = CalibreSync3;
+			packageProductDependencies = (
+				8CB3CDEF2393BE47008B30F6 /* GRDB */,
+			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
 			productType = "com.apple.product-type.application";
@@ -241,6 +268,9 @@
 				Base,
 			);
 			mainGroup = 8CB3CDAB239397FD008B30F6;
+			packageReferences = (
+				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -286,7 +316,9 @@
 			files = (
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
+				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
+				8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
@@ -614,6 +646,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8CB3CDEF2393BE47008B30F6 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8CB3CDAC239397FD008B30F6 /* Project object */;
 }

@@ -16,7 +16,7 @@ final class SettingStore: ObservableObject {
         self.defaults = defaults
         
         defaults.register(defaults: [
-            "view.preferences.calibreLibraryPath": ""
+            "view.preferences.calibreLibraryPath": "/"
         ])
     }
     
@@ -30,8 +30,16 @@ final class SettingStore: ObservableObject {
         }
     }
     
-    func getCalibrePath() -> String {
+    func isKeyPresentInUserDefaults(key: String) -> Bool {
+        return defaults.object(forKey: key) != nil
+    }
+    
+    func getCalibreURL() -> URL {
         var urlResult = false
-        return try! URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult).path
+        return try! URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
+    }
+    
+    func getCalibrePath() -> String {
+        return getCalibreURL().path
     }
 }
