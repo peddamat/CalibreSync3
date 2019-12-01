@@ -29,4 +29,9 @@ final class SettingStore: ObservableObject {
             defaults.set(newValue, forKey: "view.preferences.calibreLibraryPath")
         }
     }
+    
+    func getCalibrePath() -> String {
+        var urlResult = false
+        return try! URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult).path
+    }
 }

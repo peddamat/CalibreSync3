@@ -13,12 +13,17 @@ struct ContentView: View {
     @State private var showSettings = false
 
     var body: some View {
+        
+        VStack {
+            Text(self.settingStore.getCalibrePath())
 
-        Button(action: {
-            self.showSettings.toggle()
-        }) {
-            Text("Open Settings Screen")
+            Button(action: {
+                self.showSettings.toggle()
+            }) {
+                Text("Open Settings Screen")
+            }
         }
+
         .sheet(isPresented: $showSettings) {
             SettingsView().environmentObject(self.settingStore)
         }
