@@ -17,7 +17,7 @@ struct WaterfallScreen: View
     
 //    @State var data: [Book] = getBooks()
     @State var selectedItems: [SectionID: IndexSet] = [:]
-    @State var columnMinSize: CGFloat = 100
+    @State var columnMinSize: CGFloat = 80
 
     @Environment(\.editMode) private var editMode
     var isEditing: Bool
@@ -39,8 +39,8 @@ struct WaterfallScreen: View
                 ZStack(alignment: .bottomTrailing)
                 {
                     ASRemoteImageView(URL(fileURLWithPath: self.calibreLibraryPath + "/" + item.path + "/cover.jpg"))
-                        .aspectRatio(contentMode: .fit)
-//                        .scaledToFill()
+//                        .aspectRatio(contentMode: .fit)
+                        .scaledToFill()
                         .frame(width: geom.size.width, height: geom.size.height)
                         .opacity(state.isSelected ? 0.7 : 1.0)
 
@@ -126,19 +126,25 @@ struct WaterfallScreen: View
         switch event
         {
         case let .onAppear(item):
+//            print("Appeared")
             ASRemoteImageManager.shared.load(URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
         case let .onDisappear(item):
+//            print("Disappeared")
             ASRemoteImageManager.shared.cancelLoad(for: URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
         case let .prefetchForData(data):
-            for item in data
-            {
-                ASRemoteImageManager.shared.load(URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
-            }
+            break
+//            print("Prefetching")
+//            for item in data
+//            {
+//                ASRemoteImageManager.shared.load(URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
+//            }
         case let .cancelPrefetchForData(data):
-            for item in data
-            {
-                ASRemoteImageManager.shared.cancelLoad(for: URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
-            }
+            break
+//            print("Cancelled prefetching")
+//            for item in data
+//            {
+//                ASRemoteImageManager.shared.cancelLoad(for: URL(fileURLWithPath: calibreLibraryPath + "/" + item.path + "/cover.jpg"))
+//            }
         }
     }
 }
@@ -147,16 +153,17 @@ extension WaterfallScreen
 {
     var layout: ASCollectionLayout<Int>
     {
-        ASCollectionLayout(createCustomLayout: ASWaterfallLayout.init)
-        { layout in
-            layout.numberOfColumns = .adaptive(minWidth: self.columnMinSize)
-        }
+//        ASCollectionLayout(createCustomLayout: ASWaterfallLayout.init)
+//        { layout in
+//            layout.numberOfColumns = .adaptive(minWidth: self.columnMinSize)
+//        }
         // Can also initialise like this when no need to dynamically update values
-//         ASCollectionLayout
-//         {
-//             let layout = ASWaterfallLayout()
-//             return layout
-//         }
+         ASCollectionLayout
+         {
+             let layout = ASWaterfallLayout()
+            layout.numberOfColumns = .adaptive(minWidth: 80)
+             return layout
+         }
     }
 }
 
@@ -167,7 +174,7 @@ class WaterfallScreenLayoutDelegate: ASCollectionViewDelegate, ASWaterfallLayout
     {
 //        guard let post: Book = getDataForItem(at: indexPath) else { return 100 }
 //        return context.width /// post.aspectRatio
-        return context.width
+        return context.width * (4/3)
     }
 }
 

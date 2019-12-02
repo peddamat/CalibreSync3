@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         do {
             try dbQueue.read { db -> [Book] in
-                books = try Book.limit(50).fetchAll(db)
+                books = try Book.limit(500).fetchAll(db)
                 return books!
             }
         } catch {
