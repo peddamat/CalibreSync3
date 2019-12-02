@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         do {
             try dbQueue.read { db -> [Book] in
-                books = try Book.fetchAll(db)
+                books = try Book.limit(50).fetchAll(db)
                 return books!
             }
         } catch {
@@ -83,7 +83,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let folderURL = try! URL(resolvingBookmarkData: url, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
         
-        print(folderURL)
         return folderURL
     }
 
@@ -98,18 +97,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NSFileCoordinator().coordinate(readingItemAt: pickedFolderURL, error: error)
         { (folderURL) in
                         do {
-                            print("hi.")
-                            print(folderURL.path)
+                            print("File coordination setup for: \(folderURL.path)")
                             let keys : [URLResourceKey] = [.nameKey, .isDirectoryKey]
                             let fileList = try FileManager.default.enumerator(at: folderURL, includingPropertiesForKeys: keys)
                             for file  in fileList! {
-            //                    let h: URL = file
                                 print(file)
-            //                    getFileSize(filePath: file as! URL)
                             }
-                            //                for case let file as URL in fileList! {
-                            //                    print(".")
-                            //                }
                         } catch let error {
                             print("fucked")
                         }
