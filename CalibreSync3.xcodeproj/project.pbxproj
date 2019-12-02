@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BooksDetail.swift */; };
+		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
 		8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */; };
 		8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */; };
 		8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDBB239397FD008B30F6 /* ContentView.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		8C053FD223951A5900EFAEFB /* BooksDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksDetail.swift; sourceTree = "<group>"; };
+		8C053FD4239520C900EFAEFB /* BookComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookComment.swift; sourceTree = "<group>"; };
 		8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalibreSync3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C053FD62395220B00EFAEFB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8CB3CDF12393BE8C008B30F6 /* Book.swift */,
+				8C053FD4239520C900EFAEFB /* BookComment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8CB3CDAB239397FD008B30F6 = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +179,7 @@
 		8CB3CDF32393BFB4008B30F6 /* Books */ = {
 			isa = PBXGroup;
 			children = (
-				8CB3CDF12393BE8C008B30F6 /* Book.swift */,
+				8C053FD62395220B00EFAEFB /* Models */,
 				8C053FD223951A5900EFAEFB /* BooksDetail.swift */,
 			);
 			path = Books;
@@ -321,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
 				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,

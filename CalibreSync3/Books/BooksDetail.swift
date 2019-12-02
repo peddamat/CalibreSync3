@@ -6,11 +6,13 @@
 //  Copyright © 2019 Sumanth Peddamatham. All rights reserved.
 //
 
+import GRDB
 import SwiftUI
 
 struct BooksDetail: View {
     var book: Book
     var calibrePath: String
+    var dbQueue: DatabaseQueue
     
     var body: some View {
         ScrollView {
@@ -27,16 +29,15 @@ struct BooksDetail: View {
                         .bold()
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color(red: 251/255, green: 128/255, blue: 128/255), Color(red: 253/255, green: 193/255, blue: 104/255)]), startPoint: .leading, endPoint: .trailing))
+//                        .background(LinearGradient(gradient: Gradient(colors: [Color(red: 2/255, green: 0/255, blue: 36/255), Color(red: 0/255, green: 212/255, blue: 255/255)]), startPoint: .leading, endPoint: .trailing))
+                        .background(Color(red: 0/255, green: 212/255, blue: 255/255))
                         .cornerRadius(10)
                         .padding(.horizontal)
                 }
 
-                Separator()
-
-                TagList()
+//                TagList()
     
-                BookSummary()
+                BookSummary(book: book, dbQueue: dbQueue)
 
                 Spacer()
             }
@@ -68,14 +69,44 @@ struct BookHeader: View {
     }
 }
 
-
-
 struct BookSummary: View {
+    var book: Book
+    var dbQueue: DatabaseQueue
+    @State var comments: [BookComment]?
+    
+
+    func getComments() -> [BookComment]? {
+        do {
+            return try dbQueue.read { db in
+//                try book.comments.fetchAll(db)
+                try BookComment
+                .filter(Column("book") == book.id)
+                .fetchAll(db)
+            }
+        } catch {
+            return nil
+        }
+//        do {
+//            try dbQueue.read { db -> [BookComment] in
+//                comments = try book.comments.fetchAll(db)
+//                return comments!
+//            }
+//        } catch {
+//            print("Error: Unable to get books")
+//        }
+//        return comments!
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("SUMMARY")
-            Text("With Acceptance Test-Driven Development (ATDD), business customers, testers, and developers can collaborate to produce testable requirements that help them build higher quality software more rapidly. However, ATDD is still widely misunderstood by many practitioners. ATDD by Example is the first practical, entry-level, hands-on guide to implementing and successfully applying it. ATDD pioneer Markus Gärtner walks readers step by step through deriving the right systems from business users, and then implementing fully automated, functional tests that accurately reflect business requirements, are intelligible to stakeholders, and promote more effective development. Through two end-to-end case studies, Gärtner demonstrates how ATDD can be applied using diverse frameworks and languages. Each case study is accompanied by an extensive set of artifacts, including test automation classes, step definitions, and full sample implementations. These realistic examples illuminate ATDD's fundamental principles, show how ATDD fits into the broader development process, highlight tips from Gärtner's extensive experience, and identify crucial pitfalls to avoid. Readers will learn to Master the thought processes associated with successful ATDD implementation Use ATDD with Cucumber to describe software in ways businesspeople can understand Test web pages using ATDD tools Bring ATDD to Java with the FitNesse wiki-based acceptance test framework Use examples more effectively in Behavior-Driven Development (BDD) Specify software collaboratively through innovative workshops Implement more user-friendly and collaborative test automation Test more cleanly, listen to test results, and refactor tests for greater value If you're a tester, analyst, developer, or project manager, this book offers a concrete foundation for achieving real benefits with ATDD now–and it will help you reap even more value as you gain experience. ")
+            ForEach(getComments()!) { comment in
+//                Text("Hi")
+                Text(comment.text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+ )
+            }
         }
+        .padding(.top, 10)
     }
 }
 

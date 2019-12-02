@@ -18,6 +18,12 @@ struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
     @State private var showSettings = false
 
+    func getDBqueue() -> DatabaseQueue {
+        let calibreDB = CalibreDB(settingStore: settingStore)
+        let dbQueue = calibreDB.load()
+        return dbQueue
+    }
+    
     func getBooks() -> [Book] {
         var books: [Book]?
         
@@ -26,7 +32,7 @@ struct ContentView: View {
 
         do {
             try dbQueue.read { db -> [Book] in
-                books = try Book.limit(200).fetchAll(db)
+                books = try Book.limit(20).fetchAll(db)
                 return books!
             }
         } catch {
@@ -48,7 +54,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 QGrid(getBooks(), columns: 3) {
-                    GridCell(book: $0, calibreLibraryPath: self.settingStore.getCalibrePath())
+                    GridCell(book: $0, calibreLibraryPath: self.settingStore.getCalibrePath(), dbQueue: self.getDBqueue())
                 }
             }
             .navigationBarTitle("CalibreSync")
@@ -94,7 +100,8 @@ struct ImageView: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width:130, height:100)
+                .frame(width:150, height:150)
+            .padding(10)
         }.onReceive(imageLoader.didChange) { data in
             self.image = UIImage(data: data) ?? UIImage()
         }
@@ -103,14 +110,20 @@ struct ImageView: View {
 
 struct GridCell: View {
     var book: Book
-    
     var calibreLibraryPath: String
+    var dbQueue: DatabaseQueue
 
     var body: some View {
         VStack() {
-            NavigationLink(destination: BooksDetail(book: book, calibrePath: calibreLibraryPath)) {
+            NavigationLink(destination: BooksDetail(book: book, calibrePath: calibreLibraryPath, dbQueue: dbQueue)) {
+//                Image("cover")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 150, height: 150)
+                
                 ImageView(withURL: URL(fileURLWithPath: calibreLibraryPath + "/" + book.path + "/cover.jpg").absoluteString)
                     .padding([.horizontal, .top], 2.0)
+                
     //            Text(book.title)
             }
             .buttonStyle(PlainButtonStyle())

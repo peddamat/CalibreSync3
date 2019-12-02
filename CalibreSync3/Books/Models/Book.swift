@@ -8,6 +8,7 @@
 
 import GRDB
 
+// Author
 struct Book {
     var id: Int64
     var title: String
@@ -23,7 +24,7 @@ extension Book: Hashable { }
 
 // MARK: - Persistence
 
-extension Book: Codable, Identifiable, FetchableRecord, MutablePersistableRecord {
+extension Book: Codable, Identifiable, MutablePersistableRecord {
     private enum Columns {
         static let id = Column(CodingKeys.id)
         static let title = Column(CodingKeys.title)
@@ -43,3 +44,11 @@ extension Book {
     }
 }
 
+// MARK: - Associations
+
+extension Book: TableRecord, FetchableRecord, EncodableRecord {
+    static let comments = hasMany(BookComment.self)
+    var comments: QueryInterfaceRequest<BookComment> {
+        return request(for: Book.comments)
+    }
+}
