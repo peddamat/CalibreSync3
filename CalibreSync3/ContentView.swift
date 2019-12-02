@@ -26,7 +26,7 @@ struct ContentView: View {
 
         do {
             try dbQueue.read { db -> [Book] in
-                books = try Book.fetchAll(db)
+                books = try Book.limit(200).fetchAll(db)
                 return books!
             }
         } catch {
@@ -47,11 +47,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-//                Text(settingStore.getCalibrePath())
-//                ForEach(getBooks(), id: \.self) { book in
-//                    Text(book.path)
-//                        .padding()
-//                }
                 QGrid(getBooks(), columns: 3) {
                     GridCell(book: $0, calibreLibraryPath: self.settingStore.getCalibrePath())
                 }
@@ -99,7 +94,7 @@ struct ImageView: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width:100, height:100)
+                .frame(width:130, height:100)
         }.onReceive(imageLoader.didChange) { data in
             self.image = UIImage(data: data) ?? UIImage()
         }
@@ -108,13 +103,17 @@ struct ImageView: View {
 
 struct GridCell: View {
     var book: Book
+    
     var calibreLibraryPath: String
 
     var body: some View {
         VStack() {
-            ImageView(withURL: URL(fileURLWithPath: calibreLibraryPath + "/" + book.path + "/cover.jpg").absoluteString)
-                .padding([.horizontal, .top], 2.0)
-            Text(book.title)
+            NavigationLink(destination: BooksDetail(book: book, calibrePath: calibreLibraryPath)) {
+                ImageView(withURL: URL(fileURLWithPath: calibreLibraryPath + "/" + book.path + "/cover.jpg").absoluteString)
+                    .padding([.horizontal, .top], 2.0)
+    //            Text(book.title)
+            }
+            .buttonStyle(PlainButtonStyle())
         }
     }
 }

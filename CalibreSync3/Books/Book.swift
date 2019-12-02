@@ -13,6 +13,7 @@ struct Book {
     var title: String
     var path: String
     var has_cover: Bool
+    var author_sort: String
     var uuid: String
     
     static let databaseTableName = "Books"
@@ -29,6 +30,7 @@ extension Book: Codable, Identifiable, FetchableRecord, MutablePersistableRecord
         static let path = Column(CodingKeys.path)
 //        static let format = Column(CodingKeys.format)
         static let has_cover = Column(CodingKeys.has_cover)
+        static let author = Column(CodingKeys.author_sort)
         static let uuid = Column(CodingKeys.uuid)
     }
 }
