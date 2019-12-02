@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C3133502393F1EE00DC8D6B /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = 8C31334F2393F1EE00DC8D6B /* ASCollectionView */; };
+		8C3133522393F4CE00DC8D6B /* WaterfallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3133512393F4CE00DC8D6B /* WaterfallScreen.swift */; };
+		8C31335C2393F64600DC8D6B /* ASRemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3133582393F64600DC8D6B /* ASRemoteImageView.swift */; };
+		8C31335D2393F64600DC8D6B /* ASCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3133592393F64600DC8D6B /* ASCache.swift */; };
+		8C31335E2393F64600DC8D6B /* ASRemoteImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C31335A2393F64600DC8D6B /* ASRemoteImageManager.swift */; };
+		8C31335F2393F64600DC8D6B /* LoremSwiftum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C31335B2393F64600DC8D6B /* LoremSwiftum.swift */; };
 		8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */; };
 		8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */; };
 		8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDBB239397FD008B30F6 /* ContentView.swift */; };
@@ -42,6 +48,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C3133512393F4CE00DC8D6B /* WaterfallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallScreen.swift; sourceTree = "<group>"; };
+		8C3133582393F64600DC8D6B /* ASRemoteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASRemoteImageView.swift; sourceTree = "<group>"; };
+		8C3133592393F64600DC8D6B /* ASCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASCache.swift; sourceTree = "<group>"; };
+		8C31335A2393F64600DC8D6B /* ASRemoteImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASRemoteImageManager.swift; sourceTree = "<group>"; };
+		8C31335B2393F64600DC8D6B /* LoremSwiftum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremSwiftum.swift; sourceTree = "<group>"; };
 		8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalibreSync3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +80,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */,
+				8C3133502393F1EE00DC8D6B /* ASCollectionView in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +102,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C3133572393F64600DC8D6B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				8C3133582393F64600DC8D6B /* ASRemoteImageView.swift */,
+				8C3133592393F64600DC8D6B /* ASCache.swift */,
+				8C31335A2393F64600DC8D6B /* ASRemoteImageManager.swift */,
+				8C31335B2393F64600DC8D6B /* LoremSwiftum.swift */,
+			);
+			name = Support;
+			path = ../../ThirdParty/ASCollectionView/Demo/ASCollectionViewDemo/Support;
+			sourceTree = "<group>";
+		};
 		8CB3CDAB239397FD008B30F6 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +140,8 @@
 				8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */,
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
+				8C3133512393F4CE00DC8D6B /* WaterfallScreen.swift */,
+				8C3133572393F64600DC8D6B /* Support */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CB3CDE9239399CE008B30F6 /* Settings */,
@@ -198,6 +224,7 @@
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
 				8CB3CDF82393D04E008B30F6 /* QGrid */,
+				8C31334F2393F1EE00DC8D6B /* ASCollectionView */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -274,6 +301,7 @@
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */,
+				8C31334E2393F1EE00DC8D6B /* XCRemoteSwiftPackageReference "ASCollectionView" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -318,14 +346,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C3133522393F4CE00DC8D6B /* WaterfallScreen.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
 				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,
+				8C31335C2393F64600DC8D6B /* ASRemoteImageView.swift in Sources */,
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */,
+				8C31335D2393F64600DC8D6B /* ASCache.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
+				8C31335F2393F64600DC8D6B /* LoremSwiftum.swift in Sources */,
+				8C31335E2393F64600DC8D6B /* ASRemoteImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +685,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8C31334E2393F1EE00DC8D6B /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.6;
+			};
+		};
 		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
@@ -671,6 +712,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8C31334F2393F1EE00DC8D6B /* ASCollectionView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C31334E2393F1EE00DC8D6B /* XCRemoteSwiftPackageReference "ASCollectionView" */;
+			productName = ASCollectionView;
+		};
 		8CB3CDEF2393BE47008B30F6 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
