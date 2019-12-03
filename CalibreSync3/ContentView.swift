@@ -62,24 +62,7 @@ struct ContentView: View {
             NavigationView {
                 VStack {
                     QGrid(getBooks(), columns: 3) { book in
-//                        GridCell(book: book, calibreLibraryPath: self.calibrePath, dbQueue: self.getDBqueue())
-
-                        ZStack {
-//                            Image("cover")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: 150, height: 150)
-            
-//                            ImageStubView(withURL: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/cover.jpg", withPath: self.calibrePath, withDB: self.getDBqueue())
-                            
-//                            ImageView(withURL: "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook Library/Atul S. Khot/Scala Functional Programming Patter (411)/cover.jpg".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-//                            .padding([.horizontal, .top], 2.0)
-
-                            ImageView(withURL: URL(fileURLWithPath: self.calibrePath + "/" + book.path + "/cover.jpg").absoluteString)
-                                .padding([.horizontal, .top], 2.0)
-
-                            Text(book.title)
-                        }
+                        NewGridCell(book: book, calibrePath: self.calibrePath, dbQueue: self.getDBqueue())
                     }
                 }
                 .navigationBarTitle("CalibreSync")
@@ -89,6 +72,38 @@ struct ContentView: View {
                 }
             }
         }
+    }
+}
+
+struct NewGridCell: View {
+    var book: Book
+    var calibrePath: String
+    var dbQueue: DatabaseQueue
+    
+    var body: some View {
+        NavigationLink(destination: BooksDetail(book: book, calibrePath: calibrePath, dbQueue: dbQueue)) {
+            
+//                        GridCell(book: book, calibreLibraryPath: self.calibrePath, dbQueue: self.getDBqueue())
+            
+            ZStack {
+//                            Image("cover")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: 150, height: 150)
+
+//                            ImageStubView(withURL: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/cover.jpg", withPath: self.calibrePath, withDB: self.getDBqueue())
+
+//                            ImageView(withURL: "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook Library/Atul S. Khot/Scala Functional Programming Patter (411)/cover.jpg".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+//                            .padding([.horizontal, .top], 2.0)
+                
+                ImageView(withURL: URL(fileURLWithPath: self.calibrePath + "/" + book.path + "/cover.jpg").absoluteString)
+                    .padding([.horizontal, .top], 2.0)
+                
+//                Text(book.title)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+
     }
 }
 
