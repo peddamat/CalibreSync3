@@ -30,6 +30,11 @@ extension BookFormat: Codable, Identifiable, MutablePersistableRecord {
 }
 
 // MARK: - Associations
-
+extension BookFormat: TableRecord, FetchableRecord, EncodableRecord {
+    static let book = belongsTo(Book.self, using: ForeignKey(["book"]))
+    var book: QueryInterfaceRequest<Book> {
+        return request(for: BookFormat.book)
+    }
+}
 
 

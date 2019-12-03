@@ -11,6 +11,7 @@
 		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
 		8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61D239661FE006C5511 /* BookFormat.swift */; };
 		8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61F23966C2F006C5511 /* ShareSheet.swift */; };
+		8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED6282396720F006C5511 /* FilePresenterView.swift */; };
 		8CB289E723963B9E00C36D88 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB289E623963B9E00C36D88 /* Kingfisher */; };
 		8CB289E923963B9E00C36D88 /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB289E823963B9E00C36D88 /* KingfisherSwiftUI */; };
 		8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 		8C053FD4239520C900EFAEFB /* BookComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookComment.swift; sourceTree = "<group>"; };
 		8C8ED61D239661FE006C5511 /* BookFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookFormat.swift; sourceTree = "<group>"; };
 		8C8ED61F23966C2F006C5511 /* ShareSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		8C8ED6282396720F006C5511 /* FilePresenterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePresenterView.swift; sourceTree = "<group>"; };
 		8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalibreSync3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8C8ED61F23966C2F006C5511 /* ShareSheet.swift */,
+				8C8ED6282396720F006C5511 /* FilePresenterView.swift */,
 				8CB3CDE9239399CE008B30F6 /* Settings */,
 				8CB3CDBD23939803008B30F6 /* Assets.xcassets */,
 				8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */,
@@ -345,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */,
 				8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,

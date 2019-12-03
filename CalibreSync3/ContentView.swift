@@ -19,6 +19,7 @@ struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
     @State private var showSettings = false
     @State private var showShareSheet = false
+    @State private var showDocumentSheet = false
 
     var calibrePath: String
 
@@ -60,7 +61,7 @@ struct ContentView: View {
     }
     
     var shareButton: some View {
-        Button(action: { self.showShareSheet.toggle() }) {
+        Button(action: { self.showDocumentSheet.toggle() }) {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
                 .accessibility(label: Text("Share"))
@@ -88,6 +89,9 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: ["Hello World"])
+            }
+            .sheet(isPresented: $showDocumentSheet) {
+                FilePresenterUIView(file: URL(string: "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/Scala.pdf")!)
             }
         }
     }

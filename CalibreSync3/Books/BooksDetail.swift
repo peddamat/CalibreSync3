@@ -15,6 +15,40 @@ struct BooksDetail: View {
     var dbQueue: DatabaseQueue
     
     @State private var showingSheet = false
+    @State private var showDocumentSheet = false
+    @State private var bookPath:String = ""
+
+    func getActions() -> [ActionSheet.Button]? {
+        var buttons = [ActionSheet.Button]()
+
+        do {
+            try dbQueue.read { db -> [ActionSheet.Button] in
+                let formats = try BookFormat
+                    .filter(Column("book") == book.id)
+                    .fetchAll(db)
+
+                for format in formats {
+                    if format.format == "PDF" {
+                        buttons.append(
+                            .default(Text("PDF"), action: {
+                            print("PDF!")
+                                
+//                                self.bookPath = "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/Scala.pdf"
+                                let tempPath = "file://" + self.calibrePath + "/" + self.book.path + "/" + format.name + ".pdf"
+                                self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                                print("Final: " + self.bookPath)
+                                self.showDocumentSheet.toggle()
+                                
+                        }))
+                    }
+                }
+                return buttons
+            }
+        } catch {
+            print("Error: Unable to get books")
+        }
+        return buttons
+    }
     
     var body: some View {
         ScrollView {
@@ -37,16 +71,12 @@ struct BooksDetail: View {
                         .padding(.horizontal)
                 }
                 .actionSheet(isPresented: $showingSheet) {
-                    ActionSheet(title: Text("Select a format"), message: Text(""), buttons: [
-                        .default(Text("EPUB"), action: {
-                            print("EPUB!")
-                        }),
-                        .default(Text("PDF"), action: {
-                            print("PDF!")
-                        }),
-                        .default(Text("Go Back"))
-                    ])
+                    ActionSheet(title: Text("Select a format"), message: Text(""), buttons: getActions()!)
                 }
+                .sheet(isPresented: $showDocumentSheet) {
+                    FilePresenterUIView(file: URL(string: self.bookPath)!)
+                }
+
 
 //                TagList()
     
@@ -55,7 +85,6 @@ struct BooksDetail: View {
                 Spacer()
             }
         }
-        
     }
 }
 
