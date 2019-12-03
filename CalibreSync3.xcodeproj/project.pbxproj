@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BooksDetail.swift */; };
 		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
+		8CB289E723963B9E00C36D88 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB289E623963B9E00C36D88 /* Kingfisher */; };
+		8CB289E923963B9E00C36D88 /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB289E823963B9E00C36D88 /* KingfisherSwiftUI */; };
 		8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB7239397FD008B30F6 /* AppDelegate.swift */; };
 		8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */; };
 		8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDBB239397FD008B30F6 /* ContentView.swift */; };
@@ -72,7 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB289E723963B9E00C36D88 /* Kingfisher in Frameworks */,
 				8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */,
+				8CB289E923963B9E00C36D88 /* KingfisherSwiftUI in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +216,8 @@
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
 				8CB3CDF82393D04E008B30F6 /* QGrid */,
+				8CB289E623963B9E00C36D88 /* Kingfisher */,
+				8CB289E823963B9E00C36D88 /* KingfisherSwiftUI */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -288,6 +294,7 @@
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */,
+				8CB289E523963B9E00C36D88 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -421,6 +428,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -481,6 +489,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -668,6 +677,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8CB289E523963B9E00C36D88 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
+			};
+		};
 		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
@@ -687,6 +704,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8CB289E623963B9E00C36D88 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB289E523963B9E00C36D88 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		8CB289E823963B9E00C36D88 /* KingfisherSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB289E523963B9E00C36D88 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = KingfisherSwiftUI;
+		};
 		8CB3CDEF2393BE47008B30F6 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
