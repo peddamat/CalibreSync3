@@ -8,19 +8,11 @@
 
 import SwiftUI
 
-struct FilePresenter : View {
-  var body: some View {
-    EmptyView()
-      .frame(width: 300, height: 200)
-      .background(Color.green)
-  }
-}
-
 struct FilePresenterUIView : UIViewRepresentable {
 
   var file: URL
   var showing = false
-  var onDismiss: () -> Void = {}
+  var onDismiss: () -> ()
 
 //  init(file: URL, onDismiss) {
 //    self.file = file
@@ -53,7 +45,9 @@ struct FilePresenterUIView : UIViewRepresentable {
       interaction.delegate = self
     }
 
+    // TODO: The modal isn't reliably dismissed, fix this
     func documentInteractionControllerDidDismissOpenInMenu(_ controller: UIDocumentInteractionController) {
+        print("should dismiss")
       self.parent.onDismiss()
     }
 
@@ -70,9 +64,10 @@ struct FilePresenterUIView : UIViewRepresentable {
   typealias _Context = UIViewRepresentableContext<FilePresenterUIView>
 
 
+  // TODO: See if we can completely hide the ugly gray background...
   func makeUIView(context: _Context) -> ProvideViewCoordsView {
-    let v = ProvideViewCoordsView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
-    v.backgroundColor = .orange
+    let v = ProvideViewCoordsView(frame: CGRect(origin: .zero, size: CGSize(width: 10, height: 10)))
+    v.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
     v.setNeedsLayout()
     context.coordinator.setup(v)
     return v

@@ -20,26 +20,29 @@ struct BooksDetail: View {
 
     func getActions() -> [ActionSheet.Button]? {
         var buttons = [ActionSheet.Button]()
-
+        
         do {
             try dbQueue.read { db -> [ActionSheet.Button] in
                 let formats = try BookFormat
                     .filter(Column("book") == book.id)
                     .fetchAll(db)
-
+                
                 for format in formats {
                     if format.format == "PDF" {
                         buttons.append(
                             .default(Text("PDF"), action: {
-                            print("PDF!")
-                                
-//                                self.bookPath = "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/Scala.pdf"
                                 let tempPath = "file://" + self.calibrePath + "/" + self.book.path + "/" + format.name + ".pdf"
                                 self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                                print("Final: " + self.bookPath)
                                 self.showDocumentSheet.toggle()
-                                
-                        }))
+                            }))
+                    }
+                    else if format.format == "EPUB" {
+                        buttons.append(
+                            .default(Text("EPUB"), action: {
+                                let tempPath = "file://" + self.calibrePath + "/" + self.book.path + "/" + format.name + ".epub"
+                                self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                                self.showDocumentSheet.toggle()
+                            }))
                     }
                 }
                 return buttons
@@ -65,7 +68,6 @@ struct BooksDetail: View {
                         .bold()
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-//                        .background(LinearGradient(gradient: Gradient(colors: [Color(red: 2/255, green: 0/255, blue: 36/255), Color(red: 0/255, green: 212/255, blue: 255/255)]), startPoint: .leading, endPoint: .trailing))
                         .background(Color(red: 0/255, green: 212/255, blue: 255/255))
                         .cornerRadius(10)
                         .padding(.horizontal)
@@ -74,7 +76,7 @@ struct BooksDetail: View {
                     ActionSheet(title: Text("Select a format"), message: Text(""), buttons: getActions()!)
                 }
                 .sheet(isPresented: $showDocumentSheet) {
-                    FilePresenterUIView(file: URL(string: self.bookPath)!)
+                    FilePresenterUIView(file: URL(string: self.bookPath)!, onDismiss: { self.showDocumentSheet.toggle() })
                 }
 
 
@@ -117,7 +119,7 @@ struct BookSummary: View {
     @State var comments: [BookComment]?
     
 
-    func getComments() -> [BookComment]? {
+    func getComments() -> [BookComment] {
         do {
             return try dbQueue.read { db in
 //                try book.comments.fetchAll(db)
@@ -126,7 +128,7 @@ struct BookSummary: View {
                 .fetchAll(db)
             }
         } catch {
-            return nil
+            return []
         }
 //        do {
 //            try dbQueue.read { db -> [BookComment] in
@@ -142,7 +144,7 @@ struct BookSummary: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("SUMMARY")
-            ForEach(getComments()!) { comment in
+            ForEach(getComments()) { comment in
 //                Text("Hi")
                 Text(comment.text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
  )

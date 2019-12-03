@@ -10,7 +10,6 @@ import GRDB
 import QGrid
 import SwiftUI
 import Combine
-import KingfisherSwiftUI
 
 // The shared database queue
 var dbQueue: DatabaseQueue?
@@ -18,7 +17,7 @@ var dbQueue: DatabaseQueue?
 struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
     @State private var showSettings = false
-    @State private var showShareSheet = false
+//    @State private var showShareSheet = false
     @State private var showDocumentSheet = false
 
     var calibrePath: String
@@ -60,7 +59,16 @@ struct ContentView: View {
         }
     }
     
-    var shareButton: some View {
+//    var shareButton: some View {
+//        Button(action: { self.showShareSheet.toggle() }) {
+//            Image(systemName: "square.and.arrow.up")
+//                .imageScale(.large)
+//                .accessibility(label: Text("Share"))
+//                .padding()
+//        }
+//    }
+    
+    var docShareButton: some View {
         Button(action: { self.showDocumentSheet.toggle() }) {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
@@ -68,6 +76,7 @@ struct ContentView: View {
                 .padding()
         }
     }
+
     
     var body: some View {
         VStack {
@@ -81,18 +90,15 @@ struct ContentView: View {
                 .navigationBarItems(trailing:
                     HStack {
                         profileButton
-                        shareButton
+//                        shareButton
                 })
                 .sheet(isPresented: $showSettings) {
                     SettingsView().environmentObject(self.settingStore)
                 }
             }
-            .sheet(isPresented: $showShareSheet) {
-                ShareSheet(activityItems: ["Hello World"])
-            }
-            .sheet(isPresented: $showDocumentSheet) {
-                FilePresenterUIView(file: URL(string: "file:///private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/Jg110QPublic/Old/Ebook%20Library/Atul%20S.%20Khot/Scala%20Functional%20Programming%20Patter%20(411)/Scala.pdf")!)
-            }
+//            .sheet(isPresented: $showShareSheet) {
+//                ShareSheet(activityItems: ["Hello World"])
+//            }
         }
     }
 }
