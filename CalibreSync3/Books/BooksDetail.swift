@@ -14,6 +14,8 @@ struct BooksDetail: View {
     var calibrePath: String
     var dbQueue: DatabaseQueue
     
+    @State private var showingSheet = false
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -21,7 +23,7 @@ struct BooksDetail: View {
                 Separator()
     
                 Button(action: {
-                    // Proceed to the next screen
+                    self.showingSheet = true
                 }) {
                     Text("Download")
                         .font(.system(.body, design: .rounded))
@@ -33,6 +35,17 @@ struct BooksDetail: View {
                         .background(Color(red: 0/255, green: 212/255, blue: 255/255))
                         .cornerRadius(10)
                         .padding(.horizontal)
+                }
+                .actionSheet(isPresented: $showingSheet) {
+                    ActionSheet(title: Text("Select a format"), message: Text(""), buttons: [
+                        .default(Text("EPUB"), action: {
+                            print("EPUB!")
+                        }),
+                        .default(Text("PDF"), action: {
+                            print("PDF!")
+                        }),
+                        .default(Text("Go Back"))
+                    ])
                 }
 
 //                TagList()

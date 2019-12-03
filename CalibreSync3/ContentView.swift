@@ -18,6 +18,8 @@ var dbQueue: DatabaseQueue?
 struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
     @State private var showSettings = false
+    @State private var showShareSheet = false
+
     var calibrePath: String
 
     func getDBqueue() -> DatabaseQueue {
@@ -57,6 +59,15 @@ struct ContentView: View {
         }
     }
     
+    var shareButton: some View {
+        Button(action: { self.showShareSheet.toggle() }) {
+            Image(systemName: "square.and.arrow.up")
+                .imageScale(.large)
+                .accessibility(label: Text("Share"))
+                .padding()
+        }
+    }
+    
     var body: some View {
         VStack {
             NavigationView {
@@ -66,10 +77,17 @@ struct ContentView: View {
                     }
                 }
                 .navigationBarTitle("CalibreSync")
-                .navigationBarItems(trailing: profileButton)
+                .navigationBarItems(trailing:
+                    HStack {
+                        profileButton
+                        shareButton
+                })
                 .sheet(isPresented: $showSettings) {
                     SettingsView().environmentObject(self.settingStore)
                 }
+            }
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(activityItems: ["Hello World"])
             }
         }
     }
