@@ -62,7 +62,7 @@ struct BooksDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                BookHeader(book: book, calibrePath: calibreDB.getCalibrePath().path)
+                BookHeader(book: book, calibrePath: calibreDB.getCalibrePath())
                 Separator()
     
                 Button(action: {
@@ -94,12 +94,13 @@ struct BooksDetail: View {
 
 struct BookHeader: View {
     var book: Book
-    var calibrePath: String
+    var calibrePath: URL
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
 //            Image(URL(fileURLWithPath: calibrePath + "/" + book.path + "/cover.jpg").absoluteString)
-            ImageView(withURL: URL(fileURLWithPath: calibrePath + "/" + book.path + "/cover.jpg").absoluteString)
+//            ImageView(withURL: URL(fileURLWithPath: calibrePath + "/" + book.path + "/cover.jpg"))
+            ImageView(withURL: calibrePath.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 //                .resizable()
 //                .scaledToFit()
 //                .frame(width:110)

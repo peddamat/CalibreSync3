@@ -11,7 +11,7 @@ import QGrid
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct ContentView: View  {
     @EnvironmentObject var settingStore: SettingStore
     
     @State private var showSettings = false
@@ -73,7 +73,13 @@ struct ContentView: View {
         VStack {
             NavigationView {
                 VStack {
-                    QGrid(books, columns: 3) { book in
+                    QGrid(books,
+                          columns: 3,
+                          columnsInLandscape: 4,
+                          vSpacing: 10,
+                          hSpacing: 10,
+                          vPadding: 0,
+                          hPadding: 00) { book in
                         NewGridCell(book: book, calibreDB: self.calibreDB)
                     }
                 }
@@ -101,7 +107,8 @@ struct NewGridCell: View {
     var body: some View {
         NavigationLink(destination: BooksDetail(book: book, calibreDB: calibreDB)) {
             ZStack {
-                ImageView(withURL: URL(fileURLWithPath: calibreDB.getCalibrePath().path + "/" + book.path + "/cover.jpg").absoluteString)
+//                ImageView(withURL: URL(fileURLWithPath: calibreDB.getCalibrePath().path + "/" + book.path + "/cover.jpg").absoluteString)
+                ImageView(withURL: calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
                     .padding([.horizontal, .top], 2.0)
 //                Text(book.title)
             }
@@ -112,20 +119,20 @@ struct NewGridCell: View {
 
 struct ImageView: View {
     @ObservedObject var imageLoader:ImageLoader
-    @State var image:UIImage = UIImage()
+    @State var image:UIImage = UIImage(imageLiteralResourceName: "cover")
     
-    init(withURL url:String) {
+    init(withURL url:URL) {
+        print("init")
         imageLoader = ImageLoader(urlString:url)
     }
     
     var body: some View {
-        VStack {
-            Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width:150, height:150)
-            .padding(10)
-        }.onReceive(imageLoader.didChange) { data in
+        Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+//                .frame(width:80, height:100)
+        .padding(10)
+        .onReceive(imageLoader.didChange) { data in
             self.image = UIImage(data: data) ?? UIImage()
         }
     }
@@ -133,28 +140,28 @@ struct ImageView: View {
 
 class ImageLoader: ObservableObject {
     var didChange = PassthroughSubject<Data, Never>()
+    var task: URLSessionDataTask!
     var data = Data() {
         didSet {
             didChange.send(data)
         }
     }
     
-    init(urlString:String) {
-        
-        guard let url = URL(string: urlString) else {
-            print("Punt! \(urlString)")
-            return
-        }
-        
-//        DispatchQueue.global(qos: .userInitiated).async {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    init(urlString url:URL) {
+                
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.task = URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data else { return }
                 DispatchQueue.main.async {
                     self.data = data
                 }
             }
-            task.resume()
-//        }
+            self.task.resume()
+        }
+    }
+    
+    deinit {
+        task.cancel()
     }
 }
 
