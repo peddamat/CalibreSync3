@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
 //            setupFileCoordination()
-            window.rootViewController = UIHostingController(rootView: AppRootView(settingStore: settingStore))
+            window.rootViewController = UIHostingController(rootView: AppRootView().environmentObject(settingStore))
             self.window = window
             window.makeKeyAndVisible()
         }

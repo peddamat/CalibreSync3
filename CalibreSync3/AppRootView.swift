@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct AppRootView: View {
-    @ObservedObject var settingStore: SettingStore
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         Group {
             if settingStore.calibreRoot != nil {
                 ContentView().environmentObject(settingStore)
             } else {
-                SettingsView()
+                SettingsView().environmentObject(settingStore)
             }
         }
     }

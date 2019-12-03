@@ -47,6 +47,10 @@ struct BooksDetail: View {
                             }))
                     }
                 }
+                
+                // Finally, always add the close button
+                buttons.append(.default(Text("Dismiss")))
+                
                 return buttons
             }
         } catch {
@@ -74,20 +78,16 @@ struct BooksDetail: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                 }
-                .actionSheet(isPresented: $showingSheet) {
-                    ActionSheet(title: Text("Select a format"), message: Text(""), buttons: getActions()!)
-                }
-                .sheet(isPresented: $showDocumentSheet) {
-                    FilePresenterUIView(file: URL(string: self.bookPath)!, onDismiss: { self.showDocumentSheet.toggle() })
-                }
-
-
 //                TagList()
-    
                 BookSummary(book: book, dbQueue: dbQueue)
-
                 Spacer()
             }
+        }
+        .actionSheet(isPresented: $showingSheet) {
+            ActionSheet(title: Text("Select a format"), message: Text("Depending on what other apps you have installed"), buttons: getActions()!)
+        }
+        .sheet(isPresented: $showDocumentSheet) {
+            FilePresenterUIView(file: URL(string: self.bookPath)!, onDismiss: { self.showDocumentSheet.toggle() })
         }
     }
 }

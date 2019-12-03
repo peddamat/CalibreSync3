@@ -32,6 +32,7 @@ final class SettingStore: ObservableObject {
         
         set {
             defaults.set(newValue, forKey: "view.preferences.calibreLibraryPath")
+            self.objectWillChange.send()
         }
     }
     
