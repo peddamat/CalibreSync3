@@ -9,6 +9,11 @@
 import Combine
 import Foundation
 
+enum ErrorsToThrow: Error {
+    case calibrePathNotSet
+    case calibrePathNotResolving
+}
+
 final class SettingStore: ObservableObject {
     @Published var defaults: UserDefaults
     
@@ -20,9 +25,9 @@ final class SettingStore: ObservableObject {
         ])
     }
     
-    var calibreRoot: Data {
+    var calibreRoot: Data? {
         get {
-            defaults.data(forKey: "view.preferences.calibreLibraryPath")!
+            defaults.data(forKey: "view.preferences.calibreLibraryPath")
         }
         
         set {
@@ -34,12 +39,20 @@ final class SettingStore: ObservableObject {
         return defaults.object(forKey: key) != nil
     }
     
-    func getCalibreURL() -> URL {
+    func getCalibreURL() throws -> URL {
         var urlResult = false
-        return try! URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
+        guard let calibreRoot = calibreRoot else {
+            throw ErrorsToThrow.calibrePathNotSet
+        }
+        
+        do {
+            return try URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
+        } catch {
+            throw ErrorsToThrow.calibrePathNotResolving
+        }
     }
     
-    func getCalibrePath() -> String {
-        return getCalibreURL().path
+    func getCalibrePath() throws -> String {
+        return try getCalibreURL().path
     }
 }

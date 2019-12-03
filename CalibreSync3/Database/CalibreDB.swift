@@ -9,8 +9,22 @@
 import GRDB
 import SwiftUI
 
-struct CalibreDB {
+class CalibreDB {
     var settingStore: SettingStore
+    private var dbQueue: DatabaseQueue
+    private var calibrePath: URL
+    
+    init(settingStore: SettingStore) throws {
+        self.settingStore = settingStore
+        
+        guard let calibrePath = try settingStore.getCalibreURL() as URL? else {
+            throw ErrorsToThrow.calibrePathNotResolving
+        }
+        self.calibrePath = calibrePath
+        let databaseURL = calibrePath.appendingPathComponent("metadata.db")
+
+        self.dbQueue = try! CalibreDB.openDatabase(atPath: databaseURL.path)
+    }
     
     /// Creates a fully initialized database at path
     static func openDatabase(atPath path: String) throws -> DatabaseQueue {
@@ -24,13 +38,41 @@ struct CalibreDB {
         return dbQueue
     }
     
-    func load() -> DatabaseQueue {
-        let calibrePath = settingStore.getCalibreURL() as URL
-        let databaseURL = try! calibrePath.appendingPathComponent("metadata.db")
+    func load() throws  -> DatabaseQueue {
+        
+        guard let calibrePath = try settingStore.getCalibreURL() as URL? else {
+            throw ErrorsToThrow.calibrePathNotResolving
+        }
+        let databaseURL = calibrePath.appendingPathComponent("metadata.db")
 
         let dbQueue = try! CalibreDB.openDatabase(atPath: databaseURL.path)
         return dbQueue
     }
+    
+    func getDBqueue() -> DatabaseQueue {
+        return self.dbQueue
+    }
+    
+    func getCalibrePath() -> URL {
+        return self.calibrePath
+    }
+//    
+//    func getBooks() -> [Book] {
+//        var books: [Book]?
+//        
+//        let calibreDB = CalibreDB(settingStore: settingStore)
+//        let dbQueue = calibreDB.load()
+//
+//        do {
+//            try dbQueue.read { db -> [Book] in
+//                books = try Book.limit(100).fetchAll(db)
+//                return books!
+//            }
+//        } catch {
+//            print("Error: Unable to get books")
+//        }
+//        return books!
+//    }
     
 //    private func setupDatabase(_ application: UIApplication) throws {
 //        let databaseURL = try Bundle.main.resourceURL!.appendingPathComponent("Test Database").appendingPathComponent("metadata.db")

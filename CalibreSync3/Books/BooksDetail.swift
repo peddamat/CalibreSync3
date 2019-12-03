@@ -11,8 +11,10 @@ import SwiftUI
 
 struct BooksDetail: View {
     var book: Book
-    var calibrePath: String
-    var dbQueue: DatabaseQueue
+    var calibreDB: CalibreDB
+    var dbQueue: DatabaseQueue {
+        calibreDB.getDBqueue()
+    }
     
     @State private var showingSheet = false
     @State private var showDocumentSheet = false
@@ -31,7 +33,7 @@ struct BooksDetail: View {
                     if format.format == "PDF" {
                         buttons.append(
                             .default(Text("PDF"), action: {
-                                let tempPath = "file://" + self.calibrePath + "/" + self.book.path + "/" + format.name + ".pdf"
+                                let tempPath = "file://" + self.calibreDB.getCalibrePath().path + "/" + self.book.path + "/" + format.name + ".pdf"
                                 self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                                 self.showDocumentSheet.toggle()
                             }))
@@ -39,7 +41,7 @@ struct BooksDetail: View {
                     else if format.format == "EPUB" {
                         buttons.append(
                             .default(Text("EPUB"), action: {
-                                let tempPath = "file://" + self.calibrePath + "/" + self.book.path + "/" + format.name + ".epub"
+                                let tempPath = "file://" + self.calibreDB.getCalibrePath().path + "/" + self.book.path + "/" + format.name + ".epub"
                                 self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                                 self.showDocumentSheet.toggle()
                             }))
@@ -56,7 +58,7 @@ struct BooksDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                BookHeader(book: book, calibrePath: calibrePath)
+                BookHeader(book: book, calibrePath: calibreDB.getCalibrePath().path)
                 Separator()
     
                 Button(action: {
@@ -118,7 +120,6 @@ struct BookSummary: View {
     var dbQueue: DatabaseQueue
     @State var comments: [BookComment]?
     
-
     func getComments() -> [BookComment] {
         do {
             return try dbQueue.read { db in
@@ -130,24 +131,13 @@ struct BookSummary: View {
         } catch {
             return []
         }
-//        do {
-//            try dbQueue.read { db -> [BookComment] in
-//                comments = try book.comments.fetchAll(db)
-//                return comments!
-//            }
-//        } catch {
-//            print("Error: Unable to get books")
-//        }
-//        return comments!
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             Text("SUMMARY")
             ForEach(getComments()) { comment in
-//                Text("Hi")
-                Text(comment.text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
- )
+                Text(comment.text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil))
             }
         }
         .padding(.top, 10)

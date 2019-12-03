@@ -19,15 +19,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        
+                
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(calibrePath: readCalibrePath().path).environmentObject(settingStore)
+//        let contentView = ContentView(calibrePath: readCalibrePath().path).environmentObject(settingStore)
         
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            setupFileCoordination()
-            window.rootViewController = UIHostingController(rootView: contentView)
+//            setupFileCoordination()
+            window.rootViewController = UIHostingController(rootView: AppRootView(settingStore: settingStore))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -61,38 +61,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
-    func readCalibrePath() -> URL {
-        var urlResult = false
-        let url = self.settingStore.calibreRoot
-        
-        let folderURL = try! URL(resolvingBookmarkData: url, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
-        
-        print(folderURL)
-        return folderURL
-    }
-    
-    func setupFileCoordination() {
-        let error: NSErrorPointer = nil
-        let filePath = readCalibrePath().path
-        
-        let pickedFolderURL = URL(fileURLWithPath: filePath)
-        let shouldStopAccessing = pickedFolderURL.startAccessingSecurityScopedResource()
-        defer { if shouldStopAccessing { pickedFolderURL.stopAccessingSecurityScopedResource() }}
-        
-        NSFileCoordinator().coordinate(readingItemAt: pickedFolderURL, error: error)
-        { (folderURL) in
-            do {
-                print("Scene Delegate: Completed setting up file coordination")
-                let keys : [URLResourceKey] = [.nameKey, .isDirectoryKey]
-                let fileList = try FileManager.default.enumerator(at: folderURL, includingPropertiesForKeys: keys)
-                for file  in fileList! {
-                    print(file)
-                }
-            } catch let error {
-                print("fucked")
-            }
-        }
-    }
+//    func readCalibrePath() -> URL {
+//        var urlResult = false
+//        let url = self.settingStore.calibreRoot
+//        
+//        let folderURL = try! URL(resolvingBookmarkData: url, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
+//        
+//        print(folderURL)
+//        return folderURL
+//    }
+//    
+//    func setupFileCoordination() {
+//        let error: NSErrorPointer = nil
+//        let filePath = readCalibrePath().path
+//        
+//        let pickedFolderURL = URL(fileURLWithPath: filePath)
+//        let shouldStopAccessing = pickedFolderURL.startAccessingSecurityScopedResource()
+//        defer { if shouldStopAccessing { pickedFolderURL.stopAccessingSecurityScopedResource() }}
+//        
+//        NSFileCoordinator().coordinate(readingItemAt: pickedFolderURL, error: error)
+//        { (folderURL) in
+//            do {
+//                print("Scene Delegate: Completed setting up file coordination")
+//                let keys : [URLResourceKey] = [.nameKey, .isDirectoryKey]
+//                let fileList = try FileManager.default.enumerator(at: folderURL, includingPropertiesForKeys: keys)
+//                for file  in fileList! {
+//                    print(file)
+//                }
+//            } catch let error {
+//                print("fucked")
+//            }
+//        }
+//    }
     
 }
 
