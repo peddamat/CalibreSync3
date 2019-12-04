@@ -30,8 +30,21 @@
 		8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* Book.swift */; };
 		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
 		8CD759022397BD1300C25612 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759012397BD1300C25612 /* Card.swift */; };
+		8CD759462397E6C500C25612 /* Grid+Inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759362397E6C500C25612 /* Grid+Inits.swift */; };
+		8CD759472397E6C500C25612 /* StaggeredGridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759382397E6C500C25612 /* StaggeredGridStyle.swift */; };
+		8CD759482397E6C500C25612 /* Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7593A2397E6C500C25612 /* Tracks.swift */; };
+		8CD759492397E6C500C25612 /* LayoutMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7593B2397E6C500C25612 /* LayoutMath.swift */; };
+		8CD7594A2397E6C500C25612 /* GridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7593D2397E6C500C25612 /* GridStyle.swift */; };
+		8CD7594B2397E6C500C25612 /* GridItemPreferencesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7593E2397E6C500C25612 /* GridItemPreferencesModifier.swift */; };
+		8CD7594C2397E6C500C25612 /* GridItemPreferencesKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7593F2397E6C500C25612 /* GridItemPreferencesKey.swift */; };
+		8CD7594D2397E6C500C25612 /* View+GridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759402397E6C500C25612 /* View+GridStyle.swift */; };
+		8CD7594E2397E6C500C25612 /* GridStyleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759412397E6C500C25612 /* GridStyleKey.swift */; };
+		8CD7594F2397E6C500C25612 /* EnvironmentValues+GridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759422397E6C500C25612 /* EnvironmentValues+GridStyle.swift */; };
+		8CD759502397E6C500C25612 /* GridItemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759432397E6C500C25612 /* GridItemPreferences.swift */; };
+		8CD759512397E6C500C25612 /* ModularGridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759442397E6C500C25612 /* ModularGridStyle.swift */; };
+		8CD759522397E6C500C25612 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759452397E6C500C25612 /* Grid.swift */; };
+		8CD7595A2397F46F00C25612 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759592397F46F00C25612 /* SideMenuView.swift */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
-		8CF69E88239792180023ADF4 /* Grid in Frameworks */ = {isa = PBXBuildFile; productRef = 8CF69E87239792180023ADF4 /* Grid */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +93,20 @@
 		8CB3CDF12393BE8C008B30F6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		8CB3CDF42393C159008B30F6 /* CalibreDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreDB.swift; sourceTree = "<group>"; };
 		8CD759012397BD1300C25612 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8CD759362397E6C500C25612 /* Grid+Inits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits.swift"; sourceTree = "<group>"; };
+		8CD759382397E6C500C25612 /* StaggeredGridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaggeredGridStyle.swift; sourceTree = "<group>"; };
+		8CD7593A2397E6C500C25612 /* Tracks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracks.swift; sourceTree = "<group>"; };
+		8CD7593B2397E6C500C25612 /* LayoutMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutMath.swift; sourceTree = "<group>"; };
+		8CD7593D2397E6C500C25612 /* GridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStyle.swift; sourceTree = "<group>"; };
+		8CD7593E2397E6C500C25612 /* GridItemPreferencesModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridItemPreferencesModifier.swift; sourceTree = "<group>"; };
+		8CD7593F2397E6C500C25612 /* GridItemPreferencesKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridItemPreferencesKey.swift; sourceTree = "<group>"; };
+		8CD759402397E6C500C25612 /* View+GridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+GridStyle.swift"; sourceTree = "<group>"; };
+		8CD759412397E6C500C25612 /* GridStyleKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStyleKey.swift; sourceTree = "<group>"; };
+		8CD759422397E6C500C25612 /* EnvironmentValues+GridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+GridStyle.swift"; sourceTree = "<group>"; };
+		8CD759432397E6C500C25612 /* GridItemPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridItemPreferences.swift; sourceTree = "<group>"; };
+		8CD759442397E6C500C25612 /* ModularGridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModularGridStyle.swift; sourceTree = "<group>"; };
+		8CD759452397E6C500C25612 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		8CD759592397F46F00C25612 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,7 +117,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
-				8CF69E88239792180023ADF4 /* Grid in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +176,9 @@
 				8CDE745C2396AA8E006611AA /* AppRootView.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
 				8CD759012397BD1300C25612 /* Card.swift */,
+				8CD759592397F46F00C25612 /* SideMenuView.swift */,
+				8CD7595B2397F48700C25612 /* Menu */,
+				8CD759352397E6C500C25612 /* Grid */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CCE46712396946C00A327AB /* Sharing */,
@@ -226,6 +255,58 @@
 			path = Sharing;
 			sourceTree = "<group>";
 		};
+		8CD759352397E6C500C25612 /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				8CD759452397E6C500C25612 /* Grid.swift */,
+				8CD759362397E6C500C25612 /* Grid+Inits.swift */,
+				8CD759372397E6C500C25612 /* Styles */,
+			);
+			name = Grid;
+			path = CalibreSync3/Grid;
+			sourceTree = SOURCE_ROOT;
+		};
+		8CD759372397E6C500C25612 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				8CD759382397E6C500C25612 /* StaggeredGridStyle.swift */,
+				8CD759392397E6C500C25612 /* Layout */,
+				8CD7593C2397E6C500C25612 /* Style */,
+				8CD759442397E6C500C25612 /* ModularGridStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		8CD759392397E6C500C25612 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				8CD7593A2397E6C500C25612 /* Tracks.swift */,
+				8CD7593B2397E6C500C25612 /* LayoutMath.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		8CD7593C2397E6C500C25612 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				8CD7593D2397E6C500C25612 /* GridStyle.swift */,
+				8CD7593E2397E6C500C25612 /* GridItemPreferencesModifier.swift */,
+				8CD7593F2397E6C500C25612 /* GridItemPreferencesKey.swift */,
+				8CD759402397E6C500C25612 /* View+GridStyle.swift */,
+				8CD759412397E6C500C25612 /* GridStyleKey.swift */,
+				8CD759422397E6C500C25612 /* EnvironmentValues+GridStyle.swift */,
+				8CD759432397E6C500C25612 /* GridItemPreferences.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		8CD7595B2397F48700C25612 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
 		8CF69E8B23979BE70023ADF4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +335,6 @@
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
 				8C839D4123976F6600B786C4 /* Macduff */,
-				8CF69E87239792180023ADF4 /* Grid */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -331,7 +411,6 @@
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */,
-				8CF69E86239792180023ADF4 /* XCRemoteSwiftPackageReference "Grid" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -377,19 +456,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */,
+				8CD759502397E6C500C25612 /* GridItemPreferences.swift in Sources */,
+				8CD7595A2397F46F00C25612 /* SideMenuView.swift in Sources */,
 				8CD759022397BD1300C25612 /* Card.swift in Sources */,
+				8CD759462397E6C500C25612 /* Grid+Inits.swift in Sources */,
 				8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */,
+				8CD7594C2397E6C500C25612 /* GridItemPreferencesKey.swift in Sources */,
+				8CD759472397E6C500C25612 /* StaggeredGridStyle.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
+				8CD7594B2397E6C500C25612 /* GridItemPreferencesModifier.swift in Sources */,
+				8CD759482397E6C500C25612 /* Tracks.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
 				8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */,
+				8CD759512397E6C500C25612 /* ModularGridStyle.swift in Sources */,
 				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,
 				8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */,
+				8CD7594F2397E6C500C25612 /* EnvironmentValues+GridStyle.swift in Sources */,
+				8CD759522397E6C500C25612 /* Grid.swift in Sources */,
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */,
+				8CD7594E2397E6C500C25612 /* GridStyleKey.swift in Sources */,
+				8CD7594A2397E6C500C25612 /* GridStyle.swift in Sources */,
 				8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */,
 				8C839D442397729900B786C4 /* BookCache.swift in Sources */,
+				8CD7594D2397E6C500C25612 /* View+GridStyle.swift in Sources */,
 				8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */,
 				8C053FD323951A5900EFAEFB /* BookDetail.swift in Sources */,
+				8CD759492397E6C500C25612 /* LayoutMath.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
@@ -738,14 +831,6 @@
 				minimumVersion = 4.6.2;
 			};
 		};
-		8CF69E86239792180023ADF4 /* XCRemoteSwiftPackageReference "Grid" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIExtensions/Grid.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -758,11 +843,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
-		};
-		8CF69E87239792180023ADF4 /* Grid */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8CF69E86239792180023ADF4 /* XCRemoteSwiftPackageReference "Grid" */;
-			productName = Grid;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

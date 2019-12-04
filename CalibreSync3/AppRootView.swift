@@ -16,7 +16,7 @@ struct AppRootView: View {
         Group {
             if settingStore.calibreRoot != nil {
                 TabView(selection: $selection) {
-                    Text("Placeholder")
+                    SideMenuView()
                     .tabItem {
                             VStack {
                                 Image(systemName: "square.grid.3x2.fill")

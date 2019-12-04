@@ -12,6 +12,7 @@ import Foundation
 enum ErrorsToThrow: Error {
     case calibrePathNotSet
     case calibrePathNotResolving
+    case documentsDirectoryMissing
 }
 
 final class SettingStore: ObservableObject {
