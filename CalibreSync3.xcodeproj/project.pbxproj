@@ -29,6 +29,7 @@
 		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
 		8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* Book.swift */; };
 		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
+		8CD759022397BD1300C25612 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759012397BD1300C25612 /* Card.swift */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E88239792180023ADF4 /* Grid in Frameworks */ = {isa = PBXBuildFile; productRef = 8CF69E87239792180023ADF4 /* Grid */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
@@ -78,6 +79,7 @@
 		8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryPickerView.swift; sourceTree = "<group>"; };
 		8CB3CDF12393BE8C008B30F6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		8CB3CDF42393C159008B30F6 /* CalibreDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreDB.swift; sourceTree = "<group>"; };
+		8CD759012397BD1300C25612 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +149,7 @@
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CDE745C2396AA8E006611AA /* AppRootView.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
+				8CD759012397BD1300C25612 /* Card.swift */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CCE46712396946C00A327AB /* Sharing */,
@@ -374,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */,
+				8CD759022397BD1300C25612 /* Card.swift in Sources */,
 				8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,

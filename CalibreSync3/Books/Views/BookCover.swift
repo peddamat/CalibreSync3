@@ -1,6 +1,6 @@
 import SwiftUI
 import Combine
-//import Macduff
+import Macduff
 
 struct BookCover: View {
     let title: String
@@ -8,7 +8,7 @@ struct BookCover: View {
     
     var body: some View {
         ZStack(alignment: .init(horizontal: .center, vertical: .center)) {
-            ImageView(withURL: fetchURL)
+//            ImageView(withURL: fetchURL)
 //                .aspectRatio(contentMode: .fit)
             
 //            Text(title)
@@ -16,19 +16,19 @@ struct BookCover: View {
 //                .foregroundColor(.white)
 //                .opacity(0.5)
             
-//            RemoteImage(
-//                with: fetchURL,
-//                imageView: { Image(uiImage: $0).resizable() },
-//                loadingPlaceHolder: { ProgressView(progress: $0) },
-//                errorPlaceHolder: { ErrorView(error: $0) },
-//                config: Config(),
-//                completion: { (status) in
-//                    switch status {
-//                    case .success(let image): NSLog("success! imageSize:", image.size)
-//                    case .failure(let error): NSLog("failure... error:", error.localizedDescription)
-//                    }
-//                }
-//            ).frame(width: 100, height: 100*(4/3), alignment: .center)
+            RemoteImage(
+                with: fetchURL,
+                imageView: { Image(uiImage: $0).resizable() },
+                loadingPlaceHolder: { ProgressView(progress: $0) },
+                errorPlaceHolder: { ErrorView(error: $0) },
+                config: Config(),
+                completion: { (status) in
+                    switch status {
+                    case .success(let image): NSLog("success! imageSize: \(image.size)")
+                    case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
+                    }
+                }
+            ).frame(width: 100, height: 100*(4/3), alignment: .center)
             
         }
 //        .overlay(
@@ -63,7 +63,7 @@ struct BookCover: View {
 
 struct ImageView: View {
     @ObservedObject var imageLoader:ImageLoader2
-    @State var image:UIImage = UIImage(imageLiteralResourceName: "cover")
+    @State var image:UIImage = UIImage(imageLiteralResourceName: "11")
     
     init(withURL url:URL) {
         NSLog("init: \(url.path)")
@@ -98,7 +98,7 @@ class ImageLoader2: ObservableObject {
     }
     
     func run() {
-//        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).async {
 //        DispatchQueue(label: "helloworld").async {
             self.task = URLSession.shared.dataTask(with: self.fetchURL) { data, response, error in
                 guard let data = data else { return }
@@ -108,7 +108,7 @@ class ImageLoader2: ObservableObject {
                 }
             }
             self.task.resume()
-//        }
+        }
     }
     
     deinit {

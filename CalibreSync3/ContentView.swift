@@ -22,6 +22,8 @@ struct ContentView: View  {
 
     // Book cover grid styling options
     @State var style = ModularGridStyle(columns: .min(100), rows: .min(100*(4/3)))
+//    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
+
     
     private var calibreDB: CalibreDB {
         return try! CalibreDB(settingStore: settingStore)
@@ -112,11 +114,13 @@ struct ContentView: View  {
             Grid(bookCache.books) { book in
                 NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
 
-//                    BookCover(title: "\(book.title)", fetchURL: self.dummyCover)
+//                    BookCover(title: (book.title), fetchURL: self.dummyCover)
                     
-                    BookCover(title: "\(book.title)", fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
-
-//                    BookCover(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+                    BookCover(title: (book.title), fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
+                    
+//                    BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
+                    
+//                    Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 
                 }.buttonStyle(PlainButtonStyle())
             }

@@ -10,11 +10,31 @@ import SwiftUI
 
 struct AppRootView: View {
     @EnvironmentObject var settingStore: SettingStore
+    @State private var selection = 1
     
     var body: some View {
         Group {
             if settingStore.calibreRoot != nil {
-                ContentView().environmentObject(settingStore)
+                TabView(selection: $selection) {
+                    Text("Placeholder")
+                    .tabItem {
+                            VStack {
+                                Image(systemName: "square.grid.3x2.fill")
+                                Text("Home")
+                            }
+                        }
+                        .tag(0)
+                    ContentView().environmentObject(settingStore)
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "rectangle.3.offgrid.fill")
+                                Text("Library")
+                            }
+                        }
+                        .tag(1)
+                }
+                .accentColor(.yellow)
+                
             } else {
                 SettingsView().environmentObject(settingStore)
             }
