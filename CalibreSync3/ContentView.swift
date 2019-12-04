@@ -161,7 +161,7 @@ struct MainView: View  {
         }
         .gridStyle(self.style)
         .onAppear {
-            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:40)
+            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:70)
         }
         .onReceive(self.bookCache.didChange) { books in
             self.books = books

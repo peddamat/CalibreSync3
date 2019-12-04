@@ -30,7 +30,8 @@ class CalibreDB {
             NSLog("Fuck")
         }
         guard let calibrePath = try settingStore.getCalibreURL() as URL? else {
-            self.settingStore.calibreRoot = nil
+            // Uncomment this to simulate that weird exception you experienced earlier...
+            //self.settingStore.calibreRoot = nil
             throw ErrorsToThrow.calibrePathNotResolving
         }
         self.calibrePath = calibrePath

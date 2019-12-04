@@ -74,6 +74,14 @@ class MyModel: ObservableObject {
         }
     }
     
+    @Published var loadingMore: Bool = false {
+        didSet {
+            if oldValue == false && loading == true {
+//                self.load()
+            }
+        }
+    }
+    
     var idx = 0
     
     func load() {
