@@ -14,6 +14,8 @@ import Macduff
 
 struct ContentView: View  {
     @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var bookCache = BookCache()
+
     
     @State private var showSettings = false
 //    @State private var showShareSheet = false
@@ -27,21 +29,21 @@ struct ContentView: View  {
         return try! settingStore.getCalibreURL()
     }
     
-    var books: [Book] {
-        var books: [Book] = []
+//    var books: [Book] {
+//        var books: [Book] = []
+//
+//        do {
+//            let dbQueue = try calibreDB.load()
+//            try dbQueue.read { db -> [Book] in
+//                books = try Book.limit(100).fetchAll(db)
+//                return books
+//            }
+//        } catch {
+//            print("Error: Unable to get books")
+//        }
+//        return books
+//    }
         
-        do {
-            let dbQueue = try calibreDB.load()
-            try dbQueue.read { db -> [Book] in
-                books = try Book.limit(100).fetchAll(db)
-                return books
-            }
-        } catch {
-            print("Error: Unable to get books")
-        }
-        return books
-    }
-    
     var profileButton: some View {
         Button(action: { self.showSettings.toggle() }) {
             Image(systemName: "person.crop.circle")
@@ -71,33 +73,35 @@ struct ContentView: View  {
 
     
     var body: some View {
-        VStack {
-            NavigationView {
-                VStack {
-                    QGrid(books,
-                          columns: 3,
-                          columnsInLandscape: 6,
-                          vSpacing: 10,
-                          hSpacing: 10,
-                          vPadding: 0,
-                          hPadding: 00) { book in
-                        NewGridCell(book: book, calibreDB: self.calibreDB)
-                    }
-                }
-                .navigationBarTitle("CalibreSync")
-                .navigationBarItems(trailing:
-                    HStack {
-                        profileButton
+
+        NavigationView {
+            QGrid(bookCache.books,
+                  columns: 3,
+                  columnsInLandscape: 6,
+                  vSpacing: 10,
+                  hSpacing: 10,
+                  vPadding: 0,
+                  hPadding: 00) { book in
+                NewGridCell(book: book, calibreDB: self.calibreDB)
+            }
+
+            .navigationBarTitle("CalibreSync")
+            .navigationBarItems(trailing:
+                HStack {
+                    profileButton
 //                        shareButton
                 })
-                .sheet(isPresented: $showSettings) {
-                    SettingsView().environmentObject(self.settingStore)
-                }
+            
+            .sheet(isPresented: $showSettings) {
+                SettingsView().environmentObject(self.settingStore)
             }
+        }
+        .onAppear {
+            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:5)
+        }
 //            .sheet(isPresented: $showShareSheet) {
 //                ShareSheet(activityItems: ["Hello World"])
 //            }
-        }
     }
 }
 

@@ -10,6 +10,7 @@
 		8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BooksDetail.swift */; };
 		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
 		8C839D4223976F6600B786C4 /* Macduff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C839D4123976F6600B786C4 /* Macduff */; };
+		8C839D442397729900B786C4 /* BookCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C839D432397729900B786C4 /* BookCache.swift */; };
 		8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61D239661FE006C5511 /* BookFormat.swift */; };
 		8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61F23966C2F006C5511 /* ShareSheet.swift */; };
 		8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED6282396720F006C5511 /* FilePresenterView.swift */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		8C053FD223951A5900EFAEFB /* BooksDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksDetail.swift; sourceTree = "<group>"; };
 		8C053FD4239520C900EFAEFB /* BookComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookComment.swift; sourceTree = "<group>"; };
+		8C839D432397729900B786C4 /* BookCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCache.swift; sourceTree = "<group>"; };
 		8C8ED61D239661FE006C5511 /* BookFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookFormat.swift; sourceTree = "<group>"; };
 		8C8ED61F23966C2F006C5511 /* ShareSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		8C8ED6282396720F006C5511 /* FilePresenterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePresenterView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CDE745C2396AA8E006611AA /* AppRootView.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
+				8C839D432397729900B786C4 /* BookCache.swift */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CCE46712396946C00A327AB /* Sharing */,
@@ -368,6 +371,7 @@
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */,
 				8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */,
+				8C839D442397729900B786C4 /* BookCache.swift in Sources */,
 				8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */,
 				8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
