@@ -11,12 +11,14 @@ import QGrid
 import SwiftUI
 import Combine
 import Macduff
+import Grid
 
 struct ContentView: View  {
     @EnvironmentObject var settingStore: SettingStore
     @ObservedObject var bookCache = BookCache()
 
-    
+    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
+
     @State private var showSettings = false
 //    @State private var showShareSheet = false
     @State private var showDocumentSheet = false
@@ -75,15 +77,25 @@ struct ContentView: View  {
     var body: some View {
 
         NavigationView {
-            QGrid(bookCache.books,
-                  columns: 3,
-                  columnsInLandscape: 6,
-                  vSpacing: 10,
-                  hSpacing: 10,
-                  vPadding: 0,
-                  hPadding: 00) { book in
-                NewGridCell(book: book, calibreDB: self.calibreDB)
+//            QGrid(bookCache.books,
+//                  columns: 3,
+//                  columnsInLandscape: 6,
+//                  vSpacing: 10,
+//                  hSpacing: 10,
+//                  vPadding: 0,
+//                  hPadding: 00) { book in
+//                NewGridCell(book: book, calibreDB: self.calibreDB)
+//            }
+            
+            Grid(bookCache.books) { book in
+                Card(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+                
+                // TODO: Why do fetches from a "https://" URL scheme happen so much quicker?
+                // Card(title: "\(book.title)", fetchURL: URL(string:"https://picsum.photos/120/140")!)
             }
+            .gridStyle(
+                self.style
+            )
 
             .navigationBarTitle("CalibreSync")
             .navigationBarItems(trailing:
@@ -97,7 +109,7 @@ struct ContentView: View  {
             }
         }
         .onAppear {
-            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:5)
+            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:100)
         }
 //            .sheet(isPresented: $showShareSheet) {
 //                ShareSheet(activityItems: ["Hello World"])
