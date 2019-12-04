@@ -42,6 +42,9 @@ class BookCache: ObservableObject {
 //            }
 //            self.task.resume()
 //        }
-        
+    }
+    
+    func removeBook() {
+        self.books.removeFirst()
     }
 }

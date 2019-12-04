@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BooksDetail.swift */; };
+		8C053FD323951A5900EFAEFB /* BookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BookDetail.swift */; };
 		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
 		8C839D4223976F6600B786C4 /* Macduff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C839D4123976F6600B786C4 /* Macduff */; };
 		8C839D442397729900B786C4 /* BookCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C839D432397729900B786C4 /* BookCache.swift */; };
@@ -29,10 +29,9 @@
 		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
 		8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* Book.swift */; };
 		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
-		8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDF82393D04E008B30F6 /* QGrid */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E88239792180023ADF4 /* Grid in Frameworks */ = {isa = PBXBuildFile; productRef = 8CF69E87239792180023ADF4 /* Grid */; };
-		8CF69E8A239792B30023ADF4 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* Card.swift */; };
+		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8C053FD223951A5900EFAEFB /* BooksDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksDetail.swift; sourceTree = "<group>"; };
+		8C053FD223951A5900EFAEFB /* BookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetail.swift; sourceTree = "<group>"; };
 		8C053FD4239520C900EFAEFB /* BookComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookComment.swift; sourceTree = "<group>"; };
 		8C839D432397729900B786C4 /* BookCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCache.swift; sourceTree = "<group>"; };
 		8C8ED61D239661FE006C5511 /* BookFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookFormat.swift; sourceTree = "<group>"; };
@@ -80,7 +79,7 @@
 		8CB3CDF12393BE8C008B30F6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		8CB3CDF42393C159008B30F6 /* CalibreDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreDB.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
-		8CF69E89239792B30023ADF4 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +88,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
-				8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */,
 				8CF69E88239792180023ADF4 /* Grid in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
@@ -149,8 +147,6 @@
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CDE745C2396AA8E006611AA /* AppRootView.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
-				8CF69E89239792B30023ADF4 /* Card.swift */,
-				8C839D432397729900B786C4 /* BookCache.swift */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CCE46712396946C00A327AB /* Sharing */,
@@ -203,8 +199,9 @@
 		8CB3CDF32393BFB4008B30F6 /* Books */ = {
 			isa = PBXGroup;
 			children = (
+				8C839D432397729900B786C4 /* BookCache.swift */,
+				8CF69E8B23979BE70023ADF4 /* Views */,
 				8C053FD62395220B00EFAEFB /* Models */,
-				8C053FD223951A5900EFAEFB /* BooksDetail.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -226,6 +223,15 @@
 			path = Sharing;
 			sourceTree = "<group>";
 		};
+		8CF69E8B23979BE70023ADF4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8CF69E89239792B30023ADF4 /* BookCover.swift */,
+				8C053FD223951A5900EFAEFB /* BookDetail.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -244,7 +250,6 @@
 			name = CalibreSync3;
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
-				8CB3CDF82393D04E008B30F6 /* QGrid */,
 				8C839D4123976F6600B786C4 /* Macduff */,
 				8CF69E87239792180023ADF4 /* Grid */,
 			);
@@ -322,7 +327,6 @@
 			mainGroup = 8CB3CDAB239397FD008B30F6;
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
-				8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */,
 				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */,
 				8CF69E86239792180023ADF4 /* XCRemoteSwiftPackageReference "Grid" */,
 			);
@@ -375,13 +379,13 @@
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,
 				8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */,
 				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,
-				8CF69E8A239792B30023ADF4 /* Card.swift in Sources */,
+				8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */,
 				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
 				8CB3CDF22393BE8C008B30F6 /* Book.swift in Sources */,
 				8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */,
 				8C839D442397729900B786C4 /* BookCache.swift in Sources */,
 				8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */,
-				8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */,
+				8C053FD323951A5900EFAEFB /* BookDetail.swift in Sources */,
 				8CB3CDB8239397FD008B30F6 /* AppDelegate.swift in Sources */,
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
@@ -730,14 +734,6 @@
 				minimumVersion = 4.6.2;
 			};
 		};
-		8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Q-Mobile/QGrid";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.3;
-			};
-		};
 		8CF69E86239792180023ADF4 /* XCRemoteSwiftPackageReference "Grid" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftUIExtensions/Grid.git";
@@ -758,11 +754,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
-		};
-		8CB3CDF82393D04E008B30F6 /* QGrid */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */;
-			productName = QGrid;
 		};
 		8CF69E87239792180023ADF4 /* Grid */ = {
 			isa = XCSwiftPackageProductDependency;

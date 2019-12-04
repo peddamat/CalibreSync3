@@ -9,7 +9,7 @@
 import GRDB
 import SwiftUI
 
-struct BooksDetail: View {
+struct BookDetail: View {
     var book: Book
     var calibreDB: CalibreDB
     var dbQueue: DatabaseQueue {
@@ -98,8 +98,6 @@ struct BookHeader: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-//            Image(URL(fileURLWithPath: calibrePath + "/" + book.path + "/cover.jpg").absoluteString)
-//            ImageView(withURL: URL(fileURLWithPath: calibrePath + "/" + book.path + "/cover.jpg"))
             ImageView(withURL: calibrePath.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 //                .resizable()
 //                .scaledToFit()
