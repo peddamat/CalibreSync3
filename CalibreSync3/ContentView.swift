@@ -21,8 +21,9 @@ struct ContentView: View  {
     @State private var showDocumentSheet = false
 
     // Book cover grid styling options
-    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100*(4/3)))
+    @State var style = ModularGridStyle(columns: .min(BOOK_WIDTH), rows: .min(BOOK_HEIGHT))
 //    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
+//    @State var style = StaggeredGridStyle(tracks: .min(100), axis: .vertical, spacing: 1, padding: .init(top: 1, leading: 1, bottom: 1, trailing: 1))
 
     
     private var calibreDB: CalibreDB {
@@ -65,50 +66,6 @@ struct ContentView: View  {
         }
     }
 
-    
-    var body2: some View {
-        NavigationView {
-            
-            Grid(bookCache.books) { book in
-                NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
-
-//                    BookCover(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-
-//                    BookCover(title: "\(book.title)", fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
-                    
-                    BookCover(title: "\(book.title)", fetchURL: self.dummyCover)
-
-                    
-//                    BookCover(title: "\(book.title)", fetchURL: URL(string:"https://picsum.photos/120/140")!)
-
-                    
-                    // TODO: Why do fetches from a "https://" URL scheme happen so much quicker?
-                    // Card(title: "\(book.title)", fetchURL: URL(string:"https://picsum.photos/120/140")!)
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            .gridStyle(
-                self.style
-            )
-
-            .navigationBarTitle("CalibreSync")
-            .navigationBarItems(trailing: HStack {
-                profileButton
-                 shareButton
-            })
-            
-            .sheet(isPresented: $showSettings) {
-                SettingsView().environmentObject(self.settingStore)
-            }
-        }
-        .onAppear {
-            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:99)
-        }
-//            .sheet(isPresented: $showShareSheet) {
-//                ShareSheet(activityItems: ["Hello World"])
-//            }
-    }
-    
     var body: some View {
         NavigationView {
             Grid(bookCache.books) { book in
@@ -126,21 +83,22 @@ struct ContentView: View  {
             }
             .gridStyle(self.style)
             .onAppear {
-                self.bookCache.getBooks(calibreDB: self.calibreDB, limit:99)
+                self.bookCache.getBooks(calibreDB: self.calibreDB, limit:2000)
             }
                 
             .navigationBarTitle("CalibreSync", displayMode: .inline)
-            .navigationBarItems(leading:
-                Button(action: { self.showSettings = true }) {
-                    Image(systemName: "gear")
-                }
-            )
+            .navigationBarItems(trailing: HStack {
+                profileButton
+                 shareButton
+            })
         }
 
         .navigationViewStyle(
             StackNavigationViewStyle()
         )
-
+        .sheet(isPresented: $showSettings) {
+            SettingsView().environmentObject(self.settingStore)
+        }
     }
 }
 

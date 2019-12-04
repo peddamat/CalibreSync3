@@ -2,6 +2,9 @@ import SwiftUI
 import Combine
 import Macduff
 
+let BOOK_WIDTH:CGFloat = 115.0
+let BOOK_HEIGHT = BOOK_WIDTH * (4/3)
+
 struct BookCover: View {
     let title: String
     let fetchURL: URL
@@ -28,7 +31,7 @@ struct BookCover: View {
                     case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
                     }
                 }
-            ).frame(width: 100, height: 100*(4/3), alignment: .center)
+            ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
             
         }
 //        .overlay(
@@ -74,8 +77,7 @@ struct ImageView: View {
         Image(uiImage: image)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width:100, height:100*(4/3))
-            .padding(10)
+            .frame(width:BOOK_WIDTH, height:BOOK_HEIGHT)
             .onReceive(imageLoader.didChange) { data in
                 self.image = UIImage(data: data) ?? UIImage()
             }

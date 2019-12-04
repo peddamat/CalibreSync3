@@ -16,32 +16,34 @@ class BookCache: ObservableObject {
     }
     
     func getBooks(calibreDB: CalibreDB, limit: Int = 100) {
-        NSLog("Getting books!")
-//        DispatchQueue.global(qos: .userInitiated).async {
+        if books.isEmpty {
+            NSLog("Getting books!")
+    //        DispatchQueue.global(qos: .userInitiated).async {
 
-            do {
-                let dbQueue = try calibreDB.load()
-                try dbQueue.read { db in
-                    let newBooks = try Book.limit(limit).fetchAll(db)
-//                    DispatchQueue.main.async {
-                        NSLog("Retrieved books")
-                        self.books.append(contentsOf: newBooks)
-//                    }
+                do {
+                    let dbQueue = try calibreDB.load()
+                    try dbQueue.read { db in
+                        let newBooks = try Book.limit(limit).fetchAll(db)
+    //                    DispatchQueue.main.async {
+                            NSLog("Retrieved books")
+                            self.books.append(contentsOf: newBooks)
+    //                    }
+                    }
+                } catch {
+                    NSLog("Error: Unable to get books")
                 }
-            } catch {
-                NSLog("Error: Unable to get books")
-            }
-//        }
-        
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            self.task = URLSession.shared.dataTask(with: url) { data, response, error in
-//                guard let data = data else { return }
-//                DispatchQueue.main.async {
-//                    self.data = data
-//                }
-//            }
-//            self.task.resume()
-//        }
+    //        }
+            
+    //        DispatchQueue.global(qos: .userInitiated).async {
+    //            self.task = URLSession.shared.dataTask(with: url) { data, response, error in
+    //                guard let data = data else { return }
+    //                DispatchQueue.main.async {
+    //                    self.data = data
+    //                }
+    //            }
+    //            self.task.resume()
+    //        }
+        }
     }
     
     func removeBook() {
