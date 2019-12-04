@@ -10,6 +10,7 @@ import GRDB
 import QGrid
 import SwiftUI
 import Combine
+import Macduff
 
 struct ContentView: View  {
     @EnvironmentObject var settingStore: SettingStore
@@ -75,7 +76,7 @@ struct ContentView: View  {
                 VStack {
                     QGrid(books,
                           columns: 3,
-                          columnsInLandscape: 4,
+                          columnsInLandscape: 6,
                           vSpacing: 10,
                           hSpacing: 10,
                           vPadding: 0,
@@ -108,12 +109,49 @@ struct NewGridCell: View {
         NavigationLink(destination: BooksDetail(book: book, calibreDB: calibreDB)) {
             ZStack {
 //                ImageView(withURL: URL(fileURLWithPath: calibreDB.getCalibrePath().path + "/" + book.path + "/cover.jpg").absoluteString)
-                ImageView(withURL: calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-                    .padding([.horizontal, .top], 2.0)
+//                ImageView(withURL: calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+//                    .padding([.horizontal, .top], 2.0)
+                
+                RemoteImage(
+                    with: calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"),
+                    imageView: { Image(uiImage: $0).resizable() },
+                    loadingPlaceHolder: { ProgressView(progress: $0) },
+                    errorPlaceHolder: { ErrorView(error: $0) },
+                    config: Config(transition: .scale, imageProcessor: GaussianBlurImageProcessor()),
+                    completion: { (status) in
+                        switch status {
+                        case .success(let image): print("success! imageSize:", image.size)
+                        case .failure(let error): print("failure... error:", error.localizedDescription)
+                        }
+                    }
+                ).frame(width: 80, height: 100, alignment: .center)
+                
 //                Text(book.title)
             }
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    struct ProgressView: View {
+        let progress: Float
+        var body: some View {
+            return GeometryReader { (geometry) in
+                ZStack(alignment: .bottom) {
+                    Rectangle().fill(Color.gray)
+                    Rectangle().fill(Color.green)
+                        .frame(width: nil, height: geometry.frame(in: .global).height * CGFloat(self.progress), alignment: .bottom)
+                }
+            }
+        }
+    }
+    struct ErrorView: View {
+        let error: Error
+        var body: some View {
+            ZStack {
+                Rectangle().fill(Color.red)
+                Text(error.localizedDescription).font(Font.system(size: 8))
+            }
+        }
     }
 }
 

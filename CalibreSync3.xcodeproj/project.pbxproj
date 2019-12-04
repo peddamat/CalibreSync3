@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8C053FD323951A5900EFAEFB /* BooksDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD223951A5900EFAEFB /* BooksDetail.swift */; };
 		8C053FD5239520C900EFAEFB /* BookComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C053FD4239520C900EFAEFB /* BookComment.swift */; };
+		8C839D4223976F6600B786C4 /* Macduff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C839D4123976F6600B786C4 /* Macduff */; };
 		8C8ED61E239661FE006C5511 /* BookFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61D239661FE006C5511 /* BookFormat.swift */; };
 		8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61F23966C2F006C5511 /* ShareSheet.swift */; };
 		8C8ED6292396720F006C5511 /* FilePresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED6282396720F006C5511 /* FilePresenterView.swift */; };
@@ -82,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
 				8CB3CDF92393D04E008B30F6 /* QGrid in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
@@ -235,6 +237,7 @@
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
 				8CB3CDF82393D04E008B30F6 /* QGrid */,
+				8C839D4123976F6600B786C4 /* Macduff */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -311,6 +314,7 @@
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8CB3CDF72393D04D008B30F6 /* XCRemoteSwiftPackageReference "QGrid" */,
+				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -698,6 +702,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malt03/Macduff.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
 		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
@@ -717,6 +729,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8C839D4123976F6600B786C4 /* Macduff */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */;
+			productName = Macduff;
+		};
 		8CB3CDEF2393BE47008B30F6 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
