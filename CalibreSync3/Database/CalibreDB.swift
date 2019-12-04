@@ -26,7 +26,11 @@ class CalibreDB {
         
         let finalDatabaseURL = documentsUrl.first!.appendingPathComponent("metadata-cache.db")
 
+        if self.settingStore.calibreRoot == nil {
+            NSLog("Fuck")
+        }
         guard let calibrePath = try settingStore.getCalibreURL() as URL? else {
+            self.settingStore.calibreRoot = nil
             throw ErrorsToThrow.calibrePathNotResolving
         }
         self.calibrePath = calibrePath

@@ -16,6 +16,8 @@ struct RefreshableScrollView<Content: View>: View {
     @State private var scrollOffset: CGFloat = 0
     @State private var frozen: Bool = false
     @State private var rotation: Angle = .degrees(0)
+    @EnvironmentObject var settingStore: SettingStore
+
     
     var threshold: CGFloat = 80
     @Binding var refreshing: Bool
@@ -36,7 +38,7 @@ struct RefreshableScrollView<Content: View>: View {
                     
                     VStack { self.content }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
                     
-                    SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
+                    SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation).environmentObject(settingStore)
                 }
             }
             .background(FixedView())
@@ -92,35 +94,30 @@ struct RefreshableScrollView<Content: View>: View {
         }
     }
     
+    // This view displays the arrow and activity indicator
     struct SymbolView: View {
         var height: CGFloat
         var loading: Bool
         var frozen: Bool
         var rotation: Angle
-        
+        @EnvironmentObject var settingStore: SettingStore
+
         
         var body: some View {
             Group {
                 if self.loading { // If loading, show the activity control
                     VStack {
                         Spacer()
-                        ActivityRep()
+                        SearchView().environmentObject(self.settingStore)
                         Spacer()
                     }.frame(height: height).fixedSize()
                         .offset(y: -height + (self.loading && self.frozen ? height : 0.0))
-                } else {
-                    Image(systemName: "arrow.down") // If not loading, show the arrow
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: height * 0.25, height: height * 0.25).fixedSize()
-                        .padding(height * 0.375)
-                        .rotationEffect(rotation)
-                        .offset(y: -height + (loading && frozen ? +height : 0.0))
                 }
             }
         }
     }
     
+    // This view is inserted within the ScrollView to enable measuring the scroll offset
     struct MovingView: View {
         var body: some View {
             GeometryReader { proxy in
@@ -129,6 +126,8 @@ struct RefreshableScrollView<Content: View>: View {
         }
     }
     
+    // This view is fixed within the ScrollView allowing scroll offset to be measured
+    //   in relation to MovingView
     struct FixedView: View {
         var body: some View {
             GeometryReader { proxy in

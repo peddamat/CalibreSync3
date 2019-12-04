@@ -17,9 +17,11 @@ enum ErrorsToThrow: Error {
 
 final class SettingStore: ObservableObject {
     @Published var defaults: UserDefaults
+    @Published var searchString: String = ""
     
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = .standard, searchString: String = "") {
         self.defaults = defaults
+        self.searchString = searchString
         
         defaults.register(defaults: [
             "view.preferences.calibreLibraryPath": "/"
@@ -50,6 +52,12 @@ final class SettingStore: ObservableObject {
         do {
             return try URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
         } catch {
+            if urlResult {
+                NSLog("Bookmark data has expired!")
+            }
+            else {
+                NSLog("Can't retrieve the bookmark data, wtf!")
+            }
             throw ErrorsToThrow.calibrePathNotResolving
         }
     }
