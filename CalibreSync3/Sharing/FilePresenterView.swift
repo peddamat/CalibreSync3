@@ -47,13 +47,13 @@ struct FilePresenterUIView : UIViewRepresentable {
         
         // TODO: The modal isn't reliably dismissed, fix this
         func documentInteractionControllerDidDismissOpenInMenu(_ controller: UIDocumentInteractionController) {
-            print("should dismiss")
+            NSLog("should dismiss")
             self.parent.onDismiss()
         }
         
         func setup(_ v: ProvideViewCoordsView) {
             v.didAppear = {view, rect in
-                print("Presenter layout \(view) \(rect)")
+                NSLog("Presenter layout \(view) \(rect)")
                 if !self.parent.showing {
                     self.interaction.presentOpenInMenu(from: rect, in: view, animated: true)
                 }
@@ -76,7 +76,7 @@ struct FilePresenterUIView : UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: _Context) {
         if let file = context.coordinator.interaction.url {
             if file != self.file {
-                print("Changed URL unexpectedly!")
+                NSLog("Changed URL unexpectedly!")
             }
         }
     }

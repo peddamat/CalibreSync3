@@ -1,6 +1,6 @@
 import SwiftUI
 import Combine
-import Macduff
+//import Macduff
 
 struct BookCover: View {
     let title: String
@@ -24,8 +24,8 @@ struct BookCover: View {
 //                config: Config(),
 //                completion: { (status) in
 //                    switch status {
-//                    case .success(let image): print("success! imageSize:", image.size)
-//                    case .failure(let error): print("failure... error:", error.localizedDescription)
+//                    case .success(let image): NSLog("success! imageSize:", image.size)
+//                    case .failure(let error): NSLog("failure... error:", error.localizedDescription)
 //                    }
 //                }
 //            ).frame(width: 100, height: 100*(4/3), alignment: .center)
@@ -66,7 +66,7 @@ struct ImageView: View {
     @State var image:UIImage = UIImage(imageLiteralResourceName: "cover")
     
     init(withURL url:URL) {
-        print("init: \(url.path)")
+        NSLog("init: \(url.path)")
         self.imageLoader = ImageLoader2(urlString:url)
     }
     
@@ -103,7 +103,7 @@ class ImageLoader2: ObservableObject {
             self.task = URLSession.shared.dataTask(with: self.fetchURL) { data, response, error in
                 guard let data = data else { return }
                 DispatchQueue.main.async {
-                    print("downloaded")
+                    NSLog("downloaded")
                     self.data = data
                 }
             }

@@ -69,7 +69,7 @@ class CalibreDB {
 //                return books!
 //            }
 //        } catch {
-//            print("Error: Unable to get books")
+//            NSLog("Error: Unable to get books")
 //        }
 //        return books!
 //    }
@@ -79,7 +79,7 @@ class CalibreDB {
 //
 //        dbQueue = try AppDatabase.openDatabase(atPath: databaseURL.path)
 //
-//        print(databaseURL.path)
+//        NSLog(databaseURL.path)
 //
 //        // Be a nice iOS citizen, and don't consume too much memory
 //        // See https://github.com/groue/GRDB.swift/blob/master/README.md#memory-management

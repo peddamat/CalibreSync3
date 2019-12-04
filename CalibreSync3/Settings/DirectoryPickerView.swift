@@ -22,11 +22,11 @@ struct FilePickerController: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        print("Making the picker")
+        NSLog("Making the picker")
         let controller = UIDocumentPickerViewController(documentTypes: [kUTTypeFolder as String], in: .open)
         
         controller.delegate = context.coordinator
-        print("Setup the delegate \(context.coordinator)")
+        NSLog("Setup the delegate \(context.coordinator)")
         
         return controller
     }
@@ -36,21 +36,21 @@ struct FilePickerController: UIViewControllerRepresentable {
         
         init(_ pickerController: FilePickerController) {
             self.parent = pickerController
-            print("Setup a parent")
-            print("Callback: \(parent.callback)")
+            NSLog("Setup a parent")
+            NSLog("Callback: \(parent.callback)")
         }
        
         public func documentPicker(_ picker: UIDocumentPickerViewController, didPickDocumentsAt: [URL]) {
-            print("Selected a document: \(didPickDocumentsAt[0])")
+            NSLog("Selected a document: \(didPickDocumentsAt[0])")
             parent.callback(didPickDocumentsAt[0])
         }
         
         func documentPickerWasCancelled(_ picker: UIDocumentPickerViewController) {
-            print("Document picker was thrown away :(")
+            NSLog("Document picker was thrown away :(")
         }
         
         deinit {
-            print("Coordinator going away")
+            NSLog("Coordinator going away")
         }
     }
 }
@@ -67,7 +67,7 @@ struct DirectoryPickerView: View {
 struct DirectoryPickerView_Preview: PreviewProvider {
     static var previews: some View {
         func filePicked(_ url: URL) {
-            print("Filename: \(url)")
+            NSLog("Filename: \(url)")
         }
         return DirectoryPickerView(callback: filePicked)
             .aspectRatio(3/2, contentMode: .fit)

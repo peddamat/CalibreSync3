@@ -16,7 +16,7 @@ class BookCache: ObservableObject {
     }
     
     func getBooks(calibreDB: CalibreDB, limit: Int = 100) {
-        print("Getting books!")
+        NSLog("Getting books!")
 //        DispatchQueue.global(qos: .userInitiated).async {
 
             do {
@@ -24,12 +24,12 @@ class BookCache: ObservableObject {
                 try dbQueue.read { db in
                     let newBooks = try Book.limit(limit).fetchAll(db)
 //                    DispatchQueue.main.async {
-                        print("Retrieved books")
+                        NSLog("Retrieved books")
                         self.books.append(contentsOf: newBooks)
 //                    }
                 }
             } catch {
-                print("Error: Unable to get books")
+                NSLog("Error: Unable to get books")
             }
 //        }
         

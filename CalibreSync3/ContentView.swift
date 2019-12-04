@@ -31,7 +31,7 @@ struct ContentView: View  {
         return try! settingStore.getCalibreURL()
     }
     
-    let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+    let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
     
     var profileButton: some View {
         Button(action: { self.showSettings.toggle() }) {
@@ -64,7 +64,7 @@ struct ContentView: View  {
     }
 
     
-    var body: some View {
+    var body2: some View {
         NavigationView {
             
             Grid(bookCache.books) { book in
@@ -72,6 +72,8 @@ struct ContentView: View  {
 
 //                    BookCover(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 
+//                    BookCover(title: "\(book.title)", fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
+                    
                     BookCover(title: "\(book.title)", fetchURL: self.dummyCover)
 
                     
@@ -103,6 +105,38 @@ struct ContentView: View  {
 //            .sheet(isPresented: $showShareSheet) {
 //                ShareSheet(activityItems: ["Hello World"])
 //            }
+    }
+    
+    var body: some View {
+        NavigationView {
+            Grid(bookCache.books) { book in
+                NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
+
+//                    BookCover(title: "\(book.title)", fetchURL: self.dummyCover)
+                    
+                    BookCover(title: "\(book.title)", fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
+
+//                    BookCover(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+
+                }.buttonStyle(PlainButtonStyle())
+            }
+            .gridStyle(self.style)
+            .onAppear {
+                self.bookCache.getBooks(calibreDB: self.calibreDB, limit:99)
+            }
+                
+            .navigationBarTitle("CalibreSync", displayMode: .inline)
+            .navigationBarItems(leading:
+                Button(action: { self.showSettings = true }) {
+                    Image(systemName: "gear")
+                }
+            )
+        }
+
+        .navigationViewStyle(
+            StackNavigationViewStyle()
+        )
+
     }
 }
 

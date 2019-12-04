@@ -16,7 +16,7 @@ struct SettingsView: View {
     @EnvironmentObject var settingStore: SettingStore
     
     func saveCalibrePath(_ url: URL) {
-        print(url.path)
+        NSLog(url.path)
         
         do {
             let shouldStopAccessing = url.startAccessingSecurityScopedResource()
@@ -53,7 +53,7 @@ struct SettingsView: View {
                     }),
                 trailing:
                     Button(action: {
-                        print("Save button clicked")
+                        NSLog("Save button clicked")
                     }, label: {
                         Text("Save")
                             .foregroundColor(.black)

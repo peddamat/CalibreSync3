@@ -67,7 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        
 //        let folderURL = try! URL(resolvingBookmarkData: url, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
 //        
-//        print(folderURL)
+//        NSLog(folderURL)
 //        return folderURL
 //    }
 //    
@@ -82,14 +82,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        NSFileCoordinator().coordinate(readingItemAt: pickedFolderURL, error: error)
 //        { (folderURL) in
 //            do {
-//                print("Scene Delegate: Completed setting up file coordination")
+//                NSLog("Scene Delegate: Completed setting up file coordination")
 //                let keys : [URLResourceKey] = [.nameKey, .isDirectoryKey]
 //                let fileList = try FileManager.default.enumerator(at: folderURL, includingPropertiesForKeys: keys)
 //                for file  in fileList! {
-//                    print(file)
+//                    NSLog(file)
 //                }
 //            } catch let error {
-//                print("fucked")
+//                NSLog("fucked")
 //            }
 //        }
 //    }

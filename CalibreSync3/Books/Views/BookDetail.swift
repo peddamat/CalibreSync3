@@ -54,7 +54,7 @@ struct BookDetail: View {
                 return buttons
             }
         } catch {
-            print("Error: Unable to get books")
+            NSLog("Error: Unable to get books")
         }
         return buttons
     }
