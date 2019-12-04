@@ -27,7 +27,6 @@ struct Card: View {
         
         init(withURL url:URL) {
             print("init")
-            
             self.imageLoader = ImageLoader2(urlString:url)
         }
         
@@ -35,7 +34,7 @@ struct Card: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width:120, height:140)
+                .frame(width:100, height:100*(4/3))
                 .padding(10)
                 .onReceive(imageLoader.didChange) { data in
                     self.image = UIImage(data: data) ?? UIImage()
@@ -60,8 +59,8 @@ class ImageLoader2: ObservableObject {
     }
     
     func run() {
-//        DispatchQueue.serial(qos: .userInitiated).async {
-        DispatchQueue(label: "helloworld").async {
+//        DispatchQueue.global(qos: .userInitiated).async {
+//        DispatchQueue(label: "helloworld").async {
             self.task = URLSession.shared.dataTask(with: self.fetchURL) { data, response, error in
                 guard let data = data else { return }
                 DispatchQueue.main.async {
@@ -70,7 +69,7 @@ class ImageLoader2: ObservableObject {
                 }
             }
             self.task.resume()
-        }
+//        }
     }
     
     deinit {

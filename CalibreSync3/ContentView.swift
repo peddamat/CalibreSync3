@@ -17,7 +17,7 @@ struct ContentView: View  {
     @EnvironmentObject var settingStore: SettingStore
     @ObservedObject var bookCache = BookCache()
 
-    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
+    @State var style = ModularGridStyle(columns: .min(125), rows: .min(145))
 
     @State private var showSettings = false
 //    @State private var showShareSheet = false
