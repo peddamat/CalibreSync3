@@ -44,6 +44,8 @@
 		8CD759512397E6C500C25612 /* ModularGridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759442397E6C500C25612 /* ModularGridStyle.swift */; };
 		8CD759522397E6C500C25612 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759452397E6C500C25612 /* Grid.swift */; };
 		8CD7595A2397F46F00C25612 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759592397F46F00C25612 /* SideMenuView.swift */; };
+		8CD7595F2398229200C25612 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7595E2398229200C25612 /* RefreshableScrollView.swift */; };
+		8CD75962239828E800C25612 /* Fuzzy in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD75961239828E800C25612 /* Fuzzy */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -107,6 +109,7 @@
 		8CD759442397E6C500C25612 /* ModularGridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModularGridStyle.swift; sourceTree = "<group>"; };
 		8CD759452397E6C500C25612 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		8CD759592397F46F00C25612 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		8CD7595E2398229200C25612 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CD75962239828E800C25612 /* Fuzzy in Frameworks */,
 				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
 				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
@@ -175,14 +179,13 @@
 				8CB3CDB9239397FD008B30F6 /* SceneDelegate.swift */,
 				8CDE745C2396AA8E006611AA /* AppRootView.swift */,
 				8CB3CDBB239397FD008B30F6 /* ContentView.swift */,
-				8CD759012397BD1300C25612 /* Card.swift */,
-				8CD759592397F46F00C25612 /* SideMenuView.swift */,
 				8CD7595B2397F48700C25612 /* Menu */,
 				8CD759352397E6C500C25612 /* Grid */,
 				8CB3CDF62393C178008B30F6 /* Database */,
 				8CB3CDF32393BFB4008B30F6 /* Books */,
 				8CCE46712396946C00A327AB /* Sharing */,
 				8CB3CDE9239399CE008B30F6 /* Settings */,
+				8CD7596323982B2400C25612 /* Utility */,
 				8CB3CDBD23939803008B30F6 /* Assets.xcassets */,
 				8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */,
 				8CB3CDC523939803008B30F6 /* Info.plist */,
@@ -303,8 +306,17 @@
 		8CD7595B2397F48700C25612 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				8CD759592397F46F00C25612 /* SideMenuView.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		8CD7596323982B2400C25612 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8CD7595E2398229200C25612 /* RefreshableScrollView.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		8CF69E8B23979BE70023ADF4 /* Views */ = {
@@ -312,6 +324,7 @@
 			children = (
 				8CF69E89239792B30023ADF4 /* BookCover.swift */,
 				8C053FD223951A5900EFAEFB /* BookDetail.swift */,
+				8CD759012397BD1300C25612 /* Card.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -335,6 +348,7 @@
 			packageProductDependencies = (
 				8CB3CDEF2393BE47008B30F6 /* GRDB */,
 				8C839D4123976F6600B786C4 /* Macduff */,
+				8CD75961239828E800C25612 /* Fuzzy */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -411,6 +425,7 @@
 			packageReferences = (
 				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */,
+				8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -487,6 +502,7 @@
 				8CB3CDBA239397FD008B30F6 /* SceneDelegate.swift in Sources */,
 				8CB3CDBC239397FD008B30F6 /* ContentView.swift in Sources */,
 				8C8ED62B23968A2B006C5511 /* SplashView.swift in Sources */,
+				8CD7595F2398229200C25612 /* RefreshableScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +847,14 @@
 				minimumVersion = 4.6.2;
 			};
 		};
+		8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/khoi/fuzzy-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -843,6 +867,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		8CD75961239828E800C25612 /* Fuzzy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */;
+			productName = Fuzzy;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

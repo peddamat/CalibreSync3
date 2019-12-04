@@ -10,6 +10,61 @@ import SwiftUI
 import Combine
 import GRDB
 //import Grid
+import Fuzzy
+
+struct ContentView2: View {
+    @EnvironmentObject var settingStore: SettingStore
+
+    @ObservedObject var model = MyModel()
+    @State private var alternate: Bool = true
+    
+    let array = Array<String>(repeating: "Hello", count: 100)
+    let transaction = Transaction(animation: .easeInOut(duration: 2.0))
+    
+    var body: some View {
+        
+        return VStack(spacing: 0) {
+            HeaderView(title: "Dog Roulette")
+            
+            RefreshableScrollView(height: 70, refreshing: self.$model.loading) {
+                
+                Text("Hi").padding(30).background(Color(UIColor.systemBackground))
+                
+            }.background(Color(UIColor.secondarySystemBackground))
+        }
+    }
+    
+    struct HeaderView: View {
+        var title = ""
+        
+        var body: some View {
+            VStack {
+                Color(UIColor.black).frame(height: 30).overlay(Text(self.title))
+                Color(white: 0.5).frame(height: 3)
+            }
+        }
+    }
+}
+
+class MyModel: ObservableObject {
+    @Published var loading: Bool = false {
+        didSet {
+            if oldValue == false && loading == true {
+//                self.load()
+            }
+        }
+    }
+    
+    var idx = 0
+    
+    func load() {
+        // Simulate async task
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            self.loading = false
+        }
+    }
+}
+
 
 struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
@@ -33,8 +88,8 @@ struct ContentView: View {
     
     var shareButton: some View {
         Button(action: {
-            self.showShareSheet.toggle()
-//            self.bookCache.removeBook()
+//            self.showShareSheet.toggle()
+            self.bookCache.removeBook()
         }) {
             Image(systemName: "square.and.arrow.up")
                 .imageScale(.large)
@@ -144,7 +199,7 @@ struct MainView: View  {
     let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
     
     var body: some View {
-        Grid(self.books) { book in
+        Grid(self.books.filter { return search(needle: "electr", haystack:$0.title) }) { book in
             NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
                 
 //                BookCover(title: (book.title), fetchURL: self.dummyCover)

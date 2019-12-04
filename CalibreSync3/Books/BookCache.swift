@@ -43,6 +43,7 @@ class BookCache: ObservableObject {
     }
     
     func removeBook() {
+        NSLog("Remove")
         self.books.removeLast()
     }
 }
