@@ -17,13 +17,36 @@ class CalibreDB {
     init(settingStore: SettingStore) throws {
         self.settingStore = settingStore
         
+        let fileManager = FileManager.default
+        let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        guard documentsUrl.count != 0 else {
+            throw ErrorsToThrow.documentsDirectoryMissing // Could not find documents URL
+        }
+        
+        let finalDatabaseURL = documentsUrl.first!.appendingPathComponent("metadata-cache.db")
+
         guard let calibrePath = try settingStore.getCalibreURL() as URL? else {
             throw ErrorsToThrow.calibrePathNotResolving
         }
         self.calibrePath = calibrePath
-        let databaseURL = calibrePath.appendingPathComponent("metadata.db")
+        
+        // Cache a local copy of the database if we don't already have one
+        if !( (try? finalDatabaseURL.checkResourceIsReachable()) ?? false) {
+            NSLog("Can't find a cached copy of the database...")
+            
+            let documentsURL = calibrePath.appendingPathComponent("metadata.db")
+            
+            do {
+                NSLog("... caching copy of database")
+                try fileManager.copyItem(atPath: documentsURL.path, toPath: finalDatabaseURL.path)
+                  } catch let error as NSError {
+                    NSLog("Couldn't cache the database! Error:\(error.description)")
+            }
 
-        self.dbQueue = try! CalibreDB.openDatabase(atPath: databaseURL.path)
+        }
+        
+        self.dbQueue = try! CalibreDB.openDatabase(atPath: finalDatabaseURL.path)
     }
     
     /// Creates a fully initialized database at path
