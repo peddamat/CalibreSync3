@@ -31,7 +31,7 @@ struct ContentView: View  {
         return try! settingStore.getCalibreURL()
     }
     
-    let dummyCover = URL(string: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")!
+    let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
     
     var profileButton: some View {
         Button(action: { self.showSettings.toggle() }) {
@@ -72,7 +72,7 @@ struct ContentView: View  {
 
 //                    BookCover(title: "\(book.title)", fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 
-                    BookCover(title: "\(book.title)", fetchURL: dummyCover)
+                    BookCover(title: "\(book.title)", fetchURL: self.dummyCover)
 
                     
 //                    BookCover(title: "\(book.title)", fetchURL: URL(string:"https://picsum.photos/120/140")!)
