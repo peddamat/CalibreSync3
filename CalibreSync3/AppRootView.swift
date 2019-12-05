@@ -14,7 +14,9 @@ struct AppRootView: View {
     
     var body: some View {
         Group {
-            if settingStore.calibreRoot != nil {
+            if settingStore.calibreRoot == nil {
+                OnboardingView().environmentObject(settingStore)
+            } else {
                 TabView(selection: $selection) {
                     SideMenuView()
                     .tabItem {
@@ -34,9 +36,6 @@ struct AppRootView: View {
                         .tag(1)
                 }
                 .accentColor(.yellow)
-                
-            } else {
-                SettingsView().environmentObject(settingStore)
             }
         }
     }
