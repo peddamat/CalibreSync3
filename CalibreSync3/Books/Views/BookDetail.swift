@@ -10,6 +10,8 @@ import GRDB
 import SwiftUI
 
 struct BookDetail: View {
+    @EnvironmentObject var settingStore: SettingStore
+
     var book: Book
     var calibreDB: CalibreDB
     var dbQueue: DatabaseQueue {
@@ -33,7 +35,8 @@ struct BookDetail: View {
                     if format.format == "PDF" {
                         buttons.append(
                             .default(Text("PDF"), action: {
-                                let tempPath = "file://" + self.calibreDB.getCalibrePath().path + "/" + self.book.path + "/" + format.name + ".pdf"
+//                                let tempPath = "file://" + self.settingStore.calibreRemoteLibraryPath + "/" + self.book.path + "/" + format.name + ".pdf"
+                                let tempPath = ""
                                 self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                                 self.showDocumentSheet.toggle()
                             }))
@@ -41,7 +44,8 @@ struct BookDetail: View {
                     else if format.format == "EPUB" {
                         buttons.append(
                             .default(Text("EPUB"), action: {
-                                let tempPath = "file://" + self.calibreDB.getCalibrePath().path + "/" + self.book.path + "/" + format.name + ".epub"
+//                                let tempPath = "file://" + self.settingStore.calibreRemoteLibraryPath + "/" + self.book.path + "/" + format.name + ".epub"
+                                let tempPath = ""
                                 self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                                 self.showDocumentSheet.toggle()
                             }))
@@ -62,7 +66,7 @@ struct BookDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                BookHeader(book: book, calibrePath: calibreDB.getCalibrePath())
+                BookHeader(book: book)
                 Separator()
     
                 Button(action: {
@@ -93,12 +97,13 @@ struct BookDetail: View {
 }
 
 struct BookHeader: View {
+    @EnvironmentObject var settingStore: SettingStore
+
     var book: Book
-    var calibrePath: URL
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-            ImageView(withURL: calibrePath.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+//            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
 //                .resizable()
 //                .scaledToFit()
 //                .frame(width:110)

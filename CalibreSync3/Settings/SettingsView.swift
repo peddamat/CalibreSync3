@@ -24,7 +24,7 @@ struct SettingsView: View {
             
             let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
             
-            self.settingStore.calibreRoot = bookmark
+            self.settingStore.calibreRemoteLibraryBookmark = bookmark
         } catch let error {
             
         }

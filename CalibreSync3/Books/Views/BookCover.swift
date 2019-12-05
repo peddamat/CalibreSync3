@@ -13,12 +13,7 @@ struct BookCover: View {
         ZStack(alignment: .init(horizontal: .center, vertical: .center)) {
 //            ImageView(withURL: fetchURL)
 //                .aspectRatio(contentMode: .fit)
-            
-//            Text(title)
-//                .font(.title)
-//                .foregroundColor(.white)
-//                .opacity(0.5)
-            
+                        
             RemoteImage(
                 with: fetchURL,
                 imageView: { Image(uiImage: $0).resizable() },
@@ -32,7 +27,15 @@ struct BookCover: View {
                     }
                 }
             ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
-            
+
+            VStack(alignment: .leading) {
+                Spacer()
+                
+                Text(title)
+                    .font(.system(size:8))
+                    .foregroundColor(.white)
+                    .opacity(0.5)
+            }
         }
 //        .overlay(
 //            RoundedRectangle(cornerRadius: 16)
@@ -57,8 +60,8 @@ struct BookCover: View {
         let error: Error
         var body: some View {
             ZStack {
-                Rectangle().fill(Color.red)
-                Text(error.localizedDescription).font(Font.system(size: 8))
+                Rectangle().fill(Color.gray)
+//                Text(error.localizedDescription).font(Font.system(size: 8))
             }
         }
     }

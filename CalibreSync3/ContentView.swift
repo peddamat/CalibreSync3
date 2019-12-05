@@ -138,9 +138,9 @@ struct MainView: View  {
         return try! CalibreDB(settingStore: settingStore)
     }
     
-    private var calibrePath: URL {
-        return try! settingStore.getCalibreURL()
-    }
+//    private var calibrePath: URL {
+//        return try! settingStore.getCalibreURL()
+//    }
     
     let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
     
@@ -149,9 +149,9 @@ struct MainView: View  {
 //        Grid(self.books) { book in
             NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
                 
-//                BookCover(title: (book.title), fetchURL: self.dummyCover)
+                BookCover(title: (book.title), fetchURL: self.dummyCover)
                 
-                BookCover(title: (book.title), fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
+//                BookCover(title: (book.title), fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
                 
 //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
 //
@@ -167,6 +167,7 @@ struct MainView: View  {
             self.books = books
             NSLog("Ping")
         }
+        
     }
 }
 

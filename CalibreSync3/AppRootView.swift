@@ -14,7 +14,7 @@ struct AppRootView: View {
     
     var body: some View {
         Group {
-            if settingStore.calibreRoot == nil {
+            if settingStore.calibreRemoteLibraryBookmark == nil {
                 OnboardingView().environmentObject(settingStore)
             } else {
                 TabView(selection: $selection) {
