@@ -17,15 +17,16 @@ struct SettingsView: View {
     
     func saveCalibrePath(_ url: URL) {
         NSLog(url.path)
-        
+                        
         do {
             let shouldStopAccessing = url.startAccessingSecurityScopedResource()
             defer { if shouldStopAccessing { url.stopAccessingSecurityScopedResource() } }
             
             let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
             
-            self.settingStore.calibreRemoteLibraryBookmark = bookmark
-            try! CalibreDB.cacheRemoteCalibreDB(settingStore: settingStore)
+            let bookCovers = BookCache.findAllBookCovers(pickedFolderURL: url)
+//            self.settingStore.calibreRemoteLibraryBookmark = bookmark
+//            try! CalibreDB.cacheRemoteCalibreDB(settingStore: settingStore, calibreRemoteURL: url)
         } catch let error {
             
         }

@@ -35,7 +35,7 @@ struct BookCover: View {
                     .font(.system(size:8))
                     .foregroundColor(.white)
                     .opacity(0.5)
-            }
+            }.frame(width: BOOK_WIDTH)
         }
 //        .overlay(
 //            RoundedRectangle(cornerRadius: 16)

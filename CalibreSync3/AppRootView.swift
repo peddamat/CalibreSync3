@@ -16,6 +16,7 @@ struct AppRootView: View {
         Group {
             if settingStore.calibreRemoteLibraryBookmark == nil {
                 OnboardingView().environmentObject(settingStore)
+//                SettingsView().environmentObject(settingStore)
             } else {
                 TabView(selection: $selection) {
                     SideMenuView()

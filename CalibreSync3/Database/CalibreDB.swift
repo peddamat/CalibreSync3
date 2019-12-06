@@ -20,27 +20,24 @@ class CalibreDB {
         let localDBURL = try SettingStore.calibreLocalDBURL()
 
         if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
-            NSLog("Can't find a cached copy of the database...")
+            NSLog("Can't find a cached copy of the database at \(localDBURL.path)")
             throw ErrorsToThrow.calibreLocalDatabaseMissing
         }
 
         self.dbQueue = try! CalibreDB.openDatabase(atPath: localDBURL.path)
     }
 
-    static func cacheRemoteCalibreDB(settingStore: SettingStore) throws {
-        let localDBURL = try SettingStore.calibreLocalDBURL()
-        
-        guard let calibreRemoteURL = try settingStore.calibreRemoteLibraryURL else {
-            // Uncomment this to simulate that weird exception you experienced earlier...
-            //self.settingStore.calibreRoot = nil
-            throw ErrorsToThrow.calibrePathNotResolving
-        }
-        
+    static func cacheRemoteCalibreDB(settingStore: SettingStore, calibreRemoteURL: URL) throws {
+        let localDBURL = try SettingStore.calibreLocalDBURL()        
         let documentsURL = calibreRemoteURL.appendingPathComponent("metadata.db")
         
         do {
             NSLog("... caching copy of database")
+            let shouldStopAccessing = calibreRemoteURL.startAccessingSecurityScopedResource()
+            defer { if shouldStopAccessing { calibreRemoteURL.stopAccessingSecurityScopedResource() }}
+
             try FileManager.default.copyItem(atPath: documentsURL.path, toPath: localDBURL.path)
+            NSLog("Database cached!")
               } catch let error as NSError {
                 NSLog("Couldn't cache the database! Error:\(error.description)")
         }

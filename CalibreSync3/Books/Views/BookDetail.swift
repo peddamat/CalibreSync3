@@ -54,25 +54,59 @@ struct BookDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                BookHeader(book: book)
+                BookHeader(book: book, bookCache: bookCache)
                 Separator()
                 
-                Button(action: {
-                    self.showingSheet = true
-                }) {
-                    Text("Download")
-                        .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white)
-                        .bold()
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(Color(red: 0/255, green: 212/255, blue: 255/255))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
+                HStack(spacing:1) {
+                    Button(action: {
+                        self.showingSheet = true
+                    }) {
+                        Text("Download")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(Color(red: 0/255, green: 212/255, blue: 255/255))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                    }
+                    .popSheet(isPresented: $showingSheet, content: {
+                        PopSheet(title: Text("Select a format"), buttons: self.getActions()!)
+                    })
+                    
+                    Button(action: {
+                        print("Clicked")
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            var task: URLSessionDataTask!
+
+                            task = URLSession.shared.dataTask(with: URL(string: "https://download-installer.cdn.mozilla.net/pub/firefox/releases/71.0/mac/en-US/Firefox%2071.0.dmg")!) { data, response, error in
+                                guard let data = data else { return }
+                                DispatchQueue.main.async {
+                                    NSLog("downloaded")
+                                }
+                            }
+                            let observation = task.progress.observe(\.fractionCompleted) { progress, _ in
+                              print(progress.fractionCompleted)
+                            }
+                            task.resume()
+                        }
+                        
+                        
+                    }) {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(minWidth: 70, maxWidth: 70)
+                            .background(Color(red: 0/255, green: 212/255, blue: 255/255))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                    }
+                  
+
+                    
                 }
-                .popSheet(isPresented: $showingSheet, content: {
-                    PopSheet(title: Text("Select a format"), buttons: self.getActions()!)
-                })
                     
 //                TagList()
                 BookSummary(book: book, dbQueue: dbQueue)
@@ -90,13 +124,17 @@ struct BookHeader: View {
     @EnvironmentObject var settingStore: SettingStore
     
     var book: Book
+    var bookCache: BookCache
+
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-            //            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-            //                .resizable()
-            //                .scaledToFit()
-            //                .frame(width:110)
+//            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width:110)
+            
+            BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
             
             VStack(alignment: .leading, spacing:5) {
                 Text(book.title)

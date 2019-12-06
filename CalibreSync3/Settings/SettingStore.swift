@@ -19,10 +19,12 @@ enum ErrorsToThrow: Error {
 final class SettingStore: ObservableObject {
     @Published var defaults: UserDefaults
     @Published var searchString: String = ""
+    @Published var loadingMore: Bool = false
     
-    init(defaults: UserDefaults = .standard, searchString: String = "") {
+    init(defaults: UserDefaults = .standard, searchString: String = "", loadingMore: Bool = false) {
         self.defaults = defaults
         self.searchString = searchString
+        self.loadingMore = loadingMore
         
         defaults.register(defaults: [
             "view.preferences.calibreLibraryPath": "/"

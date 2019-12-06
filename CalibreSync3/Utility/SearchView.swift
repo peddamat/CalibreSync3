@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SearchView: View {
     @EnvironmentObject var settingStore: SettingStore
@@ -66,6 +67,7 @@ struct SearchView: View {
 }
 
 class MyModel: ObservableObject {
+    var didChange = PassthroughSubject<Bool, Never>()
     @Published var loading: Bool = false {
         didSet {
             if oldValue == false && loading == true {
@@ -76,8 +78,8 @@ class MyModel: ObservableObject {
     
     @Published var loadingMore: Bool = false {
         didSet {
-            if oldValue == false && loading == true {
-//                self.load()
+            if oldValue == false && loadingMore == true {
+                didChange.send(loadingMore)
             }
         }
     }

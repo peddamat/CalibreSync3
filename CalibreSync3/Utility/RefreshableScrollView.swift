@@ -75,6 +75,7 @@ struct RefreshableScrollView<Content: View>: View {
             
             if !self.loadingMore && (self.bottomScrollOffset < self.bottomThreshold && self.previousBottomScrollOffset >= self.bottomThreshold) {
                 self.loadingMore = true
+                self.settingStore.loadingMore = true
                 NSLog("Loading more")
             }
             

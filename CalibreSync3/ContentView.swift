@@ -128,6 +128,7 @@ struct MainView: View  {
 //    @State var bookCache = BookCache()
     @Binding var bookCache: BookCache
     @State private var books: [Book] = []
+    @ObservedObject var model = MyModel()
             
     // Book cover grid styling options
     @State var style = ModularGridStyle(columns: .min(BOOK_WIDTH), rows: .min(BOOK_HEIGHT))
@@ -146,27 +147,32 @@ struct MainView: View  {
     let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
     
     var body: some View {
-        Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
-//        Grid(self.books) { book in
-            NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
-                
-//                BookCover(title: (book.title), fetchURL: self.dummyCover)
-                
-                BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
-                
-//                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
-//
-//                Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-                
-            }.buttonStyle(PlainButtonStyle())
-        }
-        .gridStyle(self.style)
-        .onAppear {
-            self.bookCache.getBooks(calibreDB: self.calibreDB, limit:70)
-        }
-        .onReceive(self.bookCache.didChange) { books in
-            self.books = books
-            NSLog("Ping")
+        ZStack {
+            Color.init(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
+            .edgesIgnoringSafeArea(.all)
+            
+            Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
+    //        Grid(self.books) { book in
+                NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
+                    
+    //                BookCover(title: (book.title), fetchURL: self.dummyCover)
+                    
+                    BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
+                    
+    //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
+    //
+    //                Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+                    
+                }.buttonStyle(PlainButtonStyle())
+            }
+            .gridStyle(self.style)
+            .onAppear {
+                self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:100)
+            }
+            .onReceive(self.bookCache.didChange) { books in
+                self.books = books
+                NSLog("Ping")
+            }
         }
         
     }
