@@ -17,14 +17,17 @@ class CalibreDB {
     init(settingStore: SettingStore) throws {
         self.settingStore = settingStore
         
-//        if !( (try? finalDatabaseURL.checkResourceIsReachable()) ?? false) {
-//            NSLog("Can't find a cached copy of the database...")
-
         let localDBURL = try SettingStore.calibreLocalDBURL()
+
+        if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
+            NSLog("Can't find a cached copy of the database...")
+            throw ErrorsToThrow.calibreLocalDatabaseMissing
+        }
+
         self.dbQueue = try! CalibreDB.openDatabase(atPath: localDBURL.path)
     }
 
-    static func cacheRemoteCalibreDB(settingStore: SettingStore, calibreLibraryPath: URL) throws {
+    static func cacheRemoteCalibreDB(settingStore: SettingStore) throws {
         let localDBURL = try SettingStore.calibreLocalDBURL()
         
         guard let calibreRemoteURL = try settingStore.calibreRemoteLibraryURL else {

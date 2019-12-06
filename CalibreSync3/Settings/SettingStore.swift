@@ -13,6 +13,7 @@ enum ErrorsToThrow: Error {
     case calibrePathNotSet
     case calibrePathNotResolving
     case documentsDirectoryMissing
+    case calibreLocalDatabaseMissing
 }
 
 final class SettingStore: ObservableObject {

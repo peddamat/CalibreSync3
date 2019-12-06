@@ -134,24 +134,25 @@ struct MainView: View  {
     //    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
     //    @State var style = StaggeredGridStyle(tracks: .min(100), axis: .vertical, spacing: 1, padding: .init(top: 1, leading: 1, bottom: 1, trailing: 1))
     
-    private var calibreDB: CalibreDB {
-        return try! CalibreDB(settingStore: settingStore)
+    @State var calibreDB: CalibreDB?
+    private func getCalibreDB() -> CalibreDB {
+        guard self.calibreDB != nil else {
+            self.calibreDB = try! CalibreDB(settingStore: settingStore)
+            return self.calibreDB!
+        }
+        return self.calibreDB!
     }
-    
-//    private var calibrePath: URL {
-//        return try! settingStore.getCalibreURL()
-//    }
-    
+        
     let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
     
     var body: some View {
         Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
 //        Grid(self.books) { book in
-            NavigationLink(destination: BookDetail(book: book, calibreDB: self.calibreDB)) {
+            NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
                 
-                BookCover(title: (book.title), fetchURL: self.dummyCover)
+//                BookCover(title: (book.title), fetchURL: self.dummyCover)
                 
-//                BookCover(title: (book.title), fetchURL: URL(fileURLWithPath: self.calibrePath.path + "/" + book.path + "/cover.jpg"))
+                BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
                 
 //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
 //

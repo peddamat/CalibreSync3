@@ -10,50 +10,38 @@ import GRDB
 import SwiftUI
 
 struct BookDetail: View {
-    @EnvironmentObject var settingStore: SettingStore
-
     var book: Book
+    var bookCache: BookCache
     var calibreDB: CalibreDB
     var dbQueue: DatabaseQueue {
         calibreDB.getDBqueue()
     }
+    @EnvironmentObject var settingStore: SettingStore
     
     @State private var showingSheet = false
     @State private var showDocumentSheet = false
-    @State private var bookPath:String = ""
-
-    func getActions() -> [ActionSheet.Button]? {
-        var buttons = [ActionSheet.Button]()
+    @State private var bookPath:URL?
+    
+    func getActions() -> [PopSheet.Button]? {
+        var buttons = [PopSheet.Button]()
         
         do {
-            try dbQueue.read { db -> [ActionSheet.Button] in
+            try dbQueue.read { db -> [PopSheet.Button] in
                 let formats = try BookFormat
                     .filter(Column("book") == book.id)
                     .fetchAll(db)
                 
                 for format in formats {
-                    if format.format == "PDF" {
-                        buttons.append(
-                            .default(Text("PDF"), action: {
-//                                let tempPath = "file://" + self.settingStore.calibreRemoteLibraryPath + "/" + self.book.path + "/" + format.name + ".pdf"
-                                let tempPath = ""
-                                self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                                self.showDocumentSheet.toggle()
-                            }))
-                    }
-                    else if format.format == "EPUB" {
-                        buttons.append(
-                            .default(Text("EPUB"), action: {
-//                                let tempPath = "file://" + self.settingStore.calibreRemoteLibraryPath + "/" + self.book.path + "/" + format.name + ".epub"
-                                let tempPath = ""
-                                self.bookPath = tempPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                                self.showDocumentSheet.toggle()
-                            }))
-                    }
+                    let button = PopSheet.Button(kind: .default, label: Text(format.format), action: {
+                        self.bookPath = self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format)
+                        NSLog(self.bookPath!.path)
+                        self.showDocumentSheet.toggle()
+                    })
+                    buttons.append(button)
                 }
                 
                 // Finally, always add the close button
-                buttons.append(.default(Text("Dismiss")))
+                buttons.append(PopSheet.Button(kind: .cancel, label: Text("Cancel"), action: {}))
                 
                 return buttons
             }
@@ -68,7 +56,7 @@ struct BookDetail: View {
             VStack {
                 BookHeader(book: book)
                 Separator()
-    
+                
                 Button(action: {
                     self.showingSheet = true
                 }) {
@@ -82,31 +70,33 @@ struct BookDetail: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                 }
+                .popSheet(isPresented: $showingSheet, content: {
+                    PopSheet(title: Text("Select a format"), buttons: self.getActions()!)
+                })
+                    
 //                TagList()
                 BookSummary(book: book, dbQueue: dbQueue)
+                
                 Spacer()
             }
         }
-        .actionSheet(isPresented: $showingSheet) {
-            ActionSheet(title: Text("Select a format"), message: Text("Depending on what other apps you have installed"), buttons: getActions()!)
-        }
         .sheet(isPresented: $showDocumentSheet) {
-            FilePresenterUIView(file: URL(string: self.bookPath)!, onDismiss: { self.showDocumentSheet.toggle() })
+            FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
         }
     }
 }
 
 struct BookHeader: View {
     @EnvironmentObject var settingStore: SettingStore
-
+    
     var book: Book
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-//            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width:110)
+            //            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+            //                .resizable()
+            //                .scaledToFit()
+            //                .frame(width:110)
             
             VStack(alignment: .leading, spacing:5) {
                 Text(book.title)
@@ -127,16 +117,16 @@ struct BookSummary: View {
     func getComments() -> [BookComment] {
         do {
             return try dbQueue.read { db in
-//                try book.comments.fetchAll(db)
+                //                try book.comments.fetchAll(db)
                 try BookComment
-                .filter(Column("book") == book.id)
-                .fetchAll(db)
+                    .filter(Column("book") == book.id)
+                    .fetchAll(db)
             }
         } catch {
             return []
         }
     }
-
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("SUMMARY")
