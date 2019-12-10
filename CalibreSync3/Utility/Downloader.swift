@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct Downloader {
-        
+    let bookID: Int
     let urlString: String
     @Binding var progress: Float
     
@@ -23,7 +23,7 @@ struct Downloader {
         print("Downloading Started.......")
         let configuration = URLSessionConfiguration.default
         let operationQueue = OperationQueue()
-        let urlSession = URLSession(configuration: configuration, delegate: DownloaderDelegate(progress: $progress), delegateQueue: operationQueue)
+        let urlSession = URLSession(configuration: configuration, delegate: DownloaderDelegate(bookID: bookID, progress: $progress), delegateQueue: operationQueue)
         print(urlString)
         guard let url = URL(string: urlString) else {
             print("URL Not valid")
@@ -32,15 +32,13 @@ struct Downloader {
         let downloadTask = urlSession.downloadTask(with: url)
         downloadTask.resume()
     }
-    
-    func updateProgress(progress: Float) {
-        self.progress = progress
-    }
-    
+        
     private class DownloaderDelegate: NSObject, URLSessionDownloadDelegate {
+        let bookID: Int
         var progress: Binding<Float>
         
-        init(progress: Binding<Float>) {
+        init(bookID: Int, progress: Binding<Float>) {
+            self.bookID = bookID
             self.progress = progress
         }
         
@@ -57,6 +55,9 @@ struct Downloader {
     //        DispatchQueue.main.async {
     //          NSLog("\(Int(percentage * 100))%")
     //        }
+            
+            let userInfo = ["bookID": bookID, "percentage": percentage] as [String : Any]
+            NotificationCenter.default.post(name: .downloadProgressUpdate, object: nil, userInfo: userInfo)
             
             print("Percentage Downloaded:- ", percentage)
         }

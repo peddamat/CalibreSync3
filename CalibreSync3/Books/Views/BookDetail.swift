@@ -24,11 +24,11 @@ struct BookDetail: View {
     
     @State private var progress:Float = 0.0
     
-    func getActions() -> [(String, String)]? {
-        var buttons = [(String, String)]()
+    func getActions() -> [(Int, String, String)]? {
+        var buttons = [(Int, String, String)]()
         
         do {
-            try dbQueue.read { db -> [(String, String)] in
+            try dbQueue.read { db -> [(Int, String, String)] in
                 let formats = try DiskBookFormat
                     .filter(Column("book") == book.id)
                     .fetchAll(db)
@@ -36,7 +36,7 @@ struct BookDetail: View {
                 for format in formats {
                     let bookPath = "file://" + self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format).path
                     
-                    let button = (format.format, bookPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+                    let button = (Int(book.id), format.format, bookPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
                     buttons.append(button)
                 }
                 return buttons
@@ -59,7 +59,7 @@ struct BookDetail: View {
                         Spacer()
                         
                         ForEach(getActions()!, id:\.self.0) { info in
-                            DownloadButtonView(format: info.0, fileURL: info.1)
+                            DownloadButtonView(bookID: info.0, format: info.1, fileURL: info.2)
 
                         }
                         Spacer()
@@ -75,9 +75,9 @@ struct BookDetail: View {
 //                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
 //                .opacity(0)
 //            }
-            if(showDocumentSheet) {
-                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
-            }
+//            if(showDocumentSheet) {
+//                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
+//            }
         }
             
     }
