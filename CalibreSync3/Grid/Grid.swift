@@ -25,7 +25,8 @@ public struct Grid<Content>: View where Content: View {
     }
     
     private func grid(with geometry: GeometryProxy) -> some View {
-        RefreshableScrollView(height: 70, refreshing: self.$model.loading, loadingMore: self.$model.loading) {
+        RefreshableScrollView(height: 70, refreshing: self.$model.loading) {
+//        RefreshableScrollView(height: 70, refreshing: self.$model.loading, loadingMore: self.$model.loading) {
 //        ScrollView(self.style.axis == .vertical ? .vertical : .horizontal) {
             ZStack(alignment: .topLeading) {
                 ForEach(0..<self.items.count, id: \.self) { index in

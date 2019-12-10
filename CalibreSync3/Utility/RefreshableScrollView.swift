@@ -2,36 +2,27 @@
 //  RefreshableScrollView.swift
 //  CalibreSync3
 //
-//  Created by Sumanth Peddamatham on 12/4/19.
+//  Created by Sumanth Peddamatham on 12/8/19.
 //  Copyright © 2019 Sumanth Peddamatham. All rights reserved.
 //
-
-// Authoer: The SwiftUI Lab
-// Full article: https://swiftui-lab.com/scrollview-pull-to-refresh/
 
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
     @State private var previousScrollOffset: CGFloat = 0
-    @State private var previousBottomScrollOffset: CGFloat = 0
     @State private var scrollOffset: CGFloat = 0
-    @State private var bottomScrollOffset: CGFloat = 0
     @State private var frozen: Bool = false
     @State private var rotation: Angle = .degrees(0)
-    @EnvironmentObject var settingStore: SettingStore
-
     
-    var topThreshold: CGFloat = 80
-    var bottomThreshold: CGFloat = 530
+    var threshold: CGFloat = 80
     @Binding var refreshing: Bool
-    @Binding var loadingMore: Bool
     let content: Content
 
-    init(height: CGFloat = 80, refreshing: Binding<Bool>, loadingMore: Binding<Bool>, @ViewBuilder content: () -> Content) {
-        self.topThreshold = height
+    init(height: CGFloat = 80, refreshing: Binding<Bool>, @ViewBuilder content: () -> Content) {
+        self.threshold = height
         self._refreshing = refreshing
-        self._loadingMore = loadingMore
         self.content = content()
+
     }
     
     var body: some View {
@@ -40,12 +31,9 @@ struct RefreshableScrollView<Content: View>: View {
                 ZStack(alignment: .top) {
                     MovingView()
                     
-                    VStack {
-                        self.content
-                        BottomView()
-                    }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.topThreshold : 0.0 })
+                    VStack { self.content }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
                     
-                    SearchBarView(height: self.topThreshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation).environmentObject(settingStore)
+                    SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
                 }
             }
             .background(FixedView())
@@ -59,39 +47,30 @@ struct RefreshableScrollView<Content: View>: View {
         DispatchQueue.main.async {
             // Calculate scroll offset
             let movingBounds = values.first { $0.vType == .movingView }?.bounds ?? .zero
-            let bottomBounds = values.first { $0.vType == .bottomView }?.bounds ?? .zero
             let fixedBounds = values.first { $0.vType == .fixedView }?.bounds ?? .zero
             
             self.scrollOffset  = movingBounds.minY - fixedBounds.minY
-            self.bottomScrollOffset  = bottomBounds.minY - fixedBounds.minY
-//            NSLog("scroll: \(self.bottomScrollOffset)")
             
             self.rotation = self.symbolRotation(self.scrollOffset)
             
             // Crossing the threshold on the way down, we start the refresh process
-            if !self.refreshing && (self.scrollOffset > self.topThreshold && self.previousScrollOffset <= self.topThreshold) {
+            if !self.refreshing && (self.scrollOffset > self.threshold && self.previousScrollOffset <= self.threshold) {
                 self.refreshing = true
-            }
-            
-            if !self.loadingMore && (self.bottomScrollOffset < self.bottomThreshold && self.previousBottomScrollOffset >= self.bottomThreshold) {
-                self.loadingMore = true
-                self.settingStore.loadingMore = true
-                NSLog("Loading more")
             }
             
             if self.refreshing {
                 // Crossing the threshold on the way up, we add a space at the top of the scrollview
-                if self.previousScrollOffset > self.topThreshold && self.scrollOffset <= self.topThreshold {
+                if self.previousScrollOffset > self.threshold && self.scrollOffset <= self.threshold {
                     self.frozen = true
+
                 }
             } else {
-                // remove the space at the top of the scroll view
+                // remove the sapce at the top of the scroll view
                 self.frozen = false
             }
             
             // Update last scroll offset
             self.previousScrollOffset = self.scrollOffset
-            self.previousBottomScrollOffset = self.bottomScrollOffset
         }
     }
     
@@ -99,41 +78,46 @@ struct RefreshableScrollView<Content: View>: View {
         
         // We will begin rotation, only after we have passed
         // 60% of the way of reaching the threshold.
-        if scrollOffset < self.topThreshold * 0.60 {
+        if scrollOffset < self.threshold * 0.60 {
             return .degrees(0)
         } else {
             // Calculate rotation, based on the amount of scroll offset
-            let h = Double(self.topThreshold)
+            let h = Double(self.threshold)
             let d = Double(scrollOffset)
             let v = max(min(d - (h * 0.6), h * 0.4), 0)
             return .degrees(180 * v / (h * 0.4))
         }
     }
     
-    // This view displays the arrow and activity indicator
-    struct SearchBarView: View {
+    struct SymbolView: View {
         var height: CGFloat
         var loading: Bool
         var frozen: Bool
         var rotation: Angle
-        @EnvironmentObject var settingStore: SettingStore
-
+        
         
         var body: some View {
             Group {
                 if self.loading { // If loading, show the activity control
                     VStack {
                         Spacer()
-                        SearchView().environmentObject(self.settingStore)
+                        ActivityRep()
                         Spacer()
                     }.frame(height: height).fixedSize()
                         .offset(y: -height + (self.loading && self.frozen ? height : 0.0))
+                } else {
+                    Image(systemName: "arrow.down") // If not loading, show the arrow
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: height * 0.25, height: height * 0.25).fixedSize()
+                        .padding(height * 0.375)
+                        .rotationEffect(rotation)
+                        .offset(y: -height + (loading && frozen ? +height : 0.0))
                 }
             }
         }
     }
     
-    // This view is inserted within the ScrollView to enable measuring the scroll offset
     struct MovingView: View {
         var body: some View {
             GeometryReader { proxy in
@@ -142,16 +126,6 @@ struct RefreshableScrollView<Content: View>: View {
         }
     }
     
-    struct BottomView: View {
-        var body: some View {
-            GeometryReader { proxy in
-                Color.clear.preference(key: RefreshableKeyTypes.PrefKey.self, value: [RefreshableKeyTypes.PrefData(vType: .bottomView, bounds: proxy.frame(in: .global))])
-            }.frame(height: 0)
-        }
-    }
-    
-    // This view is fixed within the ScrollView allowing scroll offset to be measured
-    //   in relation to MovingView
     struct FixedView: View {
         var body: some View {
             GeometryReader { proxy in
@@ -165,7 +139,6 @@ struct RefreshableKeyTypes {
     enum ViewType: Int {
         case movingView
         case fixedView
-        case bottomView
     }
 
     struct PrefData: Equatable {
