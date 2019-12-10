@@ -10,7 +10,7 @@ struct BookCover: View {
     let fetchURL: URL
     
     var body: some View {
-        ZStack(alignment: .init(horizontal: .center, vertical: .center)) {
+        ZStack() {
 //            ImageView(withURL: fetchURL)
 //                .aspectRatio(contentMode: .fit)
 
@@ -34,18 +34,9 @@ struct BookCover: View {
                             case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
                             }
                         }
-                    ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
+                    ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
                 }
             }
-                
-            VStack(alignment: .leading) {
-                Spacer()
-                
-                Text(title)
-                    .font(.system(size:8))
-                    .foregroundColor(.white)
-                    .opacity(0.5)
-            }.frame(width: BOOK_WIDTH)
             
             DownloadView()
         }

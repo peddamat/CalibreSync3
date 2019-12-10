@@ -34,7 +34,7 @@ struct BookDetail: View {
                 for format in formats {
                     let button = PopSheet.Button(kind: .default, label: Text(format.format), action: {
                         self.bookPath = self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format)
-                        NSLog(self.bookPath!.path)
+                        NSLog("Opening book in: \(self.bookPath!.path)")
                         self.showDocumentSheet.toggle()
                     })
                     buttons.append(button)
@@ -109,9 +109,9 @@ struct BookDetail: View {
                     BookSummary(book: book, dbQueue: dbQueue)
                     Spacer()
                 }
-                .padding(2)
-                Spacer()
+                
             }
+                .padding(10)
             .sheet(isPresented: $showDocumentSheet) {
                 FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
             }
@@ -124,15 +124,9 @@ struct BookHeader: View {
     
     var book: DiskBook
     var bookCache: BookCache
-
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-//            ImageView(withURL: self.settingStore.calibreRemoteLibraryURL!.appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width:110)
-            
             BookCover(title: (book.title.trimmingCharacters(in: .whitespacesAndNewlines)), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
             
             VStack(alignment: .leading, spacing:5) {
@@ -143,7 +137,6 @@ struct BookHeader: View {
                 Text(book.author_sort.trimmingCharacters(in: .whitespacesAndNewlines))
             }
         }
-//        .padding(.top, 10)
     }
 }
 
@@ -170,14 +163,15 @@ struct BookSummary: View {
             HStack {
                 Text("SUMMARY")
                     .fontWeight(.bold)
-                    .font(.system(size: 12))
+                    .font(.system(size: 14))
+                    .padding(.bottom, 5)
                 Spacer()
             }
             ForEach(getComments()) { comment in
                 Text(comment.text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil))
             }
         }
-        .padding(5)
+    .padding(10)
     }
 }
 

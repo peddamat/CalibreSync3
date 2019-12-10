@@ -99,7 +99,7 @@ class BookCache: ObservableObject {
     }
     
     func getBookFileURL(settingStore: SettingStore, book: DiskBook, format: DiskBookFormat) -> URL {
-        let tempPath = settingStore.calibreLocalLibraryPath!.path + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        let tempPath = settingStore.calibreRemoteLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
     }
     
