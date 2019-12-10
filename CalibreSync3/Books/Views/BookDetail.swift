@@ -22,27 +22,23 @@ struct BookDetail: View {
     @State private var showDocumentSheet = false
     @State private var bookPath:URL?
     
-    func getActions() -> [PopSheet.Button]? {
-        var buttons = [PopSheet.Button]()
+    @State private var progress:Float = 0.0
+    
+    func getActions() -> [(String, String)]? {
+        var buttons = [(String, String)]()
         
         do {
-            try dbQueue.read { db -> [PopSheet.Button] in
+            try dbQueue.read { db -> [(String, String)] in
                 let formats = try DiskBookFormat
                     .filter(Column("book") == book.id)
                     .fetchAll(db)
                 
                 for format in formats {
-                    let button = PopSheet.Button(kind: .default, label: Text(format.format), action: {
-                        self.bookPath = self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format)
-                        NSLog("Opening book in: \(self.bookPath!.path)")
-                        self.showDocumentSheet.toggle()
-                    })
+                    let bookPath = "file://" + self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format).path
+                    
+                    let button = (format.format, bookPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
                     buttons.append(button)
                 }
-                
-                // Finally, always add the close button
-                buttons.append(PopSheet.Button(kind: .cancel, label: Text("Cancel"), action: {}))
-                
                 return buttons
             }
         } catch {
@@ -60,24 +56,13 @@ struct BookDetail: View {
                     Separator()
                     
                     HStack(spacing:1) {
-                        Button(action: {
-                            self.showingSheet = true
-                        }) {
-                            Text("Open")
-                                .font(.system(.body, design: .rounded))
-                                .foregroundColor(.white)
-                                .bold()
-                                .padding()
-                                .frame(minWidth: 0, maxWidth: .infinity)
-                                .background(Color(red: 0/255, green: 212/255, blue: 255/255))
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                        }
-                        .popSheet(isPresented: $showingSheet, content: {
-                            PopSheet(title: Text("Select a format"), buttons: self.getActions()!)
-                        })
+                        Spacer()
                         
-    
+                        ForEach(getActions()!, id:\.self.0) { info in
+                            DownloadButtonView(format: info.0, fileURL: info.1)
+
+                        }
+                        Spacer()
                     }
                 
                     //                TagList()
