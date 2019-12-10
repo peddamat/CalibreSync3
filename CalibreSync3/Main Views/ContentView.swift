@@ -150,29 +150,40 @@ struct MainView: View  {
         ZStack {
             Color.init(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
             .edgesIgnoringSafeArea(.all)
-            
-            Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
-    //        Grid(self.books) { book in
-                NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
-                    
-    //                BookCover(title: (book.title), fetchURL: self.dummyCover)
-                    
-                    BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
-                    
-    //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
-    //
-    //                Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-                    
-                }.buttonStyle(PlainButtonStyle())
-            }
-            .gridStyle(self.style)
-            .onAppear {
-                self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:100)
-            }
-            .onReceive(self.bookCache.didChange) { books in
-                self.books = books
-                NSLog("Ping")
-            }
+            VStack {
+                Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
+        //        Grid(self.books) { book in
+                    NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
+                        
+        //                BookCover(title: (book.title), fetchURL: self.dummyCover)
+                        
+                        BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
+                            .contextMenu {
+                                Button(action: {
+                                    // delete the selected restaurant
+                                }) {
+                                    HStack {
+                                        Text("Delete")
+                                        Image(systemName: "trash")
+                                    }
+                                }
+                        }
+                        
+        //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
+        //
+        //                Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
+                        
+                    }.buttonStyle(PlainButtonStyle())
+                }
+                .gridStyle(self.style)
+                .onAppear {
+                    self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:100)
+                }
+                .onReceive(self.bookCache.didChange) { books in
+                    self.books = books
+                    NSLog("Ping")
+                }
+        }
         }
         
     }

@@ -8,6 +8,7 @@
 
 import GRDB
 import SwiftUI
+import PromiseKit
 
 class CalibreDB {
     var settingStore: SettingStore
@@ -40,6 +41,37 @@ class CalibreDB {
             NSLog("Database cached!")
               } catch let error as NSError {
                 NSLog("Couldn't cache the database! Error:\(error.description)")
+        }
+    }
+    
+    static func promiseCacheRemoteCalibreDB(localDirectory: URL, remoteDBURL: URL) -> Promise<URL> {
+        return Promise<URL> { seal in
+            do {
+                let localDBURL = localDirectory.appendingPathComponent("metadata.db")
+
+                NSLog("... caching copy of database")
+                try FileManager.default.copyItem(atPath: remoteDBURL.path, toPath: localDBURL.path)
+                NSLog("Database cached!")
+                
+                seal.fulfill(localDBURL)
+            } catch let error as NSError {
+                NSLog("Couldn't cache the database! Error:\(error.description)")
+                seal.reject(error)
+            }
+        }
+    }
+    
+
+    
+    static func promiseOpenDatabase(atPath path: String) -> Promise<DatabaseQueue> {
+        return Promise<DatabaseQueue> { seal in
+            do {
+                NSLog("Opening database at: \(path)")
+                let dbQueue = try DatabaseQueue(path: path)
+                seal.resolve(.fulfilled(dbQueue))
+            } catch {
+                seal.reject(error)
+            }
         }
     }
     

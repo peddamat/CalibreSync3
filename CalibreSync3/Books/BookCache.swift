@@ -8,6 +8,8 @@
 
 import SwiftUI
 import Combine
+import PromiseKit
+import GRDB
 
 class BookCache: ObservableObject {
 //    @Published var books = [Book]()
@@ -42,6 +44,30 @@ class BookCache: ObservableObject {
         }
     }
     
+    static func promiseGetBookCoverURLs(dbQueue: DatabaseQueue, withBaseURL: URL) -> Promise<[String]> {
+        func createURL(baseURL: URL, bookPath: String) -> String {
+//            let bookCoverURL = baseURL.appendingPathComponent(bookPath).appendingPathComponent("cover.jpg")
+//            let bookCoverURL = baseURL.appendingPathComponent(bookPath)
+//            let bookCoverURL = URL(string: "/" + bookPath + "/")!
+            return bookPath
+        }
+        
+        return Promise<[String]> { seal in
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try dbQueue.read { db in
+                        let newBooks = try Book.fetchAll(db)
+                        let bookCoverURLs = newBooks.compactMap { createURL(baseURL: withBaseURL, bookPath: $0.path) }
+                        seal.fulfill(bookCoverURLs)
+                    }
+                } catch {
+                    NSLog("Error: Unable to get books")
+                    seal.reject(error)
+                }
+            }
+        }
+    }
+    
 //    static func cacheBookCovers(calibreDB: CalibreDB) {
 //        NSLog("Getting books!")
 //        DispatchQueue.global(qos: .userInitiated).async {
@@ -69,11 +95,11 @@ class BookCache: ObservableObject {
     }
     
     func getBookCoverURL(settingStore: SettingStore, book: Book) -> URL {
-        return URL(fileURLWithPath: settingStore.calibreRemoteLibraryPath! + "/" + book.path + "/cover.jpg")
+        return URL(fileURLWithPath: settingStore.calibreLocalLibraryPath!.path + "/" + book.path + "/cover.jpg")
     }
     
     func getBookFileURL(settingStore: SettingStore, book: Book, format: BookFormat) -> URL {
-        let tempPath = settingStore.calibreRemoteLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        let tempPath = settingStore.calibreLocalLibraryPath!.path + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
     }
     
@@ -101,6 +127,7 @@ class BookCache: ObservableObject {
                         continue
                 }
                 if !isDirectory && name == "cover.jpg" {
+                
                     let foundCover = fileURL.path.dropFirst(urlCount)
                     NSLog("Found cover at: \(foundCover)")
                     coverURLs.append(URL(fileURLWithPath: String(foundCover)))

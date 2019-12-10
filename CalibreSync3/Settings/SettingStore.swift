@@ -71,13 +71,13 @@ final class SettingStore: ObservableObject {
         }
     }
     
+    var calibreLocalLibraryPath: URL? {
+        return FileHelper.getDocumentsDirectory()
+    }
+    
     static func calibreLocalDBURL() throws -> URL {
-        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        
-        guard documentsUrl.count != 0 else {
-            throw ErrorsToThrow.documentsDirectoryMissing // Could not find documents URL
-        }
-        return documentsUrl.first!.appendingPathComponent("metadata-cache.db")
+        let documentsURL = FileHelper.getDocumentsDirectory()!
+        return documentsURL.appendingPathComponent("metadata.db")
     }
     
     func isKeyPresentInUserDefaults(key: String) -> Bool {
