@@ -31,7 +31,12 @@ struct RefreshableScrollView<Content: View>: View {
                 ZStack(alignment: .top) {
                     MovingView()
                     
-                    VStack { self.content }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
+                    VStack {
+                        SearchView()
+                            .padding(.top, 10)
+                        self.content
+                        
+                    }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
                     
                     SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
                 }
@@ -139,6 +144,7 @@ struct RefreshableKeyTypes {
     enum ViewType: Int {
         case movingView
         case fixedView
+        case bottomView
     }
 
     struct PrefData: Equatable {
