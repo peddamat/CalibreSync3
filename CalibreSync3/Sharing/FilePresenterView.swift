@@ -67,7 +67,7 @@ struct FilePresenterUIView : UIViewRepresentable {
     // TODO: See if we can completely hide the ugly gray background...
     func makeUIView(context: _Context) -> ProvideViewCoordsView {
         let v = ProvideViewCoordsView(frame: CGRect(origin: .zero, size: CGSize(width: 10, height: 10)))
-        v.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        v.backgroundColor = UIColor.red.withAlphaComponent(0.0)
         v.setNeedsLayout()
         context.coordinator.setup(v)
         return v

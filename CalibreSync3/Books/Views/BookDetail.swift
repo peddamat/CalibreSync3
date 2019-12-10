@@ -53,7 +53,7 @@ struct BookDetail: View {
     
     var body: some View {
         
-            
+        ZStack {
             ScrollView {
                 VStack {
                     BookHeader(book: book, bookCache: bookCache)
@@ -77,45 +77,25 @@ struct BookDetail: View {
                             PopSheet(title: Text("Select a format"), buttons: self.getActions()!)
                         })
                         
-    //                    Button(action: {
-    //                        print("Clicked")
-    //                        DispatchQueue.global(qos: .userInitiated).async {
-    //                            var task: URLSessionDataTask!
-    //
-    //                            task = URLSession.shared.dataTask(with: URL(string: "https://download-installer.cdn.mozilla.net/pub/firefox/releases/71.0/mac/en-US/Firefox%2071.0.dmg")!) { data, response, error in
-    //                                guard let data = data else { return }
-    //                                DispatchQueue.main.async {
-    //                                    NSLog("downloaded")
-    //                                }
-    //                            }
-    //                            let observation = task.progress.observe(\.fractionCompleted) { progress, _ in
-    //                              print(progress.fractionCompleted)
-    //                            }
-    //                            task.resume()
-    //                        }
-    //                    }) {
-    //                        Image(systemName: "square.and.arrow.down")
-    //                            .font(.system(.body, design: .rounded))
-    //                            .foregroundColor(.white)
-    //                            .padding()
-    //                            .frame(minWidth: 70, maxWidth: 70)
-    //                            .background(Color(red: 0/255, green: 212/255, blue: 255/255))
-    //                            .cornerRadius(10)
-    //                            .padding(.horizontal)
-    //                    }
+    
                     }
                 
                     //                TagList()
                     BookSummary(book: book, dbQueue: dbQueue)
                     Spacer()
                 }
-                
             }
-                .padding(10)
-            .sheet(isPresented: $showDocumentSheet) {
+            .padding(10)
+//            .sheet(isPresented: $showDocumentSheet) {
+//                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
+//                .opacity(0)
+//            }
+            if(showDocumentSheet) {
                 FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
             }
         }
+            
+    }
 
 }
 
