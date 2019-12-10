@@ -9,7 +9,7 @@
 import GRDB
 
 // Book
-struct BookComment {
+struct DiskBookComment {
     
     var id: Int64
     var text: String
@@ -17,11 +17,11 @@ struct BookComment {
     static let databaseTableName = "Comments"
 }
 
-extension BookComment: Hashable { }
+extension DiskBookComment: Hashable { }
 
 // MARK: - Persistence
 
-extension BookComment: Codable, Identifiable, MutablePersistableRecord {
+extension DiskBookComment: Codable, Identifiable, MutablePersistableRecord {
     private enum Columns {
         static let id = Column(CodingKeys.id)
         static let text = Column(CodingKeys.text)
@@ -30,9 +30,9 @@ extension BookComment: Codable, Identifiable, MutablePersistableRecord {
 
 // MARK: - Associations
 
-extension BookComment: TableRecord, FetchableRecord, EncodableRecord {
-    static let book = belongsTo(Book.self, using: ForeignKey(["book"]))
-    var book: QueryInterfaceRequest<Book> {
-        return request(for: BookComment.book)
+extension DiskBookComment: TableRecord, FetchableRecord, EncodableRecord {
+    static let book = belongsTo(DiskBook.self, using: ForeignKey(["book"]))
+    var book: QueryInterfaceRequest<DiskBook> {
+        return request(for: DiskBookComment.book)
     }
 }

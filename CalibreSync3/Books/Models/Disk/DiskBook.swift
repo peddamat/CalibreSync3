@@ -9,7 +9,7 @@
 import GRDB
 
 // Author
-struct Book {
+struct DiskBook {
     var id: Int64
     var title: String
     var path: String
@@ -20,11 +20,11 @@ struct Book {
     static let databaseTableName = "Books"
 }
 
-extension Book: Hashable { }
+extension DiskBook: Hashable { }
 
 // MARK: - Persistence
 
-extension Book: Codable, Identifiable, MutablePersistableRecord {
+extension DiskBook: Codable, Identifiable, MutablePersistableRecord {
     private enum Columns {
         static let id = Column(CodingKeys.id)
         static let title = Column(CodingKeys.title)
@@ -38,17 +38,17 @@ extension Book: Codable, Identifiable, MutablePersistableRecord {
 
 // MARK: - Persistence
 
-extension Book {
-    static func orderedByName() -> QueryInterfaceRequest<Book> {
-        return Book.order(Columns.title)
+extension DiskBook {
+    static func orderedByName() -> QueryInterfaceRequest<DiskBook> {
+        return DiskBook.order(Columns.title)
     }
 }
 
 // MARK: - Associations
 
-extension Book: TableRecord, FetchableRecord, EncodableRecord {
-    static let comments = hasMany(BookComment.self)
-    var comments: QueryInterfaceRequest<BookComment> {
-        return request(for: Book.comments)
+extension DiskBook: TableRecord, FetchableRecord, EncodableRecord {
+    static let comments = hasMany(DiskBookComment.self)
+    var comments: QueryInterfaceRequest<DiskBookComment> {
+        return request(for: DiskBook.comments)
     }
 }

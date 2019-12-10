@@ -13,8 +13,8 @@ import GRDB
 
 class BookCache: ObservableObject {
 //    @Published var books = [Book]()
-    var didChange = PassthroughSubject<[Book], Never>()
-    var books = [Book]() {
+    var didChange = PassthroughSubject<[DiskBook], Never>()
+    var books = [DiskBook]() {
         didSet {
             didChange.send(books)
         }
@@ -31,7 +31,7 @@ class BookCache: ObservableObject {
                 do {
                     let dbQueue = try calibreDB.load()
                     try dbQueue.read { db in
-                        let newBooks = try Book.limit(limit, offset: offset).fetchAll(db)
+                        let newBooks = try DiskBook.limit(limit, offset: offset).fetchAll(db)
                         DispatchQueue.main.async {
                             NSLog("Retrieved \(newBooks.count) books")
                             self.books.append(contentsOf: newBooks)
@@ -56,7 +56,7 @@ class BookCache: ObservableObject {
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     try dbQueue.read { db in
-                        let newBooks = try Book.fetchAll(db)
+                        let newBooks = try DiskBook.fetchAll(db)
                         let bookCoverURLs = newBooks.compactMap { createURL(baseURL: withBaseURL, bookPath: $0.path) }
                         seal.fulfill(bookCoverURLs)
                     }
@@ -94,11 +94,11 @@ class BookCache: ObservableObject {
         self.books.removeLast()
     }
     
-    func getBookCoverURL(settingStore: SettingStore, book: Book) -> URL {
+    func getBookCoverURL(settingStore: SettingStore, book: DiskBook) -> URL {
         return URL(fileURLWithPath: settingStore.calibreLocalLibraryPath!.path + "/" + book.path + "/cover.jpg")
     }
     
-    func getBookFileURL(settingStore: SettingStore, book: Book, format: BookFormat) -> URL {
+    func getBookFileURL(settingStore: SettingStore, book: DiskBook, format: DiskBookFormat) -> URL {
         let tempPath = settingStore.calibreLocalLibraryPath!.path + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
     }

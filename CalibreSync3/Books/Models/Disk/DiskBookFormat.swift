@@ -8,7 +8,7 @@
 
 import GRDB
 
-struct BookFormat {
+struct DiskBookFormat {
     
     var id: Int64
     var format: String
@@ -17,11 +17,11 @@ struct BookFormat {
     static let databaseTableName = "Data"
 }
 
-extension BookFormat: Hashable { }
+extension DiskBookFormat: Hashable { }
 
 // MARK: - Persistence
 
-extension BookFormat: Codable, Identifiable, MutablePersistableRecord {
+extension DiskBookFormat: Codable, Identifiable, MutablePersistableRecord {
     private enum Columns {
         static let id = Column(CodingKeys.id)
         static let format = Column(CodingKeys.format)
@@ -30,10 +30,10 @@ extension BookFormat: Codable, Identifiable, MutablePersistableRecord {
 }
 
 // MARK: - Associations
-extension BookFormat: TableRecord, FetchableRecord, EncodableRecord {
-    static let book = belongsTo(Book.self, using: ForeignKey(["book"]))
-    var book: QueryInterfaceRequest<Book> {
-        return request(for: BookFormat.book)
+extension DiskBookFormat: TableRecord, FetchableRecord, EncodableRecord {
+    static let book = belongsTo(DiskBook.self, using: ForeignKey(["book"]))
+    var book: QueryInterfaceRequest<DiskBook> {
+        return request(for: DiskBookFormat.book)
     }
 }
 

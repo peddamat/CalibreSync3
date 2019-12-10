@@ -127,7 +127,7 @@ struct MainView: View  {
     @EnvironmentObject var settingStore: SettingStore
 //    @State var bookCache = BookCache()
     @Binding var bookCache: BookCache
-    @State private var books: [Book] = []
+    @State private var books: [DiskBook] = []
     @ObservedObject var model = MyModel()
             
     // Book cover grid styling options

@@ -7,14 +7,15 @@
 //
 
 import SwiftUI
+import PromiseKit
 
 struct OnboardingView: View {
     @State private var show_modal: Bool = false
     @EnvironmentObject var settingStore: SettingStore
     
-    @State private var step1: Bool = false
+    @State private var showFoundCalibreDB: Bool = false
     @State private var step2: Bool = false
-    @State private var step3: Bool = false
+    @State private var showDatabaseError: Bool = false
     
     @State private var copyProgress: CGFloat = 0.0
     
@@ -22,82 +23,45 @@ struct OnboardingView: View {
     
     let bgColor = Color(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
     
+    func getFolder() -> Promise<Bool> {
+        return Promise { seal in
+            seal.fulfill(true)
+        }
+    }
+    
     func saveCalibrePath(_ pickedFolderURL: URL) {
-        var documentsURL: URL
-        // Make sure this is actually a Calibre Library
-        do {
-            documentsURL = pickedFolderURL.appendingPathComponent("metadata.db")
-            NSLog("Checking for database in \(documentsURL.path)")
-            
-            let shouldStopAccessing = pickedFolderURL.startAccessingSecurityScopedResource()
-            defer { if shouldStopAccessing { pickedFolderURL.stopAccessingSecurityScopedResource() }}
-            
-            try CalibreDB.openDatabase(atPath: documentsURL.path)
-        } catch {
-            NSLog("Can't find a database in \(documentsURL.path)")
-            print(error)
+        
+//        FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
+        pickedFolderURL.startAccessingSecurityScopedResource()
 
-            step3 = true
-            return
+        let pi = pickedFolderURL.appendingPathComponent("metadata.db")
+        
+        firstly {
+            getFolder()
+        }.then { _ in
+            CalibreDB.promiseCacheRemoteCalibreDB(localDirectory: FileHelper.getDocumentsDirectory()!, remoteDBURL: pi)
+        }.then { (databaseURL) in
+            // Make sure we can find the Calibre database
+            CalibreDB.promiseOpenDatabase(atPath: databaseURL.path)
+        }.then { (dbQueue) in
+            // Retrieve books
+            BookCache.promiseGetBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
+//            CalibreDB.promiseCacheRemoteCalibreDB(settingStore: self.settingStore, calibreRemoteURL: pickedFolderURL)
+        }.then { (bookCoverURLs) in
+            // Cache book covers
+            FileHelper.promiseCopyBookCovers(covers: bookCoverURLs,
+                                             pickedFolderURL: pickedFolderURL,
+                                             destinationFolderURL: FileHelper.getDocumentsDirectory()!)
+        }.ensure {
+        }.done { (result) in
+            self.step2 = true
+            self.pickedURL = pickedFolderURL
+
+        }.catch { (error) in
+            NSLog("Can't find a database in \(pickedFolderURL.path)")
+            print(error)
+            self.showDatabaseError = true
         }
-        
-        step1 = true
-        
-        // Cache a copy of the database
-        try! CalibreDB.cacheRemoteCalibreDB(settingStore: settingStore, calibreRemoteURL: pickedFolderURL)
-        
-        // Cache the book covers
-        let covers = BookCache.findAllBookCovers(pickedFolderURL: pickedFolderURL)
-        var currCount = 0
-        let totalCount = covers.count
-        
-        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        
-        guard documentsUrl.count != 0 else {
-            return
-        }
-        
-        let documentURL = documentsUrl.first!
-        
-        for coverURL in covers {
-            currCount += 1
-            DispatchQueue.global(qos: .userInitiated).async {
-                let baseURL = coverURL.deletingLastPathComponent()
-                let originURL = pickedFolderURL.appendingPathComponent(coverURL.path)
-                let destinationURL = documentURL.appendingPathComponent(String(baseURL.path.dropFirst()))
-                let destinationURL2 = documentURL.appendingPathComponent(String(baseURL.path.dropFirst())).appendingPathComponent("cover.jpg")
-                
-                NSLog("Creating directory at: \(destinationURL.path)")
-                do {
-                    try FileManager.default.createDirectory(
-                        atPath: destinationURL.path,
-                        withIntermediateDirectories: true,
-                        attributes: nil
-                    )
-                } catch {
-                    NSLog("Couldn't create directory!")
-                }
-                    
-                
-                let shouldStopAccessing = pickedFolderURL.startAccessingSecurityScopedResource()
-                defer { if shouldStopAccessing { pickedFolderURL.stopAccessingSecurityScopedResource() }}
-                
-                do {
-                    try FileManager.default.copyItem(at: originURL, to: destinationURL2)
-                } catch {
-                    NSLog("Couldn't copy file")
-                    NSLog(" From: \(originURL.path)")
-                    NSLog(" To: \(destinationURL2.path)")
-                    print("Error: \(error)")
-                }
-                DispatchQueue.main.async {
-                    self.copyProgress = CGFloat(currCount / totalCount)
-                }
-            }
-        }
-        
-        step2 = true
-        self.pickedURL = pickedFolderURL        
     }
     
     var body: some View {
@@ -132,7 +96,7 @@ struct OnboardingView: View {
                         .padding(.horizontal)
                 }
 
-                if (self.step1) {
+                if (self.showFoundCalibreDB) {
                     Text("Great!  Now we're going to download a local copy of your database.  This may take a few minutes.")
 
                     HStack {
@@ -161,10 +125,9 @@ struct OnboardingView: View {
                             .cornerRadius(10)
                             .padding(.horizontal)
                     }
-                    
                 }
                 
-                if (self.step3) {
+                if (self.showDatabaseError) {
                     Text("Uh oh, we couldn't find a Calibre database in this location.  Try selecting another folder.")
                 }
                 
