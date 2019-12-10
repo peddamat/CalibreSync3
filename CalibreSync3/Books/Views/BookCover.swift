@@ -13,21 +13,31 @@ struct BookCover: View {
         ZStack(alignment: .init(horizontal: .center, vertical: .center)) {
 //            ImageView(withURL: fetchURL)
 //                .aspectRatio(contentMode: .fit)
-                        
-            RemoteImage(
-                with: fetchURL,
-                imageView: { Image(uiImage: $0).resizable() },
-                loadingPlaceHolder: { ProgressView(progress: $0) },
-                errorPlaceHolder: { ErrorView(error: $0) },
-                config: Config(),
-                completion: { (status) in
-                    switch status {
-                    case .success(let image): NSLog("success! imageSize: \(image.size)")
-                    case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
-                    }
-                }
-            ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
 
+            VStack {
+                if(fetchURL.scheme == "https") {
+                    Image("cover")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
+                } else {
+                
+                    RemoteImage(
+                        with: fetchURL,
+                        imageView: { Image(uiImage: $0).resizable() },
+                        loadingPlaceHolder: { ProgressView(progress: $0) },
+                        errorPlaceHolder: { ErrorView(error: $0) },
+                        config: Config(),
+                        completion: { (status) in
+                            switch status {
+                            case .success(let image): NSLog("success! imageSize: \(image.size)")
+                            case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
+                            }
+                        }
+                    ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
+                }
+            }
+                
             VStack(alignment: .leading) {
                 Spacer()
                 
@@ -36,6 +46,8 @@ struct BookCover: View {
                     .foregroundColor(.white)
                     .opacity(0.5)
             }.frame(width: BOOK_WIDTH)
+            
+            DownloadView()
         }
 //        .overlay(
 //            RoundedRectangle(cornerRadius: 16)
@@ -44,18 +56,87 @@ struct BookCover: View {
 //        .cornerRadius(16)
     }
     
-    struct ProgressView: View {
-        let progress: Float
+    struct DownloadView: View {
+        var downloaded = false
+        
         var body: some View {
-            return GeometryReader { (geometry) in
-                ZStack(alignment: .bottom) {
-                    Rectangle().fill(Color.gray)
-                    Rectangle().fill(Color.green)
-                        .frame(width: nil, height: geometry.frame(in: .global).height * CGFloat(self.progress), alignment: .bottom)
+            VStack {
+                Spacer()
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: BOOK_WIDTH, height:20, alignment:.bottom)
+                        .background(Color.black)
+                        .opacity(0.1)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Image(systemName: self.downloaded ? "cloud.fill" : "cloud")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width:BOOK_WIDTH/5, height:BOOK_HEIGHT/6)
+                            .font(.system(size: 50))
+                            .foregroundColor(.yellow)
+                            .opacity(1)
+                        //    .offset(x:BOOK_WIDTH/2 - 10, y:BOOK_HEIGHT/2 - 10)
+                    }
                 }
-            }
+            }.frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .bottom)
         }
     }
+    
+    struct ProgressView: View {
+        let progress: Float
+        private let kPreviewBackground = Color(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
+        var body: some View {
+            ZStack {
+                kPreviewBackground
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    ActivityIndicator()
+                        .frame(width: 50, height: 50)
+                }.foregroundColor(Color.white)
+            }
+        }
+//        var body: some View {
+//            return GeometryReader { (geometry) in
+//                ZStack(alignment: .bottom) {
+//                    Rectangle().fill(Color.gray)
+//                    Rectangle().fill(Color.green)
+//                        .frame(width: nil, height: geometry.frame(in: .global).height * CGFloat(self.progress), alignment: .bottom)
+//                }
+//            }
+//        }
+//
+    }
+    
+    struct ActivityIndicator: View {
+        @State private var isAnimating: Bool = false
+        
+        var body: some View {
+            GeometryReader { (geometry: GeometryProxy) in
+                ForEach(0..<5) { index in
+                    Group {
+                        Circle()
+                            .frame(width: geometry.size.width / 5, height: geometry.size.height / 5)
+                            .scaleEffect(!self.isAnimating ? 1 - CGFloat(index) / 5 : 0.2 + CGFloat(index) / 5)
+                            .offset(y: geometry.size.width / 10 - geometry.size.height / 2)
+                    }.frame(width: geometry.size.width, height: geometry.size.height)
+                        .rotationEffect(!self.isAnimating ? .degrees(0) : .degrees(360))
+                        .animation(Animation
+                            .timingCurve(0.5, 0.15 + Double(index) / 5, 0.25, 1, duration: 1.5)
+                            .repeatForever(autoreverses: false))
+                }
+            }.aspectRatio(1, contentMode: .fit)
+                .onAppear {
+                    self.isAnimating = true
+                }
+        }
+        
+    }
+    
     struct ErrorView: View {
         let error: Error
         var body: some View {
@@ -123,8 +204,10 @@ class ImageLoader2: ObservableObject {
 
 #if DEBUG
 struct BookCover_Previews: PreviewProvider {
+    @State var downloaded = true
     static var previews: some View {
         BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
+//        DownloadView(downloaded: true)
     }
 }
 #endif
