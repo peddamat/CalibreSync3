@@ -47,7 +47,7 @@ struct DownloadButtonView: View {
                         self.progress2 = data["percentage"]! as! Float
                     }
                 }
-            }                
+            }
         }
     }
     

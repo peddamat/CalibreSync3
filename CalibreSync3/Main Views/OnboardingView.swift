@@ -32,20 +32,17 @@ struct OnboardingView: View {
     func saveCalibrePath(_ pickedFolderURL: URL) {
         
 //        FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
-        pickedFolderURL.startAccessingSecurityScopedResource()
-
-        let pi = pickedFolderURL.appendingPathComponent("metadata.db")
         
         firstly {
             getFolder()
         }.then { _ in
-            CalibreDB.promiseCacheRemoteCalibreDB(localDirectory: FileHelper.getDocumentsDirectory()!, remoteDBURL: pi)
-        }.then { (databaseURL) in
+            CalibreDB.copyDatabase(from: pickedFolderURL, to: FileHelper.getDocumentsDirectory()!)
+        }.then { (localDBURL) in
             // Make sure we can find the Calibre database
-            CalibreDB.promiseOpenDatabase(atPath: databaseURL.path)
+            CalibreDB.openDatabase(atPath: localDBURL.path)
         }.then { (dbQueue) in
             // Retrieve books
-            BookCache.promiseGetBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
+            CalibreDB.promiseGetBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
 //            CalibreDB.promiseCacheRemoteCalibreDB(settingStore: self.settingStore, calibreRemoteURL: pickedFolderURL)
         }.then { (bookCoverURLs) in
             // Cache book covers
@@ -113,7 +110,7 @@ struct OnboardingView: View {
                     
                     Button(action: {
                         // Tell the rest of the application that we're ready
-                        self.settingStore.saveCalibrePath(self.pickedURL!)
+                        self.settingStore.saveRemoteLibraryBookmark(self.pickedURL!)
                     }) {
                         Text("Next")
                             .font(.system(.body, design: .rounded))

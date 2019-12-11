@@ -34,7 +34,8 @@ class FileHelper {
                     
 //                    let srcFile = pickedFolderURL.appendingPathComponent(coverURL.path).appendingPathComponent("cover.jpg")
 //                    let srcFile = coverURL.appendingPathComponent("cover.jpg")
-                    let srcFile = pickedFolderURL.appendingPathComponent(coverURL).appendingPathComponent("cover.jpg")
+                    let srcDirectory = pickedFolderURL.appendingPathComponent(coverURL)
+                    let srcFile = srcDirectory.appendingPathComponent("cover.jpg")
                     let dstDirectory = destinationFolderURL.appendingPathComponent(coverURL)
                     let dstFile = dstDirectory.appendingPathComponent("cover.jpg")
                     
@@ -51,16 +52,17 @@ class FileHelper {
                         seal.reject(error)
                     }
                     
-                    FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
+//                    FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
+                    let shouldStopAccessing = srcFile.startAccessingSecurityScopedResource()
+                    defer { if shouldStopAccessing { srcFile.stopAccessingSecurityScopedResource() }}
                     
                     do {
                         NSLog("Copying cover to: \(dstFile.path)")
-                        try FileManager.default.copyItem(atPath: srcFile.path, toPath: dstFile.path)
+                        try FileManager.default.copyItem(at: srcFile, to: dstFile)
                     } catch {
-                        NSLog("Couldn't copy file from: \(srcFile.path)!")
+                        NSLog("Couldn't copy file from: \(srcFile.path)")
                         print(error)
-//                        seal.reject(error)
-                        
+//                        seal.reject(error)                        
                     }
                 }
                 

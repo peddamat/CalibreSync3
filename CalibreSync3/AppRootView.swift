@@ -14,10 +14,12 @@ struct AppRootView: View {
     
     var body: some View {
         Group {
-            if settingStore.calibreRemoteLibraryBookmark == nil {
+            // If we don't 
+            if settingStore.remoteLibraryBookmark == nil {
                 OnboardingView().environmentObject(settingStore)
 //                SettingsView().environmentObject(settingStore)
-            } else {
+            }
+            else {
                 TabView(selection: $selection) {
                     SideMenuView()
                     .tabItem {
@@ -27,7 +29,7 @@ struct AppRootView: View {
                             }
                         }
                         .tag(0)
-                    ContentView().environmentObject(settingStore)
+                    ContentView(bookCache: BookCache(settingStore: settingStore)).environmentObject(settingStore)
                         .tabItem {
                             VStack {
                                 Image(systemName: "rectangle.3.offgrid.fill")

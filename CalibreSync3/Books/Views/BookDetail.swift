@@ -10,13 +10,14 @@ import GRDB
 import SwiftUI
 
 struct BookDetail: View {
+    @EnvironmentObject var settingStore: SettingStore
+
     var book: DiskBook
     var bookCache: BookCache
     var calibreDB: CalibreDB
     var dbQueue: DatabaseQueue {
-        calibreDB.getDBqueue()
+        calibreDB.dbQueue
     }
-    @EnvironmentObject var settingStore: SettingStore
     
     @State private var showingSheet = false
     @State private var showDocumentSheet = false
@@ -34,7 +35,7 @@ struct BookDetail: View {
                     .fetchAll(db)
                 
                 for format in formats {
-                    let bookPath = "file://" + self.bookCache.getBookFileURL(settingStore: self.settingStore, book: self.book, format: format).path
+                    let bookPath = "file://" + self.bookCache.getFile(forBook: self.book, withFormat: format).path
                     
                     let button = (Int(book.id), format.format, bookPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
                     buttons.append(button)
@@ -85,14 +86,12 @@ struct BookDetail: View {
 }
 
 struct BookHeader: View {
-    @EnvironmentObject var settingStore: SettingStore
-    
     var book: DiskBook
     var bookCache: BookCache
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-            BookCover(title: (book.title.trimmingCharacters(in: .whitespacesAndNewlines)), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
+            BookCover(title: (book.title.trimmingCharacters(in: .whitespacesAndNewlines)), fetchURL: self.bookCache.getCover(forBook: book))
             
             VStack(alignment: .leading, spacing:5) {
                 Text(book.title.trimmingCharacters(in: .whitespacesAndNewlines))

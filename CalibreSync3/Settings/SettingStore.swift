@@ -31,7 +31,22 @@ final class SettingStore: ObservableObject {
         ])
     }
     
-    var calibreRemoteLibraryBookmark: Data? {
+    func saveRemoteLibraryBookmark(_ url: URL) {
+        NSLog(url.path)
+        
+        do {
+            let shouldStopAccessing = url.startAccessingSecurityScopedResource()
+            defer { if shouldStopAccessing { url.stopAccessingSecurityScopedResource() } }
+            
+            let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+            
+            self.remoteLibraryBookmark = bookmark
+        } catch let error {
+            
+        }
+    }
+    
+    var remoteLibraryBookmark: Data? {
         get {
             defaults.data(forKey: "view.preferences.calibreLibraryPath")
         }
@@ -42,14 +57,14 @@ final class SettingStore: ObservableObject {
         }
     }
     
-    var calibreRemoteLibraryURL: URL? {
+    var remoteLibraryURL: URL? {
         get {
-            if self.calibreRemoteLibraryBookmark == nil {
+            if self.remoteLibraryBookmark == nil {
                 return nil
             } else {
                 var urlResult = false
                 
-                guard let calibreRoot = calibreRemoteLibraryBookmark else {
+                guard let calibreRoot = remoteLibraryBookmark else {
                     return nil
                 }
                 
@@ -62,63 +77,38 @@ final class SettingStore: ObservableObject {
         }
     }
     
-    var calibreRemoteLibraryPath: String? {
+    var remoteLibraryPath: String? {
         get {
-            guard self.calibreRemoteLibraryURL != nil else {
+            guard self.remoteLibraryURL != nil else {
                 return nil
             }
-            return self.calibreRemoteLibraryURL?.path
+            return self.remoteLibraryURL?.path
         }
     }
-    
-    var calibreLocalLibraryPath: URL? {
+        
+    var localLibraryURL: URL? {
         return FileHelper.getDocumentsDirectory()
     }
     
-    static func calibreLocalDBURL() throws -> URL {
-        let documentsURL = FileHelper.getDocumentsDirectory()!
-        return documentsURL.appendingPathComponent("metadata.db")
+    var localLibraryPath: String? {
+        get {
+            guard self.localLibraryURL != nil else {
+                return nil
+            }
+            return self.localLibraryURL?.path
+        }
     }
     
+    var localDBURL: URL? {
+        get {
+            guard self.localLibraryURL != nil else {
+                return nil
+            }
+            return self.localLibraryURL!.appendingPathComponent("metadata.db")
+        }
+    }
+        
     func isKeyPresentInUserDefaults(key: String) -> Bool {
         return defaults.object(forKey: key) != nil
-    }
-    
-    func saveCalibrePath(_ url: URL) {
-        NSLog(url.path)
-        
-        do {
-            let shouldStopAccessing = url.startAccessingSecurityScopedResource()
-            defer { if shouldStopAccessing { url.stopAccessingSecurityScopedResource() } }
-            
-            let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
-            
-            self.calibreRemoteLibraryBookmark = bookmark
-        } catch let error {
-            
-        }
-    }
-    
-    func getCalibreURL() throws -> URL {
-        var urlResult = false
-        guard let calibreRoot = calibreRemoteLibraryBookmark else {
-            throw ErrorsToThrow.calibrePathNotSet
-        }
-        
-        do {
-            return try URL(resolvingBookmarkData: calibreRoot, options: [], relativeTo: nil, bookmarkDataIsStale: &urlResult)
-        } catch {
-            if urlResult {
-                NSLog("Bookmark data has expired!")
-            }
-            else {
-                NSLog("Can't retrieve the bookmark data, wtf!")
-            }
-            throw ErrorsToThrow.calibrePathNotResolving
-        }
-    }
-    
-    func getCalibrePath() throws -> String {
-        return try getCalibreURL().path
     }
 }

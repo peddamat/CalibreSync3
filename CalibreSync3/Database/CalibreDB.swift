@@ -12,43 +12,48 @@ import PromiseKit
 
 class CalibreDB {
     var settingStore: SettingStore
-    private var dbQueue: DatabaseQueue
+    private var _dbQueue: DatabaseQueue
     private let fileManager = FileManager.default
     
     init(settingStore: SettingStore) throws {
         self.settingStore = settingStore
         
-        let localDBURL = try SettingStore.calibreLocalDBURL()
+        let localDBURL = settingStore.localDBURL!
 
         if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
             NSLog("Can't find a cached copy of the database at \(localDBURL.path)")
             throw ErrorsToThrow.calibreLocalDatabaseMissing
         }
 
-        self.dbQueue = try! CalibreDB.openDatabase(atPath: localDBURL.path)
+        self._dbQueue = try! DatabaseQueue(path: localDBURL.path)
     }
+    
+    func load() throws  -> DatabaseQueue {
+        let localDBURL = settingStore.localDBURL!
 
-    static func cacheRemoteCalibreDB(settingStore: SettingStore, calibreRemoteURL: URL) throws {
-        let localDBURL = try SettingStore.calibreLocalDBURL()        
-        let documentsURL = calibreRemoteURL.appendingPathComponent("metadata.db")
+        if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
+            NSLog("Can't find a cached copy of the database at \(localDBURL.path)")
+            throw ErrorsToThrow.calibreLocalDatabaseMissing
+        }
+    
+        return try DatabaseQueue(path: localDBURL.path)
+    }
         
-        do {
-            NSLog("... caching copy of database")
-            let shouldStopAccessing = calibreRemoteURL.startAccessingSecurityScopedResource()
-            defer { if shouldStopAccessing { calibreRemoteURL.stopAccessingSecurityScopedResource() }}
-
-            try FileManager.default.copyItem(atPath: documentsURL.path, toPath: localDBURL.path)
-            NSLog("Database cached!")
-              } catch let error as NSError {
-                NSLog("Couldn't cache the database! Error:\(error.description)")
+    var dbQueue: DatabaseQueue {
+        get {
+            return self._dbQueue
         }
     }
     
-    static func promiseCacheRemoteCalibreDB(localDirectory: URL, remoteDBURL: URL) -> Promise<URL> {
+    static func copyDatabase(from remoteDirectory: URL, to localDirectory: URL) -> Promise<URL> {
         return Promise<URL> { seal in
             do {
-                let localDBURL = localDirectory.appendingPathComponent("metadata.db")
+                let shouldStopAccessing = remoteDirectory.startAccessingSecurityScopedResource()
+                defer { if shouldStopAccessing { remoteDirectory.stopAccessingSecurityScopedResource() } }
 
+                let remoteDBURL = remoteDirectory.appendingPathComponent("metadata.db")
+                let localDBURL = localDirectory.appendingPathComponent("metadata.db")
+                
                 NSLog("... caching copy of database")
                 try FileManager.default.copyItem(atPath: remoteDBURL.path, toPath: localDBURL.path)
                 NSLog("Database cached!")
@@ -61,13 +66,21 @@ class CalibreDB {
         }
     }
     
-
-    
-    static func promiseOpenDatabase(atPath path: String) -> Promise<DatabaseQueue> {
+    static func openDatabase(atPath path: String) -> Promise<DatabaseQueue> {
         return Promise<DatabaseQueue> { seal in
             do {
                 NSLog("Opening database at: \(path)")
                 let dbQueue = try DatabaseQueue(path: path)
+
+//                var migrator = DatabaseMigrator()
+//                // 1st migration
+//                migrator.registerMigration("addDownloadsToBooks") { db in
+//                    try db.alter(table: "Books") { t in
+//                        t.add(column: "downloaded", .text)
+//                    }
+//                }
+//                try migrator.migrate(dbQueue)
+
                 seal.resolve(.fulfilled(dbQueue))
             } catch {
                 seal.reject(error)
@@ -75,55 +88,53 @@ class CalibreDB {
         }
     }
     
-    static func openDatabase(atPath path: String) throws -> DatabaseQueue {
-        let dbQueue = try DatabaseQueue(path: path)
+    static func promiseGetBookCoverURLs(dbQueue: DatabaseQueue, withBaseURL: URL) -> Promise<[String]> {
+        func createURL(baseURL: URL, bookPath: String) -> String {
+//            let bookCoverURL = baseURL.appendingPathComponent(bookPath).appendingPathComponent("cover.jpg")
+//            let bookCoverURL = baseURL.appendingPathComponent(bookPath)
+//            let bookCoverURL = URL(string: "/" + bookPath + "/")!
+            return bookPath
+        }
         
-        //try migrator.migrate(dbQueue)
-
-        return dbQueue
+        return Promise<[String]> { seal in
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try dbQueue.read { db in
+                        let newBooks = try DiskBook.fetchAll(db)
+                        let bookCoverURLs = newBooks.compactMap { createURL(baseURL: withBaseURL, bookPath: $0.path) }
+                        seal.fulfill(bookCoverURLs)
+                    }
+                } catch {
+                    NSLog("Error: Unable to get books")
+                    seal.reject(error)
+                }
+            }
+        }
     }
     
-    func load() throws  -> DatabaseQueue {
-        let localDBURL = try SettingStore.calibreLocalDBURL()
-        let dbQueue = try! CalibreDB.openDatabase(atPath: localDBURL.path)
-        
-        return dbQueue
-    }
-    
-    func getDBqueue() -> DatabaseQueue {
-        return self.dbQueue
-    }
-    
-//    func getCalibrePath() -> URL {
-//        return self.calibrePath
-//    }
-//    
-//    func getBooks() -> [Book] {
-//        var books: [Book]?
-//        
-//        let calibreDB = CalibreDB(settingStore: settingStore)
-//        let dbQueue = calibreDB.load()
+//    static func promiseGetDownloadURLs(book: DiskBook, dbQueue: DatabaseQueue, withBaseURL: URL) -> Promise<[String]> {
+//        return Promise<[String]> { seal in
+//            var buttons = [String]()
 //
-//        do {
-//            try dbQueue.read { db -> [Book] in
-//                books = try Book.limit(100).fetchAll(db)
-//                return books!
+//            do {
+//                try dbQueue.read { db -> [String] in
+//                    let formats = try DiskBookFormat
+//                        .filter(Column("book") == book.id)
+//                        .fetchAll(db)
+//
+//                    for format in formats {
+//                        let bookPath = BookCache.getBookFileURL(settingStore: self.settingStore, book: book, format: format)
+//                        NSLog("Copying book in: \(bookPath!.path)")
+//
+//                        buttons.append(bookPath)
+//                    }
+//
+//                    seal.fulfill(buttons)
+//                }
+//            } catch {
+//                NSLog("Error: Unable to get books")
+//                seal.reject(error)
 //            }
-//        } catch {
-//            NSLog("Error: Unable to get books")
 //        }
-//        return books!
-//    }
-    
-//    private func setupDatabase(_ application: UIApplication) throws {
-//        let databaseURL = try Bundle.main.resourceURL!.appendingPathComponent("Test Database").appendingPathComponent("metadata.db")
-//
-//        dbQueue = try AppDatabase.openDatabase(atPath: databaseURL.path)
-//
-//        NSLog(databaseURL.path)
-//
-//        // Be a nice iOS citizen, and don't consume too much memory
-//        // See https://github.com/groue/GRDB.swift/blob/master/README.md#memory-management
-//        dbQueue.setupMemoryManagement(in: application)
 //    }
 }

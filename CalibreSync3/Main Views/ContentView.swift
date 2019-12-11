@@ -14,7 +14,7 @@ import Fuzzy
 
 struct ContentView: View {
     @EnvironmentObject var settingStore: SettingStore
-    @State var bookCache = BookCache()
+    @State var bookCache: BookCache
 
     
     // Modal overlay toggles
@@ -157,7 +157,7 @@ struct MainView: View  {
                         
         //                BookCover(title: (book.title), fetchURL: self.dummyCover)
                         
-                        BookCover(title: (book.title), fetchURL: self.bookCache.getBookCoverURL(settingStore: self.settingStore, book: book))
+                        BookCover(title: (book.title), fetchURL: self.bookCache.getCover(forBook: book))
                             .contextMenu {
                                 Button(action: {
                                     // delete the selected restaurant

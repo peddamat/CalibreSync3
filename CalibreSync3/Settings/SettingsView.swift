@@ -24,7 +24,6 @@ struct SettingsView: View {
             
             let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
             
-            let bookCovers = BookCache.findAllBookCovers(pickedFolderURL: url)
 //            self.settingStore.calibreRemoteLibraryBookmark = bookmark
 //            try! CalibreDB.cacheRemoteCalibreDB(settingStore: settingStore, calibreRemoteURL: url)
         } catch let error {
