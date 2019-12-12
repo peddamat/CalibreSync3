@@ -25,9 +25,9 @@ struct ContentView: View {
     
     var profileButton: some View {
         Button(action: { self.showSettings.toggle() }) {
-            Image(systemName: "person.crop.circle")
+            Image(systemName: "ellipsis")
                 .imageScale(.large)
-                .accessibility(label: Text("User Profile"))
+                .accessibility(label: Text("More"))
                 .padding()
         }
     }
@@ -111,7 +111,6 @@ struct ContentView: View {
             .navigationBarTitle("CalibreSync", displayMode: .inline)
                 .navigationBarItems(leading: menuButton, trailing: HStack {
                 profileButton
-                shareButton
             })
         }
         .navigationViewStyle(
@@ -178,10 +177,10 @@ struct MainView: View  {
                 }
                 .gridStyle(self.style)
                 .onAppear {
-                    self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:333)
+                    self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:99)
                     
                     NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
-                        self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:333)
+                        self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:99)
                     }
                 }
                 .onReceive(self.bookCache.didChange) { books in

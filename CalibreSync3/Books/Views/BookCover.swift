@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 import Macduff
+import URLImage
 
 let BOOK_WIDTH:CGFloat = 115.0
 let BOOK_HEIGHT = BOOK_WIDTH * (4/3)
@@ -22,19 +23,29 @@ struct BookCover: View {
                         .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
                 } else {
                 
-                    RemoteImage(
-                        with: fetchURL,
-                        imageView: { Image(uiImage: $0).resizable() },
-                        loadingPlaceHolder: { ProgressView(progress: $0) },
-                        errorPlaceHolder: { ErrorView(error: $0) },
-                        config: Config(),
-                        completion: { (status) in
-                            switch status {
-                            case .success(let image): NSLog("success! imageSize: \(image.size)")
-                            case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
-                            }
-                        }
-                    ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
+                    URLImage(fetchURL,
+                             delay: 0.25,
+                             processors:[  Resize(size: CGSize(width: BOOK_WIDTH, height: BOOK_HEIGHT), scale: UIScreen.main.scale) ],
+                             content: {
+                                $0.image
+                                    .resizable()                     // Make image resizable
+                                    .aspectRatio(contentMode: .fit) // Fill the frame
+                                })
+                        .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
+                    
+//                    RemoteImage(
+//                        with: fetchURL,
+//                        imageView: { Image(uiImage: $0).resizable() },
+//                        loadingPlaceHolder: { ProgressView(progress: $0) },
+//                        errorPlaceHolder: { ErrorView(error: $0) },
+//                        config: Config(),
+//                        completion: { (status) in
+//                            switch status {
+//                            case .success(let image): NSLog("success! imageSize: \(image.size)")
+//                            case .failure(let error): NSLog("failure... error: \(error.localizedDescription)")
+//                            }
+//                        }
+//                    ).frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
                 }
             }
             
