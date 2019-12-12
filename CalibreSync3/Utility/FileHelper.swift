@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import SwiftUI
 
 class FileHelper {
     static func getDocumentsDirectory() -> URL? {
@@ -26,7 +27,7 @@ class FileHelper {
         }
     }
     
-    static func copyBookCovers(covers: [String], at remoteDirectory: URL, to localDirectory: URL) -> Promise<Bool> {
+    static func copyBookCovers(covers: [String], at remoteDirectory: URL, to localDirectory: URL, bookCount: Binding<CGFloat>) -> Promise<Bool> {
         return Promise<Bool> { seal in
 
             DispatchQueue.global(qos: .userInitiated).async {
@@ -60,6 +61,10 @@ class FileHelper {
                     } catch let error as NSError {
                         NSLog("Couldn't copy cover! Error:\(error.description)")
 //                        seal.reject(error)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        bookCount.wrappedValue += 1
                     }
                 }
                 

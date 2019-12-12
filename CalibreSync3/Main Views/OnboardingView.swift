@@ -17,7 +17,9 @@ struct OnboardingView: View {
     @State private var step2: Bool = false
     @State private var showDatabaseError: Bool = false
     
-    @State private var copyProgress: CGFloat = 0.0
+    @State private var bookCount: CGFloat = 0
+    @State private var bookTotal: CGFloat = 1
+    @State private var copyProgress: CGFloat = 0.5
     
     @State private var pickedURL: URL? = nil
     
@@ -29,26 +31,30 @@ struct OnboardingView: View {
         }
     }
     
+    func showProgress(bookCount: CGFloat) -> Promise<Void> {
+        return Promise<Void> { seal in
+            self.showFoundCalibreDB = true
+            self.bookTotal = bookCount
+            return seal.fulfill(())
+        }
+    }
+    
     func saveCalibrePath(_ pickedFolderURL: URL) {
         
-//        FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
+        getFolder().then { _ in
+
         
-        firstly {
-            getFolder()
-        }.then { _ in
             CalibreDB.copyDatabase(at: pickedFolderURL, to: FileHelper.getDocumentsDirectory()!)
         }.then { (localDBURL) in
-            // Make sure we can find the Calibre database
             CalibreDB.openDatabase(atPath: localDBURL.path)
         }.then { (dbQueue) in
-            // Retrieve books
             CalibreDB.getBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
-//            CalibreDB.promiseCacheRemoteCalibreDB(settingStore: self.settingStore, calibreRemoteURL: pickedFolderURL)
-        }.then { (bookCoverURLs) in
-            // Cache book covers
-            FileHelper.copyBookCovers(covers: bookCoverURLs,
+        }.then { (bookCoverURLs) -> Promise<Bool> in
+            self.showProgress(bookCount: CGFloat(bookCoverURLs.count))
+            return FileHelper.copyBookCovers(covers: bookCoverURLs,
                                              at: pickedFolderURL,
-                                             to: FileHelper.getDocumentsDirectory()!)
+                                             to: FileHelper.getDocumentsDirectory()!,
+                                             bookCount: self.$bookCount)
         }.ensure {
         }.done { (result) in
             self.step2 = true
@@ -98,7 +104,7 @@ struct OnboardingView: View {
 
                     HStack {
                         Spacer()
-                        SimpleProgressBar(circleProgress: $copyProgress, width: 200, height: 20, progressColor: Color(red: 0/255, green: 212/255, blue: 255/255), staticColor: .gray)
+                        SimpleProgressBar(circleProgress: self.$bookCount, bookTotal: self.$bookTotal, width: 200, height: 20, progressColor: Color(red: 0/255, green: 212/255, blue: 255/255), staticColor: .gray)
                         Spacer()
                     }
                 }
@@ -141,6 +147,7 @@ struct OnboardingView: View {
 struct SimpleProgressBar : View {
     
     @Binding var circleProgress: CGFloat
+    @Binding var bookTotal: CGFloat
     
     var width: CGFloat
     var height: CGFloat
@@ -155,7 +162,7 @@ struct SimpleProgressBar : View {
                     .frame(width: geometry.size.width, height: geometry.size.height)
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(self.progressColor ?? .blue)
-                    .frame(width: self.circleProgress*geometry.size.width, height: geometry.size.height)
+                    .frame(width: (self.circleProgress/self.bookTotal)*geometry.size.width, height: geometry.size.height)
             }
         }
             .frame(width: width, height: height)
