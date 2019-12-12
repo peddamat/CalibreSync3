@@ -26,7 +26,7 @@ class FileHelper {
         }
     }
     
-    static func promiseCopyBookCovers(covers: [String], at remoteDirectory: URL, to localDirectory: URL) -> Promise<Bool> {
+    static func copyBookCovers(covers: [String], at remoteDirectory: URL, to localDirectory: URL) -> Promise<Bool> {
         return Promise<Bool> { seal in
 
             DispatchQueue.global(qos: .userInitiated).async {

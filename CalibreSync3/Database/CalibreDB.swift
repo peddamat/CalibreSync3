@@ -88,7 +88,7 @@ class CalibreDB {
         }
     }
     
-    static func promiseGetBookCoverURLs(dbQueue: DatabaseQueue, withBaseURL: URL) -> Promise<[String]> {
+    static func getBookCoverURLs(dbQueue: DatabaseQueue, withBaseURL: URL) -> Promise<[String]> {
         func createURL(baseURL: URL, bookPath: String) -> String {
 //            let bookCoverURL = baseURL.appendingPathComponent(bookPath).appendingPathComponent("cover.jpg")
 //            let bookCoverURL = baseURL.appendingPathComponent(bookPath)

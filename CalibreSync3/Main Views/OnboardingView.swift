@@ -42,11 +42,11 @@ struct OnboardingView: View {
             CalibreDB.openDatabase(atPath: localDBURL.path)
         }.then { (dbQueue) in
             // Retrieve books
-            CalibreDB.promiseGetBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
+            CalibreDB.getBookCoverURLs(dbQueue: dbQueue, withBaseURL: pickedFolderURL)
 //            CalibreDB.promiseCacheRemoteCalibreDB(settingStore: self.settingStore, calibreRemoteURL: pickedFolderURL)
         }.then { (bookCoverURLs) in
             // Cache book covers
-            FileHelper.promiseCopyBookCovers(covers: bookCoverURLs,
+            FileHelper.copyBookCovers(covers: bookCoverURLs,
                                              at: pickedFolderURL,
                                              to: FileHelper.getDocumentsDirectory()!)
         }.ensure {
