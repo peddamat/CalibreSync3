@@ -45,7 +45,7 @@ class CalibreDB {
         }
     }
     
-    static func copyDatabase(from remoteDirectory: URL, to localDirectory: URL) -> Promise<URL> {
+    static func copyDatabase(at remoteDirectory: URL, to localDirectory: URL) -> Promise<URL> {
         return Promise<URL> { seal in
             do {
                 let shouldStopAccessing = remoteDirectory.startAccessingSecurityScopedResource()
@@ -55,7 +55,7 @@ class CalibreDB {
                 let localDBURL = localDirectory.appendingPathComponent("metadata.db")
                 
                 NSLog("... caching copy of database")
-                try FileManager.default.copyItem(atPath: remoteDBURL.path, toPath: localDBURL.path)
+                try FileManager.default.copyItem(at: remoteDBURL, to: localDBURL)
                 NSLog("Database cached!")
                 
                 seal.fulfill(localDBURL)

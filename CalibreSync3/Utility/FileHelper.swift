@@ -26,17 +26,19 @@ class FileHelper {
         }
     }
     
-    static func promiseCopyBookCovers(covers: [String], pickedFolderURL: URL, destinationFolderURL: URL) -> Promise<Bool> {
+    static func promiseCopyBookCovers(covers: [String], at remoteDirectory: URL, to localDirectory: URL) -> Promise<Bool> {
         return Promise<Bool> { seal in
 
             DispatchQueue.global(qos: .userInitiated).async {
+                
+                let shouldStopAccessing = remoteDirectory.startAccessingSecurityScopedResource()
+                defer { if shouldStopAccessing { remoteDirectory.stopAccessingSecurityScopedResource() }}
+                
                 for coverURL in covers {
                     
-//                    let srcFile = pickedFolderURL.appendingPathComponent(coverURL.path).appendingPathComponent("cover.jpg")
-//                    let srcFile = coverURL.appendingPathComponent("cover.jpg")
-                    let srcDirectory = pickedFolderURL.appendingPathComponent(coverURL)
+                    let srcDirectory = remoteDirectory.appendingPathComponent(coverURL)
                     let srcFile = srcDirectory.appendingPathComponent("cover.jpg")
-                    let dstDirectory = destinationFolderURL.appendingPathComponent(coverURL)
+                    let dstDirectory = localDirectory.appendingPathComponent(coverURL)
                     let dstFile = dstDirectory.appendingPathComponent("cover.jpg")
                     
                     NSLog("Creating directory at: \(dstDirectory.path)")
@@ -52,17 +54,12 @@ class FileHelper {
                         seal.reject(error)
                     }
                     
-//                    FileHelper.accessSecurityScopedFolder(url: pickedFolderURL)
-                    let shouldStopAccessing = srcFile.startAccessingSecurityScopedResource()
-                    defer { if shouldStopAccessing { srcFile.stopAccessingSecurityScopedResource() }}
-                    
                     do {
                         NSLog("Copying cover to: \(dstFile.path)")
                         try FileManager.default.copyItem(at: srcFile, to: dstFile)
-                    } catch {
-                        NSLog("Couldn't copy file from: \(srcFile.path)")
-                        print(error)
-//                        seal.reject(error)                        
+                    } catch let error as NSError {
+                        NSLog("Couldn't copy cover! Error:\(error.description)")
+//                        seal.reject(error)
                     }
                 }
                 

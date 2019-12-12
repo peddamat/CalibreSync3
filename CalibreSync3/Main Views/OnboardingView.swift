@@ -36,7 +36,7 @@ struct OnboardingView: View {
         firstly {
             getFolder()
         }.then { _ in
-            CalibreDB.copyDatabase(from: pickedFolderURL, to: FileHelper.getDocumentsDirectory()!)
+            CalibreDB.copyDatabase(at: pickedFolderURL, to: FileHelper.getDocumentsDirectory()!)
         }.then { (localDBURL) in
             // Make sure we can find the Calibre database
             CalibreDB.openDatabase(atPath: localDBURL.path)
@@ -47,8 +47,8 @@ struct OnboardingView: View {
         }.then { (bookCoverURLs) in
             // Cache book covers
             FileHelper.promiseCopyBookCovers(covers: bookCoverURLs,
-                                             pickedFolderURL: pickedFolderURL,
-                                             destinationFolderURL: FileHelper.getDocumentsDirectory()!)
+                                             at: pickedFolderURL,
+                                             to: FileHelper.getDocumentsDirectory()!)
         }.ensure {
         }.done { (result) in
             self.step2 = true
