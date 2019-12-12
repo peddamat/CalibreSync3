@@ -70,7 +70,7 @@ class MyModel: ObservableObject {
     @Published var loading: Bool = false {
         didSet {
             if oldValue == false && loading == true {
-//                self.load()
+                self.load()
             }
         }
     }
@@ -87,7 +87,9 @@ class MyModel: ObservableObject {
     
     func load() {
         // Simulate async task
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+        NotificationCenter.default.post(name: .refreshBookCache, object: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.loading = false
         }
     }

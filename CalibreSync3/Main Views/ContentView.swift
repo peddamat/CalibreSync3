@@ -178,6 +178,10 @@ struct MainView: View  {
                 .gridStyle(self.style)
                 .onAppear {
                     self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:100)
+                    
+                    NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
+                        self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:100)
+                    }
                 }
                 .onReceive(self.bookCache.didChange) { books in
                     self.books = books

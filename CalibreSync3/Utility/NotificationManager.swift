@@ -10,4 +10,5 @@ import Foundation
 
 extension Notification.Name {
     static let downloadProgressUpdate = Notification.Name("downloadProgressUpdate")
+    static let refreshBookCache = Notification.Name("refreshBookCache")
 }
