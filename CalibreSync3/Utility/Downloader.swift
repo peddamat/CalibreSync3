@@ -11,7 +11,8 @@ import SwiftUI
 
 struct Downloader {
     let bookID: Int
-    let urlString: String
+    let localFileURL: URL
+    let remoteFilePath: String
     @Binding var progress: Float
     
 //    init(remoteURL url: String, progress: Float) {
@@ -20,13 +21,13 @@ struct Downloader {
 //    }
     
     func beginDownloadingFile(){
-        print("Downloading Started.......")
+        NSLog("Downloading Started.......")
         let configuration = URLSessionConfiguration.default
         let operationQueue = OperationQueue()
-        let urlSession = URLSession(configuration: configuration, delegate: DownloaderDelegate(bookID: bookID, progress: $progress), delegateQueue: operationQueue)
-        print(urlString)
-        guard let url = URL(string: urlString) else {
-            print("URL Not valid")
+        let urlSession = URLSession(configuration: configuration, delegate: DownloaderDelegate(bookID: bookID, progress: $progress, localFileURL: localFileURL), delegateQueue: operationQueue)
+        NSLog(remoteFilePath)
+        guard let url = URL(string: remoteFilePath) else {
+            NSLog("URL Not valid")
             return
         }
         let downloadTask = urlSession.downloadTask(with: url)
@@ -36,18 +37,24 @@ struct Downloader {
     private class DownloaderDelegate: NSObject, URLSessionDownloadDelegate {
         let bookID: Int
         var progress: Binding<Float>
+        var localFileURL: URL
         
-        init(bookID: Int, progress: Binding<Float>) {
+        init(bookID: Int, progress: Binding<Float>, localFileURL: URL) {
             self.bookID = bookID
             self.progress = progress
+            self.localFileURL = localFileURL
         }
         
         func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-            print("Finshed Downloading Files")
+            NSLog("Finished download!")
+            print("Moving file from: \(location)")
+            print("to: \(self.localFileURL)")
+            
+            try! FileManager.default.moveItem(at: location,to: self.localFileURL)
         }
         
         func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64){
-            print("TotalBytes:- ", totalBytesWritten, "and toBytesWrittenExpected:- ", totalBytesExpectedToWrite)
+            NSLog("TotalBytes:- ", totalBytesWritten, "and toBytesWrittenExpected:- ", totalBytesExpectedToWrite)
             
             let percentage = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
             self.progress.wrappedValue = percentage
@@ -59,7 +66,7 @@ struct Downloader {
             let userInfo = ["bookID": bookID, "percentage": percentage] as [String : Any]
             NotificationCenter.default.post(name: .downloadProgressUpdate, object: nil, userInfo: userInfo)
             
-            print("Percentage Downloaded:- ", percentage)
+            NSLog("Percentage Downloaded:- ", percentage)
         }
     }
 }

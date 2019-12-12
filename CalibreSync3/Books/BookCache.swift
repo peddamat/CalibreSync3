@@ -51,9 +51,20 @@ class BookCache: ObservableObject {
         return URL(fileURLWithPath: self.settingStore.localLibraryURL!.path + "/" + forBook.path + "/cover.jpg")
     }
     
-    func getFile(forBook book: DiskBook, withFormat format: DiskBookFormat) -> URL {
+    func getRemoteFile(forBook book: DiskBook, withFormat format: DiskBookFormat) -> URL {
         let tempPath = self.settingStore.remoteLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
+    }
+
+    func getLocalFile(forBook book: DiskBook, withFormat format: DiskBookFormat) -> URL {
+        let tempPath = self.settingStore.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        return URL(fileURLWithPath: tempPath)
+    }
+    
+    func checkCached(forBook book: DiskBook, withFormat format: DiskBookFormat) -> Bool {
+        let tempPath = self.settingStore.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        
+        return FileManager.default.fileExists(atPath: tempPath)
     }
     
     func removeBook() {

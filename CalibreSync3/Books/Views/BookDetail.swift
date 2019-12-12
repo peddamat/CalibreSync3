@@ -25,19 +25,26 @@ struct BookDetail: View {
     
     @State private var progress:Float = 0.0
     
-    func getActions() -> [(Int, String, String)]? {
-        var buttons = [(Int, String, String)]()
+    // TODO: Replace this with a struct
+    func getActions() -> [(Int, String, URL, String, Bool)]? {
+        var buttons = [(Int, String, URL, String, Bool)]()
         
         do {
-            try dbQueue.read { db -> [(Int, String, String)] in
+            try dbQueue.read { db -> [(Int, String, URL, String, Bool)] in
                 let formats = try DiskBookFormat
                     .filter(Column("book") == book.id)
                     .fetchAll(db)
                 
                 for format in formats {
-                    let bookPath = "file://" + self.bookCache.getFile(forBook: self.book, withFormat: format).path
+                    let bookLocalPath = self.bookCache.getLocalFile(forBook: self.book, withFormat: format)
+                    let bookRemotePath = "file://" + self.bookCache.getRemoteFile(forBook: self.book, withFormat: format).path
+                    let isCached = self.bookCache.checkCached(forBook: self.book, withFormat: format)
                     
-                    let button = (Int(book.id), format.format, bookPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+                    let button = (Int(book.id),
+                                  format.format,
+                                  bookLocalPath,
+                                  bookRemotePath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+                                  isCached)
                     buttons.append(button)
                 }
                 return buttons
@@ -59,8 +66,9 @@ struct BookDetail: View {
                     HStack(spacing:1) {
                         Spacer()
                         
-                        ForEach(getActions()!, id:\.self.0) { info in
-                            DownloadButtonView(bookID: info.0, format: info.1, fileURL: info.2)
+                        // TODO: id on format ID, not the path...
+                        ForEach(getActions()!, id:\.self.2) { info in
+                            DownloadButtonView(bookID: info.0, format: info.1, fileLocalURL: info.2, fileRemoteURL: info.3, isCached: info.4)
 
                         }
                         Spacer()
@@ -72,17 +80,23 @@ struct BookDetail: View {
                 }
             }
             .padding(10)
-//            .sheet(isPresented: $showDocumentSheet) {
-//                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
-//                .opacity(0)
-//            }
-//            if(showDocumentSheet) {
-//                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
-//            }
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: .openBook, object: nil, queue: .main) { (notification) in
+                    
+                    NSLog("Received open book notification")
+                    if let userInfo = notification.userInfo
+                    {
+                        self.bookPath = URL(fileURLWithPath: (userInfo["bookPath"] as? String)!)
+                    }
+                    
+                    self.showDocumentSheet = true
+                }
+            }
+            if(showDocumentSheet) {
+                FilePresenterUIView(file: self.bookPath!, onDismiss: { self.showDocumentSheet = false })
+            }
         }
-            
     }
-
 }
 
 struct BookHeader: View {
