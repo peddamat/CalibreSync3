@@ -6,18 +6,28 @@
 //  Copyright © 2019 Sumanth Peddamatham. All rights reserved.
 //
 
+import Foundation
 import GRDB
 
 // Author
 struct DiskBook {
     var id: Int64
     var title: String
+    var timestamp: Date
+    var pubdate: Date
     var path: String
     var has_cover: Bool
     var author_sort: String
     var uuid: String
     
     static let databaseTableName = "Books"
+}
+
+enum DiskBookColumns: String, ColumnExpression {
+    case title
+    case timestamp
+    case pubdate
+    case author_sort
 }
 
 extension DiskBook: Hashable { }

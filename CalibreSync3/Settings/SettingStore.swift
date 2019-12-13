@@ -31,6 +31,23 @@ final class SettingStore: ObservableObject {
         ])
     }
     
+//    var didChange = PassthroughSubject<Bool, Never>()
+//    @Published var loading: Bool = false {
+//        didSet {
+//            if oldValue == false && loading == true {
+//                self.load()
+//            }
+//        }
+//    }
+//    
+//    @Published var loadingMore: Bool = false {
+//        didSet {
+//            if oldValue == false && loadingMore == true {
+//                didChange.send(loadingMore)
+//            }
+//        }
+//    }
+//    
     func saveRemoteLibraryBookmark(_ url: URL) {
         NSLog(url.path)
         
@@ -56,6 +73,39 @@ final class SettingStore: ObservableObject {
             self.objectWillChange.send()
         }
     }
+    
+    
+    @Published(key: "view.preferences.itemsPerScreen")
+    var itemsPerScreen = 33
+
+//    public var displayOrders = ["Title", "Author", "Calibre Added Date", "Downloaded Date"]
+    public enum DisplayOrders: String, CaseIterable, Hashable, Identifiable {
+        case title = "Title"
+        case author = "Author"
+        case calibreDateAdded = "Calibre Added Date"
+        case downloadedDate = "Downloaded Date"
+        
+        var id: DisplayOrders {self}
+    }
+    
+    public enum DisplayDirections: String, CaseIterable, Hashable, Identifiable {
+        case ascending = "Ascending"
+        case descending = "Descending"
+        
+        var id: DisplayDirections {self}
+    }
+        
+    @Published(key: "")
+    var gridDisplayOrder = DisplayOrders.title
+    
+    @Published(key: "")
+    var gridDisplayDirection = DisplayDirections.ascending
+    
+    @Published(key: "view.preferences.gridOnlyShowDownloaded")
+    var gridOnlyShowDownloaded = false
+    
+//    @Published(key: "view.preferences.calibreLibraryPath")
+//    var remoteLibraryBookmark: Data? = nil
     
     var remoteLibraryURL: URL? {
         get {
@@ -112,3 +162,62 @@ final class SettingStore: ObservableObject {
         return defaults.object(forKey: key) != nil
     }
 }
+
+// From: https://stackoverflow.com/questions/57611658/swiftui-how-to-persist-published-variable-using-userdefaults
+private var cancellables = [String:AnyCancellable]()
+
+extension Published {
+    init(wrappedValue defaultValue: Value, key: String) {
+        if key == "" {
+            self.init(initialValue: defaultValue)
+            return
+        }
+        let value = UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue
+        self.init(initialValue: value)
+        cancellables[key] = projectedValue.sink { val in
+            UserDefaults.standard.set(val, forKey: key)
+        }
+    }
+}
+
+
+//extension SettingStore.DisplayOrders: Codable {
+//
+//    enum Key: CodingKey {
+//        case rawValue
+//    }
+//
+//    enum CodingError: Error {
+//        case unknownValue
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: Key.self)
+//        let rawValue = try container.decode(Int.self, forKey: .rawValue)
+//        switch rawValue {
+//        case 0:
+//            self = .title
+//        case 1:
+//            self = .author
+//        case 2:
+//            self = .calibreDateAdded
+//        default:
+//            throw CodingError.unknownValue
+//        }
+//    }
+//
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: Key.self)
+//        switch self {
+//        case .title:
+//            try container.encode(0, forKey: .rawValue)
+//        case .author:
+//            try container.encode(1, forKey: .rawValue)
+//        case .calibreDateAdded:
+//            try container.encode(2, forKey: .rawValue)
+//        case .downloadedDate:
+//            try container.encode(3, forKey: .rawValue)
+//        }
+//    }
+//
+//}

@@ -24,7 +24,7 @@ struct BookCover: View {
                 } else {
                 
                     URLImage(fetchURL,
-                             delay: 0.25,
+                             delay: 0,
                              processors:[  Resize(size: CGSize(width: BOOK_WIDTH, height: BOOK_HEIGHT), scale: UIScreen.main.scale) ],
                              content: {
                                 $0.image

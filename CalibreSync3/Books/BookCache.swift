@@ -26,25 +26,48 @@ class BookCache: ObservableObject {
         self.settingStore = settingStore
     }
     
-    func getBooks(calibreDB: CalibreDB, limit: Int = 100, offset: Int = 0) {
-        if books.isEmpty {
+    func getBooks(calibreDB: CalibreDB, offset: Int = 0) {
+        
+        let limit = 2000
+        var newBooks: QueryInterfaceRequest<DiskBook>? = nil
+        
+        switch self.settingStore.gridDisplayOrder {
+        case .title:
+            newBooks = DiskBook.order(DiskBookColumns.title)
+        case .author:
+            newBooks = DiskBook.order(DiskBookColumns.author_sort)
+        case .calibreDateAdded:
+            newBooks = DiskBook.order(DiskBookColumns.timestamp)
+        case .downloadedDate:
+            newBooks = DiskBook.order(DiskBookColumns.author_sort)
+        }
+        
+        switch self.settingStore.gridDisplayDirection {
+        case .ascending:
+            break
+        case .descending:
+            newBooks = newBooks?.reversed()
+        }
+        
+//        if books.isEmpty {
             NSLog("Getting books!")
             DispatchQueue.global(qos: .userInitiated).async {
 
                 do {
                     let dbQueue = try calibreDB.load()
                     try dbQueue.read { db in
-                        let newBooks = try DiskBook.limit(limit, offset: offset).fetchAll(db)
+                        let fetchBooks = try newBooks!.limit(limit, offset: offset).fetchAll(db)
                         DispatchQueue.main.async {
-                            NSLog("Retrieved \(newBooks.count) books")
-                            self.books.append(contentsOf: newBooks)
+                            NSLog("Retrieved \(fetchBooks.count) books")
+//                            self.books.append(contentsOf: fetchBooks)
+                            self.books = fetchBooks
                         }
                     }
                 } catch {
                     NSLog("Error: Unable to get books")
                 }
             }
-        }
+//        }
     }
         
     func getCover(forBook: DiskBook) -> URL {

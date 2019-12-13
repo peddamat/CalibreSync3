@@ -151,7 +151,7 @@ struct MainView: View  {
             .edgesIgnoringSafeArea(.all)
             VStack {
                 // TODO: Enable sorting
-                Grid(self.books.filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
+                Grid(self.books.prefix(self.settingStore.itemsPerScreen).filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
         //        Grid(self.books) { book in
                     NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
                         
@@ -177,10 +177,10 @@ struct MainView: View  {
                 }
                 .gridStyle(self.style)
                 .onAppear {
-                    self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:99)
+                    self.bookCache.getBooks(calibreDB: self.getCalibreDB())
                     
                     NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
-                        self.bookCache.getBooks(calibreDB: self.getCalibreDB(), limit:99)
+                        self.bookCache.getBooks(calibreDB: self.getCalibreDB())
                     }
                 }
                 .onReceive(self.bookCache.didChange) { books in
