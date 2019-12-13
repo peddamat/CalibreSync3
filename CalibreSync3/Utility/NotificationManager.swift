@@ -11,5 +11,6 @@ import Foundation
 extension Notification.Name {
     static let downloadProgressUpdate = Notification.Name("downloadProgressUpdate")
     static let refreshBookCache = Notification.Name("refreshBookCache")
+    static let loadMoreBookCache = Notification.Name("loadMoreBookCache")
     static let openBook = Notification.Name("openBook")
 }

@@ -9,36 +9,42 @@
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
-    @State private var previousScrollOffset: CGFloat = 0
-    @State private var scrollOffset: CGFloat = 0
+    @EnvironmentObject var settingStore: SettingStore
+
+    @State private var prevTopScrollOffset: CGFloat = 0
+    @State private var topScrollOffset: CGFloat = 0
+    @State private var prevBotScrollOffset: CGFloat = 0
+    @State private var botScrollOffset: CGFloat = 0
     @State private var frozen: Bool = false
     @State private var rotation: Angle = .degrees(0)
     
-    var threshold: CGFloat = 80
+    var topThreshold: CGFloat = 80
+    var botThreshold: CGFloat = 570
     @Binding var refreshing: Bool
+    @Binding var loading: Bool
     let content: Content
 
-    init(height: CGFloat = 80, refreshing: Binding<Bool>, @ViewBuilder content: () -> Content) {
-        self.threshold = height
+    init(height: CGFloat = 80, refreshing: Binding<Bool>, loading: Binding<Bool>, @ViewBuilder content: () -> Content) {
+        self.topThreshold = height
         self._refreshing = refreshing
+        self._loading = loading
         self.content = content()
-
     }
     
     var body: some View {
         return VStack {
             ScrollView {
                 ZStack(alignment: .top) {
-                    MovingView()
+                    TopView()
                     
                     VStack {
                         SearchView()
                             .padding(.top, 10)
                         self.content
-                        
-                    }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.threshold : 0.0 })
+                        BottomView()
+                    }.alignmentGuide(.top, computeValue: { d in (self.refreshing && self.frozen) ? -self.topThreshold : 0.0 })
                     
-                    SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
+                    SymbolView(height: self.topThreshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
                 }
             }
             .background(FixedView())
@@ -51,21 +57,29 @@ struct RefreshableScrollView<Content: View>: View {
     func refreshLogic(values: [RefreshableKeyTypes.PrefData]) {
         DispatchQueue.main.async {
             // Calculate scroll offset
-            let movingBounds = values.first { $0.vType == .movingView }?.bounds ?? .zero
+            let topBounds = values.first { $0.vType == .topView }?.bounds ?? .zero
+            let bottomBounds = values.first { $0.vType == .bottomView }?.bounds ?? .zero
             let fixedBounds = values.first { $0.vType == .fixedView }?.bounds ?? .zero
             
-            self.scrollOffset  = movingBounds.minY - fixedBounds.minY
+            self.topScrollOffset  = topBounds.minY - fixedBounds.minY
+            self.botScrollOffset  = bottomBounds.minY - fixedBounds.minY
             
-            self.rotation = self.symbolRotation(self.scrollOffset)
+            self.rotation = self.symbolRotation(self.topScrollOffset)
             
             // Crossing the threshold on the way down, we start the refresh process
-            if !self.refreshing && (self.scrollOffset > self.threshold && self.previousScrollOffset <= self.threshold) {
+            if !self.refreshing && (self.topScrollOffset > self.topThreshold && self.prevTopScrollOffset <= self.topThreshold) {
                 self.refreshing = true
+            }
+            
+            if !self.loading && (self.botScrollOffset < self.botThreshold && self.prevBotScrollOffset >= self.botThreshold) {
+                self.loading = true
+//                self.settingStore.loadingMore = true
+                NSLog("Loading more")
             }
             
             if self.refreshing {
                 // Crossing the threshold on the way up, we add a space at the top of the scrollview
-                if self.previousScrollOffset > self.threshold && self.scrollOffset <= self.threshold {
+                if self.prevTopScrollOffset > self.topThreshold && self.topScrollOffset <= self.topThreshold {
                     self.frozen = true
 
                 }
@@ -75,7 +89,8 @@ struct RefreshableScrollView<Content: View>: View {
             }
             
             // Update last scroll offset
-            self.previousScrollOffset = self.scrollOffset
+            self.prevTopScrollOffset = self.topScrollOffset
+            self.prevBotScrollOffset = self.botScrollOffset
         }
     }
     
@@ -83,11 +98,11 @@ struct RefreshableScrollView<Content: View>: View {
         
         // We will begin rotation, only after we have passed
         // 60% of the way of reaching the threshold.
-        if scrollOffset < self.threshold * 0.60 {
+        if scrollOffset < self.topThreshold * 0.60 {
             return .degrees(0)
         } else {
             // Calculate rotation, based on the amount of scroll offset
-            let h = Double(self.threshold)
+            let h = Double(self.topThreshold)
             let d = Double(scrollOffset)
             let v = max(min(d - (h * 0.6), h * 0.4), 0)
             return .degrees(180 * v / (h * 0.4))
@@ -123,10 +138,18 @@ struct RefreshableScrollView<Content: View>: View {
         }
     }
     
-    struct MovingView: View {
+    struct TopView: View {
         var body: some View {
             GeometryReader { proxy in
-                Color.clear.preference(key: RefreshableKeyTypes.PrefKey.self, value: [RefreshableKeyTypes.PrefData(vType: .movingView, bounds: proxy.frame(in: .global))])
+                Color.clear.preference(key: RefreshableKeyTypes.PrefKey.self, value: [RefreshableKeyTypes.PrefData(vType: .topView, bounds: proxy.frame(in: .global))])
+            }.frame(height: 0)
+        }
+    }
+    
+    struct BottomView: View {
+        var body: some View {
+            GeometryReader { proxy in
+                Color.clear.preference(key: RefreshableKeyTypes.PrefKey.self, value: [RefreshableKeyTypes.PrefData(vType: .bottomView, bounds: proxy.frame(in: .global))])
             }.frame(height: 0)
         }
     }
@@ -142,7 +165,7 @@ struct RefreshableScrollView<Content: View>: View {
 
 struct RefreshableKeyTypes {
     enum ViewType: Int {
-        case movingView
+        case topView
         case fixedView
         case bottomView
     }

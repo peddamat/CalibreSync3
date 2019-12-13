@@ -128,6 +128,7 @@ struct MainView: View  {
     @Binding var bookCache: BookCache
     @State private var books: [DiskBook] = []
     @ObservedObject var model = MyModel()
+    @State private var scrollOffset = 33
             
     // Book cover grid styling options
     @State var style = ModularGridStyle(columns: .min(BOOK_WIDTH), rows: .min(BOOK_HEIGHT))
@@ -151,7 +152,7 @@ struct MainView: View  {
             .edgesIgnoringSafeArea(.all)
             VStack {
                 // TODO: Enable sorting
-                Grid(self.books.prefix(self.settingStore.itemsPerScreen).filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
+                Grid(self.books.prefix(scrollOffset).filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
         //        Grid(self.books) { book in
                     NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
                         
@@ -181,6 +182,10 @@ struct MainView: View  {
                     
                     NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
                         self.bookCache.getBooks(calibreDB: self.getCalibreDB())
+                    }
+                    
+                    NotificationCenter.default.addObserver(forName: .loadMoreBookCache, object: nil, queue: .main) { (notification) in
+                        self.scrollOffset += self.settingStore.itemsPerScreen 
                     }
                 }
                 .onReceive(self.bookCache.didChange) { books in

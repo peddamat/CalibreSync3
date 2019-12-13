@@ -32,18 +32,18 @@ final class SettingStore: ObservableObject {
     }
     
 //    var didChange = PassthroughSubject<Bool, Never>()
-//    @Published var loading: Bool = false {
+//    @Published var refreshing: Bool = false {
 //        didSet {
-//            if oldValue == false && loading == true {
-//                self.load()
+//            if oldValue == false && refreshing == true {
+//                self.refresh()
 //            }
 //        }
 //    }
 //    
-//    @Published var loadingMore: Bool = false {
+//    @Published var loading: Bool = false {
 //        didSet {
-//            if oldValue == false && loadingMore == true {
-//                didChange.send(loadingMore)
+//            if oldValue == false && loading == true {
+//                didChange.send(loading)
 //            }
 //        }
 //    }

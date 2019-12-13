@@ -67,27 +67,38 @@ struct SearchView: View {
 
 class MyModel: ObservableObject {
     var didChange = PassthroughSubject<Bool, Never>()
-    @Published var loading: Bool = false {
+    
+    @Published var refreshing: Bool = false {
         didSet {
-            if oldValue == false && loading == true {
-                self.load()
+            if oldValue == false && refreshing == true {
+                self.refresh()
             }
         }
     }
     
-    @Published var loadingMore: Bool = false {
+    @Published var loading: Bool = false {
         didSet {
-            if oldValue == false && loadingMore == true {
-                didChange.send(loadingMore)
+            if oldValue == false && loading == true {
+                self.load()
+//                didChange.send(loading)
             }
         }
     }
     
     var idx = 0
     
-    func load() {
+    func refresh() {
         // Simulate async task
         NotificationCenter.default.post(name: .refreshBookCache, object: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.refreshing = false
+        }
+    }
+    
+    func load() {
+        // Simulate async task
+        NotificationCenter.default.post(name: .loadMoreBookCache, object: nil)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.loading = false
