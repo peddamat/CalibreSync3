@@ -63,7 +63,7 @@ struct Downloader {
     //          NSLog("\(Int(percentage * 100))%")
     //        }
             
-            let userInfo = ["bookID": bookID, "percentage": percentage] as [String : Any]
+            let userInfo = ["bookID": bookID, "percentage": percentage, "localURL": localFileURL.path] as [String : Any]
             NotificationCenter.default.post(name: .downloadProgressUpdate, object: nil, userInfo: userInfo)
             
             NSLog("Percentage Downloaded:- ", percentage)

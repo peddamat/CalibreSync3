@@ -64,7 +64,8 @@ struct DownloadButtonView: View {
 //                self.progress2 = 0
                 if let data = notification.userInfo as? [String: Any]
                 {
-                    if data["bookID"]! as! Int == self.bookID {
+                    if (data["bookID"]! as! Int == self.bookID) &&
+                        (data["localURL"]! as! String == self.fileLocalURL.path){
                         self.progress2 = data["percentage"]! as! Float
                     }
                 }
