@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct RefreshableScrollView<Content: View>: View {
-    @EnvironmentObject var settingStore: SettingStore
-
+    @ObservedObject var store = Store.shared
+    
     @State private var prevTopScrollOffset: CGFloat = 0
     @State private var topScrollOffset: CGFloat = 0
     @State private var prevBotScrollOffset: CGFloat = 0
@@ -73,7 +73,7 @@ struct RefreshableScrollView<Content: View>: View {
             
             if !self.loading && (self.botScrollOffset < self.botThreshold && self.prevBotScrollOffset >= self.botThreshold) {
                 self.loading = true
-//                self.settingStore.loadingMore = true
+//                self.store.loadingMore = true
                 NSLog("Loading more")
             }
             

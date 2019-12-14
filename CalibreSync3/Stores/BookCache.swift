@@ -12,7 +12,7 @@ import PromiseKit
 import GRDB
 
 class BookCache: ObservableObject {
-    var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
 
 //    @Published var books = [Book]()
     var didChange = PassthroughSubject<[DiskBook], Never>()
@@ -22,8 +22,8 @@ class BookCache: ObservableObject {
         }
     }
     
-    init(settingStore: SettingStore) {
-        self.settingStore = settingStore
+    init(store: Store) {
+        self.store = store
     }
     
     func getBooks(calibreDB: CalibreDB, offset: Int = 0) {
@@ -31,7 +31,7 @@ class BookCache: ObservableObject {
         let limit = 2000
         var newBooks: QueryInterfaceRequest<DiskBook>? = nil
         
-        switch self.settingStore.gridDisplayOrder {
+        switch self.store.gridDisplayOrder {
         case .title:
             newBooks = DiskBook.order(DiskBookColumns.title)
         case .author:
@@ -42,7 +42,7 @@ class BookCache: ObservableObject {
             newBooks = DiskBook.order(DiskBookColumns.author_sort)
         }
         
-        switch self.settingStore.gridDisplayDirection {
+        switch self.store.gridDisplayDirection {
         case .ascending:
             break
         case .descending:
@@ -71,21 +71,21 @@ class BookCache: ObservableObject {
     }
         
     func getCover(forBook: DiskBook) -> URL {
-        return URL(fileURLWithPath: self.settingStore.localLibraryURL!.path + "/" + forBook.path + "/cover.jpg")
+        return URL(fileURLWithPath: self.store.localLibraryURL!.path + "/" + forBook.path + "/cover.jpg")
     }
     
     func getRemoteFile(forBook book: DiskBook, withFormat format: DiskBookFormat) -> URL {
-        let tempPath = self.settingStore.remoteLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        let tempPath = self.store.remoteLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
     }
 
     func getLocalFile(forBook book: DiskBook, withFormat format: DiskBookFormat) -> URL {
-        let tempPath = self.settingStore.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        let tempPath = self.store.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         return URL(fileURLWithPath: tempPath)
     }
     
     func checkCached(forBook book: DiskBook, withFormat format: DiskBookFormat) -> Bool {
-        let tempPath = self.settingStore.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
+        let tempPath = self.store.localLibraryPath! + "/" + book.path + "/" + format.name + "." + format.format.lowercased()
         
         return FileManager.default.fileExists(atPath: tempPath)
     }

@@ -10,7 +10,7 @@ import GRDB
 import SwiftUI
 
 struct BookDetail: View {
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
 
     var book: DiskBook
     var bookCache: BookCache

@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct SearchView: View {
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
 
     let array = ["Peter", "Paul", "Mary", "Anna-Lena", "George", "John", "Greg", "Thomas", "Robert", "Bernie", "Mike", "Benno", "Hugo", "Miles", "Michael", "Mikel", "Tim", "Tom", "Lottie", "Lorrie", "Barbara"]
 //    @State private var searchText = ""
@@ -24,16 +24,16 @@ struct SearchView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
 
-                TextField("Search", text: self.$settingStore.searchString, onEditingChanged: { isEditing in
+                TextField("Search", text: self.$store.searchString, onEditingChanged: { isEditing in
                     self.showCancelButton = true
                 }, onCommit: {
                     NSLog("Search: Enter pressed.")
                 }).foregroundColor(.primary)
 
                 Button(action: {
-                    self.settingStore.searchString = ""
+                    self.store.searchString = ""
                 }) {
-                    Image(systemName: "xmark.circle.fill").opacity(self.settingStore.searchString.isEmpty ? 0.0 : 1.0)
+                    Image(systemName: "xmark.circle.fill").opacity(self.store.searchString.isEmpty ? 0.0 : 1.0)
                 }
             }
             .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
@@ -44,7 +44,7 @@ struct SearchView: View {
             if showCancelButton  {
                 Button("Cancel") {
                         UIApplication.shared.endEditing(true) // this must be placed before the other commands here
-                        self.settingStore.searchString = ""
+                        self.store.searchString = ""
                         self.showCancelButton = false
                 }
                 .foregroundColor(Color(.systemBlue))

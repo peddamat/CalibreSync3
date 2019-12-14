@@ -11,7 +11,7 @@ import PromiseKit
 
 struct SetupView: View {
     @State private var show_modal: Bool = false
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
     
     @State private var showFoundCalibreDB: Bool = false
     @State private var step2: Bool = false
@@ -116,7 +116,7 @@ struct SetupView: View {
                     
                     Button(action: {
                         // Tell the rest of the application that we're ready
-                        self.settingStore.saveRemoteLibraryBookmark(self.pickedURL!)
+                        self.store.saveRemoteLibraryBookmark(self.pickedURL!)
                     }) {
                         Text("Next")
                             .font(.system(.body, design: .rounded))

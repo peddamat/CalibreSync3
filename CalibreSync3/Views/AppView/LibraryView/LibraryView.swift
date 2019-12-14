@@ -10,7 +10,7 @@ import SwiftUI
 import Fuzzy
 
 struct LibraryView: View  {
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
 //    @State var bookCache = BookCache()
     var bookCache: BookCache
     @State private var books: [DiskBook] = []
@@ -25,7 +25,7 @@ struct LibraryView: View  {
     @State var calibreDB: CalibreDB?
     private func getCalibreDB() -> CalibreDB {
         guard self.calibreDB != nil else {
-            self.calibreDB = try! CalibreDB(settingStore: settingStore)
+            self.calibreDB = try! CalibreDB(store: store)
             return self.calibreDB!
         }
         return self.calibreDB!
@@ -39,9 +39,9 @@ struct LibraryView: View  {
             .edgesIgnoringSafeArea(.all)
             VStack {
                 // TODO: Enable sorting
-                Grid(self.books.prefix(scrollOffset).filter { return search(needle: self.settingStore.searchString, haystack:$0.title) }) { book in
+                Grid(self.books.prefix(scrollOffset).filter { return search(needle: self.store.searchString, haystack:$0.title) }) { book in
         //        Grid(self.books) { book in
-                    NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.settingStore)) {
+                    NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.store)) {
                         
         //                BookCover(title: (book.title), fetchURL: self.dummyCover)
                         
@@ -72,7 +72,7 @@ struct LibraryView: View  {
                     }
                     
                     NotificationCenter.default.addObserver(forName: .loadMoreBookCache, object: nil, queue: .main) { (notification) in
-                        self.scrollOffset += self.settingStore.itemsPerScreen
+                        self.scrollOffset += self.store.itemsPerScreen
                     }
                 }
                 .onReceive(self.bookCache.didChange) { books in

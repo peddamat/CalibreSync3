@@ -13,7 +13,7 @@ import GRDB
 import Fuzzy
 
 struct SlideMenuView: View {
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
     @State var bookCache: BookCache
 
     
@@ -80,10 +80,10 @@ struct SlideMenuView: View {
         }
         
         return NavigationView {
-//            MainView(bookCache: self.$bookCache).environmentObject(self.settingStore)
+//            MainView(bookCache: self.$bookCache).environmentObject(self.store)
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    LibraryView(bookCache: self.bookCache).environmentObject(self.settingStore)
+                    LibraryView(bookCache: self.bookCache).environmentObject(self.store)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .offset(x: self.showMenu ? geometry.size.width/2.0 : 0)
                         .disabled(self.showMenu ? true : false)
@@ -117,7 +117,7 @@ struct SlideMenuView: View {
             StackNavigationViewStyle()
         )
         .sheet(isPresented: $showSettings) {
-            SettingsView().environmentObject(self.settingStore)
+            SettingsView().environmentObject(self.store)
         }
     }
 }
@@ -126,6 +126,6 @@ struct SlideMenuView: View {
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ContentView().environmentObject(SettingStore())
+//        ContentView().environmentObject(Store())
 //    }
 //}

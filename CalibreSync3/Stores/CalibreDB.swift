@@ -11,14 +11,14 @@ import SwiftUI
 import PromiseKit
 
 class CalibreDB {
-    var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
     private var _dbQueue: DatabaseQueue
     private let fileManager = FileManager.default
     
-    init(settingStore: SettingStore) throws {
-        self.settingStore = settingStore
+    init(store: Store) throws {
+        self.store = store
         
-        let localDBURL = settingStore.localDBURL!
+        let localDBURL = store.localDBURL!
 
         if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
             NSLog("Can't find a cached copy of the database at \(localDBURL.path)")
@@ -29,7 +29,7 @@ class CalibreDB {
     }
     
     func load() throws  -> DatabaseQueue {
-        let localDBURL = settingStore.localDBURL!
+        let localDBURL = store.localDBURL!
 
         if !( (try? localDBURL.checkResourceIsReachable()) ?? false) {
             NSLog("Can't find a cached copy of the database at \(localDBURL.path)")
@@ -141,7 +141,7 @@ class CalibreDB {
 //                        .fetchAll(db)
 //
 //                    for format in formats {
-//                        let bookPath = BookCache.getBookFileURL(settingStore: self.settingStore, book: book, format: format)
+//                        let bookPath = BookCache.getBookFileURL(store: self.store, book: book, format: format)
 //                        NSLog("Copying book in: \(bookPath!.path)")
 //
 //                        buttons.append(bookPath)

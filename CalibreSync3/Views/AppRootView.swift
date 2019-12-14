@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct AppRootView: View {
-    @EnvironmentObject var settingStore: SettingStore
+    @ObservedObject var store = Store.shared
     @State private var selection = 1
     
     var body: some View {
         Group {
             // If we don't 
-            if settingStore.remoteLibraryBookmark == nil {
-                SetupView().environmentObject(settingStore)
-//                SettingsView().environmentObject(settingStore)
+            if store.remoteLibraryBookmark == nil {
+                SetupView().environmentObject(store)
+//                SettingsView().environmentObject(store)
             }
             else {
                 TabView(selection: $selection) {
@@ -29,7 +29,7 @@ struct AppRootView: View {
                             }
                         }
                         .tag(0)
-                    SlideMenuView(bookCache: BookCache(settingStore: settingStore)).environmentObject(settingStore)
+                    SlideMenuView(bookCache: BookCache(store: store)).environmentObject(store)
                         .tabItem {
                             VStack {
                                 Image(systemName: "rectangle.3.offgrid.fill")

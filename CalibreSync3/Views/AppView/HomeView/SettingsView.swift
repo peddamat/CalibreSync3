@@ -10,10 +10,10 @@ import Combine
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var store = Store.shared
     
     @State private var show_modal: Bool = false
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var settingStore: SettingStore
     
     @State private var downloaded: Bool = true
     @State private var items = 33
@@ -28,8 +28,8 @@ struct SettingsView: View {
             
             let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
             
-//            self.settingStore.calibreRemoteLibraryBookmark = bookmark
-//            try! CalibreDB.cacheRemoteCalibreDB(settingStore: settingStore, calibreRemoteURL: url)
+//            self.store.calibreRemoteLibraryBookmark = bookmark
+//            try! CalibreDB.cacheRemoteCalibreDB(store: store, calibreRemoteURL: url)
         } catch let error {
             
         }
@@ -52,33 +52,33 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Stepper(onIncrement: {
-                    self.settingStore.itemsPerScreen += 3
+                    self.store.itemsPerScreen += 3
                 }, onDecrement: {
-                    self.settingStore.itemsPerScreen -= 3
+                    self.store.itemsPerScreen -= 3
                 }) {
-                    Text("Items Per Screen: \(self.settingStore.itemsPerScreen)")
+                    Text("Items Per Screen: \(self.store.itemsPerScreen)")
                 }
                 
                 Section(header: Text("SORT PREFERENCES")) {
-                    Picker(selection: self.$settingStore.gridDisplayOrder,
+                    Picker(selection: self.$store.gridDisplayOrder,
                            label: Text("Display Order"))
                     {
-                        ForEach(SettingStore.DisplayOrders.allCases) { v in
+                        ForEach(Store.DisplayOrders.allCases) { v in
                             Text(v.rawValue)
                         }
                     }
 
-                    Picker(selection: self.$settingStore.gridDisplayDirection,
+                    Picker(selection: self.$store.gridDisplayDirection,
                            label: Text("Direction"))
                     {
-                        ForEach(SettingStore.DisplayDirections.allCases) { v in
+                        ForEach(Store.DisplayDirections.allCases) { v in
                             Text(v.rawValue)
                         }
                     }
                 }
                 
                 Section(header: Text("FILTER PREFERENCES")) {
-                    Toggle(isOn: self.$settingStore.gridOnlyShowDownloaded){
+                    Toggle(isOn: self.$store.gridOnlyShowDownloaded){
                         Text("Downloaded Only")
                     }
                 }
@@ -129,7 +129,7 @@ struct SettingsView: View {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView().environmentObject(SettingStore())
+        SettingsView().environmentObject(Store.shared)
     }
 }
 

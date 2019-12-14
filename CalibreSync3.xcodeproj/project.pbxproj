@@ -23,7 +23,7 @@
 		8CB3CDC423939803008B30F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CB3CDC223939803008B30F6 /* LaunchScreen.storyboard */; };
 		8CB3CDCF23939803008B30F6 /* CalibreSync3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDCE23939803008B30F6 /* CalibreSync3Tests.swift */; };
 		8CB3CDDA23939803008B30F6 /* CalibreSync3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDD923939803008B30F6 /* CalibreSync3UITests.swift */; };
-		8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* SettingStore.swift */; };
+		8CB3CDE8239398A6008B30F6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* Store.swift */; };
 		8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */; };
 		8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */; };
 		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
@@ -62,6 +62,8 @@
 		8CD75A5E23A4997900C25612 /* GridItemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A5123A4997900C25612 /* GridItemPreferences.swift */; };
 		8CD75A5F23A4997900C25612 /* ModularGridStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A5223A4997900C25612 /* ModularGridStyle.swift */; };
 		8CD75A6023A4997900C25612 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A5323A4997900C25612 /* Grid.swift */; };
+		8CD75A6523A49DC700C25612 /* ErrorsToThrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */; };
+		8CD75A6823A4A67400C25612 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6723A4A67400C25612 /* Published.swift */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -105,7 +107,7 @@
 		8CB3CDD523939803008B30F6 /* CalibreSync3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalibreSync3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3CDD923939803008B30F6 /* CalibreSync3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreSync3UITests.swift; sourceTree = "<group>"; };
 		8CB3CDDB23939803008B30F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CB3CDE7239398A6008B30F6 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
+		8CB3CDE7239398A6008B30F6 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryPickerView.swift; sourceTree = "<group>"; };
 		8CB3CDF12393BE8C008B30F6 /* DiskBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskBook.swift; sourceTree = "<group>"; };
@@ -136,6 +138,8 @@
 		8CD75A5123A4997900C25612 /* GridItemPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridItemPreferences.swift; sourceTree = "<group>"; };
 		8CD75A5223A4997900C25612 /* ModularGridStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModularGridStyle.swift; sourceTree = "<group>"; };
 		8CD75A5323A4997900C25612 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsToThrow.swift; sourceTree = "<group>"; };
+		8CD75A6723A4A67400C25612 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,10 +209,11 @@
 		8CB3CDB6239397FD008B30F6 /* CalibreSync3 */ = {
 			isa = PBXGroup;
 			children = (
-				8CD75A4323A4997800C25612 /* Grid */,
 				8CD75A4223A496A700C25612 /* Components */,
+				8CD75A6623A49DD000C25612 /* Enums */,
 				8CD75A3823A4936600C25612 /* Delegates */,
 				8C053FD62395220B00EFAEFB /* Models */,
+				8CD75A6923A4A68100C25612 /* Property Wrappers */,
 				8CB3CDF62393C178008B30F6 /* Stores */,
 				8CD759BA239F0DD500C25612 /* Views */,
 				8CD7596323982B2400C25612 /* Utility */,
@@ -250,7 +255,7 @@
 		8CB3CDF62393C178008B30F6 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				8CB3CDE7239398A6008B30F6 /* SettingStore.swift */,
+				8CB3CDE7239398A6008B30F6 /* Store.swift */,
 				8CB3CDF42393C159008B30F6 /* CalibreDB.swift */,
 				8C839D432397729900B786C4 /* BookCache.swift */,
 			);
@@ -345,6 +350,7 @@
 		8CD75A4223A496A700C25612 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8CD75A4323A4997800C25612 /* Grid */,
 				8CD7596423984DC400C25612 /* SearchView.swift */,
 				8CD75976239DFF0200C25612 /* RefreshableScrollView.swift */,
 				8CD759702399C77A00C25612 /* PopSheet.swift */,
@@ -362,8 +368,7 @@
 				8CD75A4523A4997800C25612 /* Styles */,
 				8CD75A5323A4997900C25612 /* Grid.swift */,
 			);
-			name = Grid;
-			path = Components/Grid;
+			path = Grid;
 			sourceTree = "<group>";
 		};
 		8CD75A4523A4997800C25612 /* Styles */ = {
@@ -398,6 +403,22 @@
 				8CD75A5123A4997900C25612 /* GridItemPreferences.swift */,
 			);
 			path = Style;
+			sourceTree = "<group>";
+		};
+		8CD75A6623A49DD000C25612 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		8CD75A6923A4A68100C25612 /* Property Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				8CD75A6723A4A67400C25612 /* Published.swift */,
+			);
+			path = "Property Wrappers";
 			sourceTree = "<group>";
 		};
 		8CF69E8B23979BE70023ADF4 /* BookViews */ = {
@@ -586,11 +607,13 @@
 				8CD759672398594000C25612 /* SetupView.swift in Sources */,
 				8CD75A5E23A4997900C25612 /* GridItemPreferences.swift in Sources */,
 				8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */,
+				8CD75A6823A4A67400C25612 /* Published.swift in Sources */,
 				8CD759C823A023DD00C25612 /* NotificationManager.swift in Sources */,
 				8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */,
 				8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */,
 				8CD75975239DAC4700C25612 /* PageSwipeView.swift in Sources */,
-				8CB3CDE8239398A6008B30F6 /* SettingStore.swift in Sources */,
+				8CD75A6523A49DC700C25612 /* ErrorsToThrow.swift in Sources */,
+				8CB3CDE8239398A6008B30F6 /* Store.swift in Sources */,
 				8CB3CDF22393BE8C008B30F6 /* DiskBook.swift in Sources */,
 				8CD75A3C23A4959300C25612 /* LibraryView.swift in Sources */,
 				8C8ED61E239661FE006C5511 /* DiskBookFormat.swift in Sources */,

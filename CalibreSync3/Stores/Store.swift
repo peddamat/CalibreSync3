@@ -9,45 +9,21 @@
 import Combine
 import Foundation
 
-enum ErrorsToThrow: Error {
-    case calibrePathNotSet
-    case calibrePathNotResolving
-    case documentsDirectoryMissing
-    case calibreLocalDatabaseMissing
-}
+final class Store: ObservableObject {
+    static var shared = Store()
 
-final class SettingStore: ObservableObject {
-    @Published var defaults: UserDefaults
+    private var defaults: UserDefaults
     @Published var searchString: String = ""
-    @Published var loadingMore: Bool = false
     
-    init(defaults: UserDefaults = .standard, searchString: String = "", loadingMore: Bool = false) {
+    private init(defaults: UserDefaults = .standard, searchString: String = "") {
         self.defaults = defaults
         self.searchString = searchString
-        self.loadingMore = loadingMore
         
         defaults.register(defaults: [
             "view.preferences.calibreLibraryPath": "/"
         ])
     }
     
-//    var didChange = PassthroughSubject<Bool, Never>()
-//    @Published var refreshing: Bool = false {
-//        didSet {
-//            if oldValue == false && refreshing == true {
-//                self.refresh()
-//            }
-//        }
-//    }
-//    
-//    @Published var loading: Bool = false {
-//        didSet {
-//            if oldValue == false && loading == true {
-//                didChange.send(loading)
-//            }
-//        }
-//    }
-//    
     func saveRemoteLibraryBookmark(_ url: URL) {
         NSLog(url.path)
         
@@ -79,7 +55,7 @@ final class SettingStore: ObservableObject {
     var itemsPerScreen = 33
 
 //    public var displayOrders = ["Title", "Author", "Calibre Added Date", "Downloaded Date"]
-    public enum DisplayOrders: String, CaseIterable, Hashable, Identifiable {
+    public enum DisplayOrders: String, CaseIterable, Hashable, Identifiable, Codable {
         case title = "Title"
         case author = "Author"
         case calibreDateAdded = "Calibre Added Date"
@@ -88,17 +64,17 @@ final class SettingStore: ObservableObject {
         var id: DisplayOrders {self}
     }
     
-    public enum DisplayDirections: String, CaseIterable, Hashable, Identifiable {
+    public enum DisplayDirections: String, CaseIterable, Hashable, Identifiable, Codable {
         case ascending = "Ascending"
         case descending = "Descending"
         
         var id: DisplayDirections {self}
     }
         
-    @Published(key: "")
+    @Published(key: "view.preferences.gridDisplayOrder")
     var gridDisplayOrder = DisplayOrders.title
     
-    @Published(key: "")
+    @Published(key: "view.preferences.gridDisplayDirection")
     var gridDisplayDirection = DisplayDirections.ascending
     
     @Published(key: "view.preferences.gridOnlyShowDownloaded")
@@ -163,25 +139,7 @@ final class SettingStore: ObservableObject {
     }
 }
 
-// From: https://stackoverflow.com/questions/57611658/swiftui-how-to-persist-published-variable-using-userdefaults
-private var cancellables = [String:AnyCancellable]()
-
-extension Published {
-    init(wrappedValue defaultValue: Value, key: String) {
-        if key == "" {
-            self.init(initialValue: defaultValue)
-            return
-        }
-        let value = UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue
-        self.init(initialValue: value)
-        cancellables[key] = projectedValue.sink { val in
-            UserDefaults.standard.set(val, forKey: key)
-        }
-    }
-}
-
-
-//extension SettingStore.DisplayOrders: Codable {
+//extension Store.DisplayOrders: Codable {
 //
 //    enum Key: CodingKey {
 //        case rawValue
