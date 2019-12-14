@@ -1,0 +1,131 @@
+//
+//  ContentView.swift
+//  CalibreSync3
+//
+//  Created by Sumanth Peddamatham on 12/1/19.
+//  Copyright © 2019 Sumanth Peddamatham. All rights reserved.
+//
+
+import SwiftUI
+import Combine
+import GRDB
+//import Grid
+import Fuzzy
+
+struct SlideMenuView: View {
+    @EnvironmentObject var settingStore: SettingStore
+    @State var bookCache: BookCache
+
+    
+    // Modal overlay toggles
+    @State private var showSettings = false
+    @State private var showShareSheet = false
+    @State private var showDocumentSheet = false
+    @State var showMenu = false
+    
+    var profileButton: some View {
+        Button(action: { self.showSettings.toggle() }) {
+            Image(systemName: "ellipsis")
+                .imageScale(.large)
+                .accessibility(label: Text("More"))
+                .padding()
+        }
+    }
+    
+    var shareButton: some View {
+        Button(action: {
+//            self.showShareSheet.toggle()
+            self.bookCache.removeBook()
+        }) {
+            Image(systemName: "square.and.arrow.up")
+                .imageScale(.large)
+                .accessibility(label: Text("Share"))
+                .padding()
+        }
+    }
+    
+    var docShareButton: some View {
+        Button(action: { self.showDocumentSheet.toggle() }) {
+            Image(systemName: "square.and.arrow.up")
+                .imageScale(.large)
+                .accessibility(label: Text("Share"))
+                .padding()
+        }
+    }
+    
+    var menuButton: some View {
+        Button(action: {
+            withAnimation {
+                self.showMenu.toggle()
+            }
+        }) {
+            Image(systemName: "line.horizontal.3")
+                .imageScale(.large)
+        }
+    }
+
+    var body: some View {
+        let drag = DragGesture()
+            .onEnded {
+                if $0.translation.width > 100 {
+                    withAnimation {
+                        self.showMenu = true
+                    }
+                }
+                if $0.translation.width < -100 {
+                    withAnimation {
+                        self.showMenu = false
+                    }
+                }
+        }
+        
+        return NavigationView {
+//            MainView(bookCache: self.$bookCache).environmentObject(self.settingStore)
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    LibraryView(bookCache: self.bookCache).environmentObject(self.settingStore)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .offset(x: self.showMenu ? geometry.size.width/2.0 : 0)
+                        .disabled(self.showMenu ? true : false)
+//                    .gesture(drag)
+                    if self.showMenu {
+                        SideMenuView()
+                            .frame(width: geometry.size.width/2)
+                            .transition(.move(edge: .leading))
+                    }
+                }
+                
+            }
+            .navigationBarTitle("Side Menu", displayMode: .inline)
+            .navigationBarItems(leading: (
+                Button(action: {
+                    withAnimation {
+                        self.showMenu.toggle()
+                    }
+                }) {
+                    Image(systemName: "line.horizontal.3")
+                        .imageScale(.large)
+                }
+            ))
+                
+            .navigationBarTitle("CalibreSync", displayMode: .inline)
+                .navigationBarItems(leading: menuButton, trailing: HStack {
+                profileButton
+            })
+        }
+        .navigationViewStyle(
+            StackNavigationViewStyle()
+        )
+        .sheet(isPresented: $showSettings) {
+            SettingsView().environmentObject(self.settingStore)
+        }
+    }
+}
+
+
+
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView().environmentObject(SettingStore())
+//    }
+//}

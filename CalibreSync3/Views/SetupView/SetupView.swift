@@ -1,5 +1,5 @@
 //
-//  OnboardingView.swift
+//  SetupView.swift
 //  CalibreSync3
 //
 //  Created by Sumanth Peddamatham on 12/4/19.
@@ -9,7 +9,7 @@
 import SwiftUI
 import PromiseKit
 
-struct OnboardingView: View {
+struct SetupView: View {
     @State private var show_modal: Bool = false
     @EnvironmentObject var settingStore: SettingStore
     
@@ -178,6 +178,6 @@ struct SimpleProgressBar : View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        SetupView()
     }
 }

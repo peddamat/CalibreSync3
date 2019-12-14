@@ -16,12 +16,12 @@ struct AppRootView: View {
         Group {
             // If we don't 
             if settingStore.remoteLibraryBookmark == nil {
-                OnboardingView().environmentObject(settingStore)
+                SetupView().environmentObject(settingStore)
 //                SettingsView().environmentObject(settingStore)
             }
             else {
                 TabView(selection: $selection) {
-                    SideMenuView()
+                    HomeView()
                     .tabItem {
                             VStack {
                                 Image(systemName: "square.grid.3x2.fill")
@@ -29,7 +29,7 @@ struct AppRootView: View {
                             }
                         }
                         .tag(0)
-                    ContentView(bookCache: BookCache(settingStore: settingStore)).environmentObject(settingStore)
+                    SlideMenuView(bookCache: BookCache(settingStore: settingStore)).environmentObject(settingStore)
                         .tabItem {
                             VStack {
                                 Image(systemName: "rectangle.3.offgrid.fill")
