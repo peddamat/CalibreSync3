@@ -59,6 +59,7 @@
 		8CD759C4239F85E000C25612 /* DownloadButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759C3239F85E000C25612 /* DownloadButtonView.swift */; };
 		8CD759C823A023DD00C25612 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759C723A023DA00C25612 /* NotificationManager.swift */; };
 		8CD759CB23A2CC4A00C25612 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759CA23A2CC4A00C25612 /* URLImage */; };
+		8CD759D823A44B8400C25612 /* FileKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759D723A44B8400C25612 /* FileKit */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -143,6 +144,7 @@
 				8CD75962239828E800C25612 /* Fuzzy in Frameworks */,
 				8CD759B9239ED9A400C25612 /* PromiseKit in Frameworks */,
 				8CD759BD239F35F000C25612 /* RealmSwift in Frameworks */,
+				8CD759D823A44B8400C25612 /* FileKit in Frameworks */,
 				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
 				8CD7596D23996AED00C25612 /* Reachability in Frameworks */,
 				8CD7596A2399540F00C25612 /* EasyStash in Frameworks */,
@@ -404,6 +406,7 @@
 				8CD759B8239ED9A400C25612 /* PromiseKit */,
 				8CD759BC239F35F000C25612 /* RealmSwift */,
 				8CD759CA23A2CC4A00C25612 /* URLImage */,
+				8CD759D723A44B8400C25612 /* FileKit */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -486,6 +489,7 @@
 				8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				8CD759BB239F35EF00C25612 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference "url-image" */,
+				8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -963,6 +967,14 @@
 				minimumVersion = 0.9.9;
 			};
 		};
+		8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nvzqz/FileKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1005,6 +1017,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference "url-image" */;
 			productName = URLImage;
+		};
+		8CD759D723A44B8400C25612 /* FileKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */;
+			productName = FileKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

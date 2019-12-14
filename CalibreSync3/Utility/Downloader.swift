@@ -51,10 +51,12 @@ struct Downloader {
             print("to: \(self.localFileURL)")
             
             try! FileManager.default.moveItem(at: location,to: self.localFileURL)
+                        
+            let userInfo = ["bookID": bookID] as [String : Any]
+            NotificationCenter.default.post(name: .downloadComplete, object: nil, userInfo: userInfo)
         }
         
         func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64){
-            NSLog("TotalBytes:- ", totalBytesWritten, "and toBytesWrittenExpected:- ", totalBytesExpectedToWrite)
             
             let percentage = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
             self.progress.wrappedValue = percentage
@@ -63,6 +65,7 @@ struct Downloader {
     //          NSLog("\(Int(percentage * 100))%")
     //        }
             
+            // TODO: Replace with struct
             let userInfo = ["bookID": bookID, "percentage": percentage, "localURL": localFileURL.path] as [String : Any]
             NotificationCenter.default.post(name: .downloadProgressUpdate, object: nil, userInfo: userInfo)
             

@@ -45,6 +45,12 @@ class CalibreDB {
         }
     }
     
+    func update(book: DiskBook, in dbQueue: DatabaseQueue) throws {
+        try dbQueue.write { db in
+            try book.update(db)
+        }
+    }
+    
     static func copyDatabase(at remoteDirectory: URL, to localDirectory: URL) -> Promise<URL> {
         return Promise<URL> { seal in
             do {
@@ -56,6 +62,18 @@ class CalibreDB {
                 
                 NSLog("... caching copy of database")
                 try FileManager.default.copyItem(at: remoteDBURL, to: localDBURL)
+
+                // Make database file writable so we can run migrations
+                let attributes: [FileAttributeKey:AnyObject] = [FileAttributeKey.posixPermissions: NSNumber(value: 0o666)]
+                try! FileManager.default.setAttributes(attributes, ofItemAtPath: localDBURL.path)
+                
+                if FileManager.default.isWritableFile(atPath: localDBURL.path) {
+                    print("File is writeable!")
+                }
+                
+                if FileManager.default.isWritableFile(atPath: localDirectory.path) {
+                    print("Directory is writeable!")
+                }
                 NSLog("Database cached!")
                 
                 seal.fulfill(localDBURL)
@@ -72,14 +90,14 @@ class CalibreDB {
                 NSLog("Opening database at: \(path)")
                 let dbQueue = try DatabaseQueue(path: path)
 
-//                var migrator = DatabaseMigrator()
-//                // 1st migration
-//                migrator.registerMigration("addDownloadsToBooks") { db in
-//                    try db.alter(table: "Books") { t in
-//                        t.add(column: "downloaded", .text)
-//                    }
-//                }
-//                try migrator.migrate(dbQueue)
+                var migrator = DatabaseMigrator()
+                // 1st migration
+                migrator.registerMigration("addDownloadsToBooks") { db in
+                    try db.alter(table: "Books") { t in
+                        t.add(column: "downloaded", .boolean)
+                    }
+                }
+                try migrator.migrate(dbQueue)
 
                 seal.resolve(.fulfilled(dbQueue))
             } catch {

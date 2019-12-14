@@ -20,6 +20,9 @@ struct DiskBook {
     var author_sort: String
     var uuid: String
     
+    // Custom columns
+    var downloaded: Bool?
+    
     static let databaseTableName = "Books"
 }
 
