@@ -22,7 +22,6 @@ struct BookDetail: View {
     @State private var showingSheet = false
     @State private var showDocumentSheet = false
     @State private var bookPath:URL?
-    
     @State private var progress:Float = 0.0
     
     // TODO: Replace this with a struct

@@ -29,7 +29,7 @@ struct AppRootView: View {
                             }
                         }
                         .tag(0)
-                    SlideMenuView(bookCache: BookCache(store: store)).environmentObject(store)
+                    SlideMenuView(bookCache: BookCache()).environmentObject(store)
                         .tabItem {
                             VStack {
                                 Image(systemName: "rectangle.3.offgrid.fill")

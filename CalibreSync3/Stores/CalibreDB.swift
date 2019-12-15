@@ -26,6 +26,7 @@ class CalibreDB {
         }
 
         self._dbQueue = try! DatabaseQueue(path: localDBURL.path)
+        setupNotifications()
     }
     
     func load() throws  -> DatabaseQueue {
@@ -96,6 +97,7 @@ class CalibreDB {
                     try db.alter(table: "Books") { t in
                         t.add(column: "downloaded", .boolean)
                     }
+                    try db.execute(sql: "DROP TRIGGER books_update_trg")
                 }
                 try migrator.migrate(dbQueue)
 
@@ -125,6 +127,23 @@ class CalibreDB {
                 } catch {
                     NSLog("Error: Unable to get books")
                     seal.reject(error)
+                }
+            }
+        }
+    }
+    
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(forName: .downloadComplete, object: nil, queue: .main) { (notification) in
+            if let data = notification.userInfo as? [String: Any]
+            {
+//                if (data["bookID"]! as! Int == self.bookID) {
+//                }
+                do {
+                    let dbQueue = try self.load()
+                    let bookCache = BookCache()
+                    try! bookCache.setCached(forBookID: data["bookID"] as! Int, in: dbQueue)
+                } catch {
+                    
                 }
             }
         }

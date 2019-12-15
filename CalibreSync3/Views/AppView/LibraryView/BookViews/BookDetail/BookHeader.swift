@@ -15,7 +15,7 @@ struct BookHeader: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-            BookCover(title: (book.title.trimmingCharacters(in: .whitespacesAndNewlines)), fetchURL: self.bookCache.getCover(forBook: book))
+            BookCover(title: (book.title.trimmingCharacters(in: .whitespacesAndNewlines)), downloaded: book.downloaded ?? false,  fetchURL: self.bookCache.getCover(forBook: book))
             
             VStack(alignment: .leading, spacing:5) {
                 Text(book.title.trimmingCharacters(in: .whitespacesAndNewlines))

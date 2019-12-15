@@ -8,6 +8,7 @@ let BOOK_HEIGHT = BOOK_WIDTH * (4/3)
 
 struct BookCover: View {
     let title: String
+    let downloaded: Bool
     let fetchURL: URL
     
     var body: some View {
@@ -49,7 +50,7 @@ struct BookCover: View {
                 }
             }
             
-            DownloadView()
+            DownloadView(downloaded: self.downloaded)
         }
 //        .overlay(
 //            RoundedRectangle(cornerRadius: 16)
@@ -208,7 +209,7 @@ class ImageLoader2: ObservableObject {
 struct BookCover_Previews: PreviewProvider {
     @State var downloaded = true
     static var previews: some View {
-        BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
+        BookCover(title: "1", downloaded: true, fetchURL: URL(string:"https://picsum.photos/120/140")!)
 //        DownloadView(downloaded: true)
     }
 }

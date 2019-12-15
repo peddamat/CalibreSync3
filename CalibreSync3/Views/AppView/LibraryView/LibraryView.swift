@@ -10,17 +10,16 @@ import SwiftUI
 import Fuzzy
 
 struct LibraryView: View  {
-    @ObservedObject var store = Store.shared
-//    @State var bookCache = BookCache()
     var bookCache: BookCache
-    @State private var books: [DiskBook] = []
+
+    @ObservedObject var store = Store.shared
     @ObservedObject var model = MyModel()
+
+    @State private var books: [DiskBook] = []
     @State private var scrollOffset = 33
             
     // Book cover grid styling options
     @State var style = ModularGridStyle(columns: .min(BOOK_WIDTH), rows: .min(BOOK_HEIGHT))
-    //    @State var style = ModularGridStyle(columns: .min(100), rows: .min(100))
-    //    @State var style = StaggeredGridStyle(tracks: .min(100), axis: .vertical, spacing: 1, padding: .init(top: 1, leading: 1, bottom: 1, trailing: 1))
     
     @State var calibreDB: CalibreDB?
     private func getCalibreDB() -> CalibreDB {
@@ -31,8 +30,6 @@ struct LibraryView: View  {
         return self.calibreDB!
     }
         
-    let dummyCover = URL(fileURLWithPath: "/private/var/mobile/Library/LiveFiles/com.apple.filesystems.smbclientd/zAOBnwPublic/Old/Ebook Library/Harvard Business Review/HBR's 10 Must Reads for New Manager (106)/cover.jpg")
-    
     var body: some View {
         ZStack {
             Color.init(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
@@ -40,12 +37,10 @@ struct LibraryView: View  {
             VStack {
                 // TODO: Enable sorting
                 Grid(self.books.prefix(scrollOffset).filter { return search(needle: self.store.searchString, haystack:$0.title) }) { book in
-        //        Grid(self.books) { book in
+                    
                     NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.store)) {
-                        
-        //                BookCover(title: (book.title), fetchURL: self.dummyCover)
-                        
-                        BookCover(title: (book.title), fetchURL: self.bookCache.getCover(forBook: book))
+                                                
+                        BookCover(title: book.title, downloaded: book.downloaded ?? false, fetchURL: self.bookCache.getCover(forBook: book))
                             .contextMenu {
                                 Button(action: {
                                     // delete the selected restaurant

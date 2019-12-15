@@ -12,7 +12,7 @@ import PromiseKit
 import GRDB
 
 class BookCache: ObservableObject {
-    @ObservedObject var store = Store.shared
+    var store = Store.shared
 
 //    @Published var books = [Book]()
     var didChange = PassthroughSubject<[DiskBook], Never>()
@@ -22,9 +22,9 @@ class BookCache: ObservableObject {
         }
     }
     
-    init(store: Store) {
-        self.store = store
-    }
+//    init(store: Store) {
+//        self.store = store
+//    }
     
     func getBooks(calibreDB: CalibreDB, offset: Int = 0) {
         
@@ -49,25 +49,32 @@ class BookCache: ObservableObject {
             newBooks = newBooks?.reversed()
         }
         
-//        if books.isEmpty {
-            NSLog("Getting books!")
-            DispatchQueue.global(qos: .userInitiated).async {
+        NSLog("Getting books!")
+        DispatchQueue.global(qos: .userInitiated).async {
 
-                do {
-                    let dbQueue = try calibreDB.load()
-                    try dbQueue.read { db in
-                        let fetchBooks = try newBooks!.limit(limit, offset: offset).fetchAll(db)
-                        DispatchQueue.main.async {
-                            NSLog("Retrieved \(fetchBooks.count) books")
+            do {
+                let dbQueue = try calibreDB.load()
+                try dbQueue.read { db in
+                    let fetchBooks = try newBooks!.limit(limit, offset: offset).fetchAll(db)
+                    DispatchQueue.main.async {
+                        NSLog("Retrieved \(fetchBooks.count) books")
 //                            self.books.append(contentsOf: fetchBooks)
-                            self.books = fetchBooks
-                        }
+                        self.books = fetchBooks
                     }
-                } catch {
-                    NSLog("Error: Unable to get books")
                 }
+            } catch {
+                NSLog("Error: Unable to get books")
             }
-//        }
+        }
+    }
+    
+    func setCached(forBookID bookID: Int, in dbQueue: DatabaseQueue) throws {
+        try dbQueue.write { db in
+            if var book = try DiskBook.fetchOne(db, key: ["id": bookID]) {
+                book.downloaded = true
+                try book.update(db)
+            }
+        }
     }
         
     func getCover(forBook: DiskBook) -> URL {
@@ -89,7 +96,7 @@ class BookCache: ObservableObject {
         
         return FileManager.default.fileExists(atPath: tempPath)
     }
-    
+        
     func removeBook() {
         NSLog("Remove")
         self.books.removeLast()

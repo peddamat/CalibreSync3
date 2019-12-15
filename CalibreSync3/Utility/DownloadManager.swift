@@ -1,5 +1,5 @@
 //
-//  Downloader.swift
+//  DownloadManager.swift
 //  CalibreSync3
 //
 //  Created by Sumanth Peddamatham on 12/10/19.
@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct Downloader {
+struct DownloadManager {
     let bookID: Int
     let localFileURL: URL
     let remoteFilePath: String
@@ -52,7 +52,7 @@ struct Downloader {
             
             try! FileManager.default.moveItem(at: location,to: self.localFileURL)
                         
-            let userInfo = ["bookID": bookID] as [String : Any]
+            let userInfo = ["bookID": bookID, "localURL": localFileURL.path] as [String : Any]
             NotificationCenter.default.post(name: .downloadComplete, object: nil, userInfo: userInfo)
         }
         

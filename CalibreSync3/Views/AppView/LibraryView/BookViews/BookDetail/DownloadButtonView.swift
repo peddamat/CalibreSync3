@@ -15,16 +15,16 @@ struct DownloadButtonView: View {
     var fileRemoteURL: String
     var isCached: Bool
     
+    @State private var isCachedNew = false
     @State private var progress: Float = 0.0
-    @State private var progress2: Float = 0.0
     
     var body: some View {
         Button(action: {
-            if self.isCached || self.progress2 == 1 {
+            if self.isCached || self.progress == 1 {
                 let userInfo = ["bookPath": self.fileLocalURL.path]
                 NotificationCenter.default.post(name: .openBook, object: nil, userInfo: userInfo)
             } else {
-                let downloader = Downloader(bookID: self.bookID,
+                let downloader = DownloadManager(bookID: self.bookID,
                                             localFileURL: self.fileLocalURL,
                                             remoteFilePath: self.fileRemoteURL,
                                             progress: self.$progress)
@@ -40,19 +40,19 @@ struct DownloadButtonView: View {
                         VStack {
                             Rectangle()
                                 .fill(Color(red: 0/255, green: 212/255, blue: 255/255))
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: CGFloat(50*progress2))
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: CGFloat(50*progress))
                                 .cornerRadius(10)
                         }
                         ,alignment: .bottomTrailing)
                 VStack {
-                    Text((isCached || (progress2 == 1)) ? "Open \(format)" : "Get \(format)")
+                    Text((isCached || isCachedNew || (progress == 1)) ? "Open \(format)" : "Get \(format)")
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.white)
                         .bold()
                     // TODO: Jesus christ...
-                    if !isCached {
-                        if ((progress2 > 0) && (progress2 < 1)) {
-                            Text(String(format: "%.2f%%", progress2*100))
+                    if !(isCached || isCachedNew) {
+                        if (progress > 0) {
+                            Text(String(format: "%.2f%%", progress*100))
                                 .font(.system(size: 14, design: .rounded))
                                 .foregroundColor(.white)
                         }
@@ -66,7 +66,17 @@ struct DownloadButtonView: View {
                 {
                     if (data["bookID"]! as! Int == self.bookID) &&
                         (data["localURL"]! as! String == self.fileLocalURL.path){
-                        self.progress2 = data["percentage"]! as! Float
+                        self.progress = data["percentage"]! as! Float
+                    }
+                }
+            }
+            
+            NotificationCenter.default.addObserver(forName: .downloadComplete, object: nil, queue: .main) { (notification) in
+                if let data = notification.userInfo as? [String: Any]
+                {
+                    if (data["bookID"]! as! Int == self.bookID) &&
+                        (data["localURL"]! as! String == self.fileLocalURL.path){
+                        self.isCachedNew = true
                     }
                 }
             }
