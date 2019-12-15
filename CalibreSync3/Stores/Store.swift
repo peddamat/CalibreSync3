@@ -50,7 +50,6 @@ final class Store: ObservableObject {
         }
     }
     
-    
     @Published(key: "view.preferences.itemsPerScreen")
     var itemsPerScreen = 33
 

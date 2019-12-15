@@ -64,6 +64,8 @@
 		8CD75A6023A4997900C25612 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A5323A4997900C25612 /* Grid.swift */; };
 		8CD75A6523A49DC700C25612 /* ErrorsToThrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */; };
 		8CD75A6823A4A67400C25612 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6723A4A67400C25612 /* Published.swift */; };
+		8CD75A6B23A5663D00C25612 /* BookHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6A23A5663D00C25612 /* BookHeader.swift */; };
+		8CD75A6D23A566A200C25612 /* BookSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6C23A566A200C25612 /* BookSummary.swift */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -140,6 +142,8 @@
 		8CD75A5323A4997900C25612 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsToThrow.swift; sourceTree = "<group>"; };
 		8CD75A6723A4A67400C25612 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
+		8CD75A6A23A5663D00C25612 /* BookHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookHeader.swift; sourceTree = "<group>"; };
+		8CD75A6C23A566A200C25612 /* BookSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSummary.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -421,12 +425,22 @@
 			path = "Property Wrappers";
 			sourceTree = "<group>";
 		};
+		8CD75A6E23A566E000C25612 /* BookDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8C053FD223951A5900EFAEFB /* BookDetail.swift */,
+				8CD75A6A23A5663D00C25612 /* BookHeader.swift */,
+				8CD759C3239F85E000C25612 /* DownloadButtonView.swift */,
+				8CD75A6C23A566A200C25612 /* BookSummary.swift */,
+			);
+			path = BookDetail;
+			sourceTree = "<group>";
+		};
 		8CF69E8B23979BE70023ADF4 /* BookViews */ = {
 			isa = PBXGroup;
 			children = (
+				8CD75A6E23A566E000C25612 /* BookDetail */,
 				8CF69E89239792B30023ADF4 /* BookCover.swift */,
-				8C053FD223951A5900EFAEFB /* BookDetail.swift */,
-				8CD759C3239F85E000C25612 /* DownloadButtonView.swift */,
 				8CD759012397BD1300C25612 /* Card.swift */,
 			);
 			path = BookViews;
@@ -594,9 +608,11 @@
 				8CD75A5F23A4997900C25612 /* ModularGridStyle.swift in Sources */,
 				8CD75A5723A4997900C25612 /* LayoutMath.swift in Sources */,
 				8CD759022397BD1300C25612 /* Card.swift in Sources */,
+				8CD75A6B23A5663D00C25612 /* BookHeader.swift in Sources */,
 				8CD75977239DFF0300C25612 /* RefreshableScrollView.swift in Sources */,
 				8CD75A5D23A4997900C25612 /* EnvironmentValues+GridStyle.swift in Sources */,
 				8C053FD5239520C900EFAEFB /* DiskBookComment.swift in Sources */,
+				8CD75A6D23A566A200C25612 /* BookSummary.swift in Sources */,
 				8CD7596523984DC400C25612 /* SearchView.swift in Sources */,
 				8CD759C2239F744000C25612 /* Downloader.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
