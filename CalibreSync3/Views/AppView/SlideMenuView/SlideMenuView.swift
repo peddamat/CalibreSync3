@@ -34,13 +34,12 @@ struct SlideMenuView: View {
     
     var shareButton: some View {
         Button(action: {
-//            self.showShareSheet.toggle()
-            self.bookCache.removeBook()
+            self.store.gridOnlyShowDownloaded.toggle()
+            NotificationCenter.default.post(name: .refreshBookCache, object: nil)
         }) {
-            Image(systemName: "square.and.arrow.up")
+            Image(systemName: self.store.gridOnlyShowDownloaded ? "bookmark.fill" : "bookmark")
                 .imageScale(.large)
                 .accessibility(label: Text("Share"))
-                .padding()
         }
     }
     
@@ -110,14 +109,20 @@ struct SlideMenuView: View {
                 
             .navigationBarTitle("CalibreSync", displayMode: .inline)
                 .navigationBarItems(leading: menuButton, trailing: HStack {
-                profileButton
+                Spacer()
+                    shareButton
+                    profileButton
+                    
             })
         }
         .navigationViewStyle(
             StackNavigationViewStyle()
         )
-        .sheet(isPresented: $showSettings) {
+            .sheet(isPresented: $showSettings, onDismiss: {
+                NotificationCenter.default.post(name: .refreshBookCache, object: nil)
+            }) {
             SettingsView().environmentObject(self.store)
+            
         }
     }
 }

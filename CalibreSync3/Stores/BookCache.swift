@@ -49,6 +49,10 @@ class BookCache: ObservableObject {
             newBooks = newBooks?.reversed()
         }
         
+        if self.store.gridOnlyShowDownloaded {
+            newBooks = newBooks!.filter(Column("downloaded") == true)
+        }
+        
         NSLog("Getting books!")
         DispatchQueue.global(qos: .userInitiated).async {
 

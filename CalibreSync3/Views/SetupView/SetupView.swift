@@ -157,10 +157,10 @@ struct SimpleProgressBar : View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 20)
+                Capsule()
                     .foregroundColor(self.staticColor ?? .gray)
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                RoundedRectangle(cornerRadius: 20)
+                Capsule()
                     .foregroundColor(self.progressColor ?? .blue)
                     .frame(width: (self.circleProgress/self.bookTotal)*geometry.size.width, height: geometry.size.height)
             }
@@ -170,14 +170,14 @@ struct SimpleProgressBar : View {
 
 }
 
-//struct SimpleProgresBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SimpleProgressBar(circleProgress: .constant(0.2), width: 200, height: 10, progressColor: .blue, staticColor: .gray)
-//    }
-//}
-
-struct OnboardingView_Previews: PreviewProvider {
+struct SimpleProgresBar_Previews: PreviewProvider {
     static var previews: some View {
-        SetupView()
+        SimpleProgressBar(circleProgress: .constant(0.05), bookTotal: .constant(0.6), width: 200, height: 10, progressColor: .blue, staticColor: .gray)
     }
 }
+
+//struct OnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SetupView()
+//    }
+//}

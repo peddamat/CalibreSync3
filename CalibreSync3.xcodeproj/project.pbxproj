@@ -66,6 +66,7 @@
 		8CD75A6B23A5663D00C25612 /* BookHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6A23A5663D00C25612 /* BookHeader.swift */; };
 		8CD75A6D23A566A200C25612 /* BookSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6C23A566A200C25612 /* BookSummary.swift */; };
 		8CD75A7123A5E18100C25612 /* GRDBCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD75A7023A5E18100C25612 /* GRDBCombine */; };
+		8CD75A7323A61D9400C25612 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A7223A61D9300C25612 /* Triangle.swift */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -144,6 +145,7 @@
 		8CD75A6723A4A67400C25612 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
 		8CD75A6A23A5663D00C25612 /* BookHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookHeader.swift; sourceTree = "<group>"; };
 		8CD75A6C23A566A200C25612 /* BookSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSummary.swift; sourceTree = "<group>"; };
+		8CD75A7223A61D9300C25612 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		8CDE745C2396AA8E006611AA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
 		8CF69E89239792B30023ADF4 /* BookCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,6 +331,7 @@
 			children = (
 				8CF69E8B23979BE70023ADF4 /* BookViews */,
 				8CD75A3B23A4959300C25612 /* LibraryView.swift */,
+				8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */,
 			);
 			path = LibraryView;
 			sourceTree = "<group>";
@@ -337,7 +340,6 @@
 			isa = PBXGroup;
 			children = (
 				8CD75A3E23A495CF00C25612 /* HomeView.swift */,
-				8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -358,6 +360,7 @@
 				8CD7596423984DC400C25612 /* SearchView.swift */,
 				8CD75976239DFF0200C25612 /* RefreshableScrollView.swift */,
 				8CD759702399C77A00C25612 /* PopSheet.swift */,
+				8CD75A7223A61D9300C25612 /* Triangle.swift */,
 				8C8ED61F23966C2F006C5511 /* ShareSheet.swift */,
 				8C8ED6282396720F006C5511 /* FilePresenterView.swift */,
 				8CD75974239DAC4700C25612 /* PageSwipeView.swift */,
@@ -614,6 +617,7 @@
 				8C053FD5239520C900EFAEFB /* DiskBookComment.swift in Sources */,
 				8CD75A6D23A566A200C25612 /* BookSummary.swift in Sources */,
 				8CD7596523984DC400C25612 /* SearchView.swift in Sources */,
+				8CD75A7323A61D9400C25612 /* Triangle.swift in Sources */,
 				8CD759C2239F744000C25612 /* DownloadManager.swift in Sources */,
 				8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */,
 				8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */,

@@ -67,22 +67,19 @@ struct BookCover: View {
                 Spacer()
                 
                 ZStack {
-                    Rectangle()
-                        .frame(width: BOOK_WIDTH, height:20, alignment:.bottom)
-                        .background(Color.black)
-                        .opacity(0.1)
+//                    Rectangle()
+//                        .frame(width: BOOK_WIDTH, height:20, alignment:.bottom)
+//                        .background(Color.black)
+//                        .opacity(0.1)
                     
                     HStack {
                         Spacer()
-                        
-                        Image(systemName: self.downloaded ? "cloud.fill" : "cloud")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width:BOOK_WIDTH/5, height:BOOK_HEIGHT/6)
-                            .font(.system(size: 50))
-                            .foregroundColor(.yellow)
-                            .opacity(1)
-                        //    .offset(x:BOOK_WIDTH/2 - 10, y:BOOK_HEIGHT/2 - 10)
+
+                        if (self.downloaded) {
+                            Triangle()
+                                .fill(Color.red)
+                                .frame(width: 20, height: 20)
+                        }
                     }
                 }
             }.frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .bottom)

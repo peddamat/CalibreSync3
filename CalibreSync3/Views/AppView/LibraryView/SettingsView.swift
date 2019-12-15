@@ -35,19 +35,6 @@ struct SettingsView: View {
         }
     }
     
-    enum VegetableList: CaseIterable, Hashable, Identifiable {
-        case asparagus
-        case celery
-        case shallots
-        case cucumbers
-
-        var name: String {
-            return "\(self)".map {
-                $0.isUppercase ? " \($0)" : "\($0)" }.joined().capitalized
-        }
-        var id: VegetableList {self}
-    }
-    
     var body: some View {
         NavigationView {
             Form {
