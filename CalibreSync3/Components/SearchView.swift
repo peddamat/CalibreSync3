@@ -99,10 +99,10 @@ class MyModel: ObservableObject {
     func load() {
         // Simulate async task
         NotificationCenter.default.post(name: .loadMoreBookCache, object: nil)
+        self.loading = false
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            self.loading = false
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+//        }
     }
 }
 

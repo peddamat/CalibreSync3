@@ -3,7 +3,7 @@ import Combine
 import Macduff
 import URLImage
 
-let BOOK_WIDTH:CGFloat = 115.0
+let BOOK_WIDTH:CGFloat = 70.0
 let BOOK_HEIGHT = BOOK_WIDTH * (4/3)
 
 struct BookCover: View {
@@ -25,13 +25,30 @@ struct BookCover: View {
                 } else {
                 
                     URLImage(fetchURL,
-                             delay: 0,
+                             delay: 0.25,
                              processors:[  Resize(size: CGSize(width: BOOK_WIDTH, height: BOOK_HEIGHT), scale: UIScreen.main.scale) ],
+                             placeholder: {
+                                 ProgressView($0) { progress in
+                                     ZStack {
+                                         if progress > 0.0 {
+                                             // The download has started. CircleProgressView displays the progress.
+                                             ProgressView2(progress: progress)
+                                         }
+                                         else {
+                                             // The download has not yet started. CircleActivityView is animated activity indicator that suits this case.
+                                             ProgressView2(progress: progress)
+                                         }
+                                     }
+                                 }
+                                     .frame(width: 50.0, height: 50.0)
+                             },
                              content: {
                                 $0.image
                                     .resizable()                     // Make image resizable
                                     .aspectRatio(contentMode: .fit) // Fill the frame
-                                })
+                                    .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
+                                }
+                             )
                         .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
                     
 //                    RemoteImage(
@@ -86,7 +103,7 @@ struct BookCover: View {
         }
     }
     
-    struct ProgressView: View {
+    struct ProgressView2: View {
         let progress: Float
         private let kPreviewBackground = Color(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
         var body: some View {

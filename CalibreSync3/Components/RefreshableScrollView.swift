@@ -55,7 +55,8 @@ struct RefreshableScrollView<Content: View>: View {
     }
     
     func refreshLogic(values: [RefreshableKeyTypes.PrefData]) {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // Calculate scroll offset
             let topBounds = values.first { $0.vType == .topView }?.bounds ?? .zero
             let bottomBounds = values.first { $0.vType == .bottomView }?.bounds ?? .zero
@@ -68,13 +69,17 @@ struct RefreshableScrollView<Content: View>: View {
             
             // Crossing the threshold on the way down, we start the refresh process
             if !self.refreshing && (self.topScrollOffset > self.topThreshold && self.prevTopScrollOffset <= self.topThreshold) {
-                self.refreshing = true
+                DispatchQueue.main.async {
+                    self.refreshing = true
+                }
             }
             
             if !self.loading && (self.botScrollOffset < self.botThreshold && self.prevBotScrollOffset >= self.botThreshold) {
-                self.loading = true
-//                self.store.loadingMore = true
-                NSLog("Loading more")
+                DispatchQueue.main.async {
+                    self.loading = true
+    //                self.store.loadingMore = true
+                    NSLog("Loading more")
+                }
             }
             
             if self.refreshing {

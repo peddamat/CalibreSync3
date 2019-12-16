@@ -8,6 +8,8 @@
 
 import SwiftUI
 import Fuzzy
+import Fuse
+//import WaterfallGrid
 
 struct LibraryView: View  {
     var bookCache: BookCache
@@ -16,7 +18,7 @@ struct LibraryView: View  {
     @ObservedObject var model = MyModel()
 
     @State private var books: [DiskBook] = []
-    @State private var scrollOffset = 33
+    @State private var scrollOffset = 55
             
     // Book cover grid styling options
     @State var style = ModularGridStyle(columns: .min(BOOK_WIDTH), rows: .min(BOOK_HEIGHT))
@@ -36,7 +38,8 @@ struct LibraryView: View  {
             .edgesIgnoringSafeArea(.all)
             VStack {
                 // TODO: Enable sorting
-                Grid(self.books.prefix(scrollOffset).filter { return search(needle: self.store.searchString, haystack:$0.title) }) { book in
+                Grid(self.books.filter({ return search(needle: self.store.searchString, haystack:$0.title) }).prefix(scrollOffset)) { book in
+//                WaterfallGrid(self.books.filter({ return search(needle: self.store.searchString, haystack:$0.title) }).prefix(scrollOffset)) { book in
                     
                     NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.store)) {
                                                 
@@ -58,12 +61,17 @@ struct LibraryView: View  {
                         
                     }.buttonStyle(PlainButtonStyle())
                 }
+//                .gridStyle(
+//                  columnsInPortrait: 3,
+//                  columnsInLandscape: 6
+//                )
                 .gridStyle(self.style)
                 .onAppear {
                     self.bookCache.getBooks(calibreDB: self.getCalibreDB())
                     
                     NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
                         self.bookCache.getBooks(calibreDB: self.getCalibreDB())
+                        self.scrollOffset = 55
                     }
                     
                     NotificationCenter.default.addObserver(forName: .loadMoreBookCache, object: nil, queue: .main) { (notification) in

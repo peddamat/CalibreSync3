@@ -53,6 +53,8 @@
 	<true/>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

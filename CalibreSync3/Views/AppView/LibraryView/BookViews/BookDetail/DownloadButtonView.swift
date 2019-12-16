@@ -15,20 +15,25 @@ struct DownloadButtonView: View {
     var fileRemoteURL: String
     var isCached: Bool
     
+    @State var downloadInProgress = false
     @State private var isCachedNew = false
     @State private var progress: Float = 0.0
     
     var body: some View {
         Button(action: {
-            if self.isCached || self.progress == 1 {
-                let userInfo = ["bookPath": self.fileLocalURL.path]
-                NotificationCenter.default.post(name: .openBook, object: nil, userInfo: userInfo)
-            } else {
-                let downloader = DownloadManager(bookID: self.bookID,
-                                            localFileURL: self.fileLocalURL,
-                                            remoteFilePath: self.fileRemoteURL,
-                                            progress: self.$progress)
-                downloader.beginDownloadingFile()
+            if !self.downloadInProgress {
+                self.downloadInProgress = true
+                
+                if self.isCached || self.progress == 1 {
+                    let userInfo = ["bookPath": self.fileLocalURL.path]
+                    NotificationCenter.default.post(name: .openBook, object: nil, userInfo: userInfo)
+                } else {
+                    let downloader = DownloadManager(bookID: self.bookID,
+                                                localFileURL: self.fileLocalURL,
+                                                remoteFilePath: self.fileRemoteURL,
+                                                progress: self.$progress)
+                    downloader.beginDownloadingFile()
+                }
             }
         }) {            
             ZStack {
@@ -77,6 +82,7 @@ struct DownloadButtonView: View {
                     if (data["bookID"]! as! Int == self.bookID) &&
                         (data["localURL"]! as! String == self.fileLocalURL.path){
                         self.isCachedNew = true
+                        self.downloadInProgress = false
                     }
                 }
             }

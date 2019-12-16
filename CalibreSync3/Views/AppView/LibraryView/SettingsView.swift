@@ -16,7 +16,7 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var downloaded: Bool = true
-    @State private var items = 33
+    @State private var items = 55
     @State private var selectedOrder = 0
     
     func saveCalibrePath(_ url: URL) {
@@ -26,9 +26,8 @@ struct SettingsView: View {
             let shouldStopAccessing = url.startAccessingSecurityScopedResource()
             defer { if shouldStopAccessing { url.stopAccessingSecurityScopedResource() } }
             
-            let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
-            
-//            self.store.calibreRemoteLibraryBookmark = bookmark
+            let bookmark = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)            
+            self.store.remoteLibraryBookmark = bookmark
 //            try! CalibreDB.cacheRemoteCalibreDB(store: store, calibreRemoteURL: url)
         } catch let error {
             
@@ -39,9 +38,9 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Stepper(onIncrement: {
-                    self.store.itemsPerScreen += 3
+                    self.store.itemsPerScreen += 5
                 }, onDecrement: {
-                    self.store.itemsPerScreen -= 3
+                    self.store.itemsPerScreen -= 5
                 }) {
                     Text("Items Per Screen: \(self.store.itemsPerScreen)")
                 }

@@ -51,7 +51,7 @@ final class Store: ObservableObject {
     }
     
     @Published(key: "view.preferences.itemsPerScreen")
-    var itemsPerScreen = 33
+    var itemsPerScreen = 55
 
 //    public var displayOrders = ["Title", "Author", "Calibre Added Date", "Downloaded Date"]
     public enum DisplayOrders: String, CaseIterable, Hashable, Identifiable, Codable {
@@ -75,6 +75,9 @@ final class Store: ObservableObject {
     
     @Published(key: "view.preferences.gridDisplayDirection")
     var gridDisplayDirection = DisplayDirections.ascending
+    
+    @Published(key: "view.preferences.gridSize3")
+    var gridSize = GridSize.large
     
     @Published(key: "view.preferences.gridOnlyShowDownloaded")
     var gridOnlyShowDownloaded = false

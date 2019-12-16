@@ -8,6 +8,7 @@
 
 import Foundation
 import GRDB
+import Fuse
 
 // Author
 struct DiskBook {
@@ -24,6 +25,15 @@ struct DiskBook {
     var downloaded: Bool?
     
     static let databaseTableName = "Books"
+}
+
+extension DiskBook: Fuseable {
+    var properties: [FuseProperty] {
+        return [
+            FuseProperty(name: title, weight: 0.7),
+            FuseProperty(name: author_sort, weight: 0.3),
+        ]
+    }
 }
 
 enum DiskBookColumns: String, ColumnExpression {
