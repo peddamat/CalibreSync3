@@ -62,11 +62,15 @@ class CalibreDB {
                 let localDBURL = localDirectory.appendingPathComponent("metadata.db")
                 
                 NSLog("... caching copy of database")
-                try FileManager.default.copyItem(at: remoteDBURL, to: localDBURL)
+                let coordinator = NSFileCoordinator()
+                var error: NSError? = nil
+                coordinator.coordinate(readingItemAt: remoteDBURL, options: [], error: &error) { (url) -> Void in
+                    try! FileManager.default.copyItem(at: url, to: localDBURL)
+                }
 
                 // Make database file writable so we can run migrations
                 let attributes: [FileAttributeKey:AnyObject] = [FileAttributeKey.posixPermissions: NSNumber(value: 0o666)]
-                try! FileManager.default.setAttributes(attributes, ofItemAtPath: localDBURL.path)
+                try FileManager.default.setAttributes(attributes, ofItemAtPath: localDBURL.path)
                 
                 if FileManager.default.isWritableFile(atPath: localDBURL.path) {
                     print("File is writeable!")

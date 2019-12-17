@@ -54,13 +54,18 @@ class FileHelper {
                         print(error)
                         seal.reject(error)
                     }
-                    
-                    do {
-                        NSLog("Copying cover to: \(dstFile.path)")
-                        try FileManager.default.copyItem(at: srcFile, to: dstFile)
-                    } catch let error as NSError {
-                        NSLog("Couldn't copy cover! Error:\(error.description)")
-//                        seal.reject(error)
+
+                    // TODO: Create FileManager extension to copy from iCloud
+                    let coordinator = NSFileCoordinator()
+                    var error: NSError? = nil
+                    coordinator.coordinate(readingItemAt: srcFile, options: [], error: &error) { (url) -> Void in
+                        do {
+                            NSLog("Copying cover to: \(dstFile.path)")
+                                try FileManager.default.copyItem(at: url, to: dstFile)
+                        } catch let error as NSError {
+                            NSLog("Couldn't copy cover! Error:\(error.description)")
+    //                        seal.reject(error)
+                        }
                     }
                     
                     DispatchQueue.main.async {

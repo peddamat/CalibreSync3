@@ -27,7 +27,6 @@
 		8C39BB5323A6802D00C9C1FB /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C39BB4623A6802D00C9C1FB /* Grid.swift */; };
 		8C39BB5523A6B75A00C9C1FB /* GridSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C39BB5423A6B75A00C9C1FB /* GridSize.swift */; };
 		8C39BB5723A7090800C9C1FB /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C39BB5623A7090800C9C1FB /* BookViewModel.swift */; };
-		8C839D4223976F6600B786C4 /* Macduff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C839D4123976F6600B786C4 /* Macduff */; };
 		8C839D442397729900B786C4 /* BookCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C839D432397729900B786C4 /* BookCache.swift */; };
 		8C8ED61E239661FE006C5511 /* DiskBookFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61D239661FE006C5511 /* DiskBookFormat.swift */; };
 		8C8ED62023966C2F006C5511 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8ED61F23966C2F006C5511 /* ShareSheet.swift */; };
@@ -44,35 +43,26 @@
 		8CB3CDE8239398A6008B30F6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDE7239398A6008B30F6 /* Store.swift */; };
 		8CB3CDEB2393AB35008B30F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEA2393AB35008B30F6 /* SettingsView.swift */; };
 		8CB3CDED2393B31E008B30F6 /* DirectoryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDEC2393B31E008B30F6 /* DirectoryPickerView.swift */; };
-		8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB3CDEF2393BE47008B30F6 /* GRDB */; };
 		8CB3CDF22393BE8C008B30F6 /* DiskBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF12393BE8C008B30F6 /* DiskBook.swift */; };
 		8CB3CDF52393C159008B30F6 /* CalibreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3CDF42393C159008B30F6 /* CalibreDB.swift */; };
 		8CD759022397BD1300C25612 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759012397BD1300C25612 /* Card.swift */; };
 		8CD7595A2397F46F00C25612 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759592397F46F00C25612 /* SideMenuView.swift */; };
-		8CD75962239828E800C25612 /* Fuzzy in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD75961239828E800C25612 /* Fuzzy */; };
 		8CD7596523984DC400C25612 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7596423984DC400C25612 /* SearchView.swift */; };
 		8CD759672398594000C25612 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759662398594000C25612 /* SetupView.swift */; };
-		8CD7596A2399540F00C25612 /* EasyStash in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759692399540F00C25612 /* EasyStash */; };
-		8CD7596D23996AED00C25612 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD7596C23996AED00C25612 /* Reachability */; };
 		8CD759712399C77B00C25612 /* PopSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759702399C77A00C25612 /* PopSheet.swift */; };
 		8CD75973239B1AA400C25612 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75972239B1AA400C25612 /* FileHelper.swift */; };
 		8CD75975239DAC4700C25612 /* PageSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75974239DAC4700C25612 /* PageSwipeView.swift */; };
 		8CD75977239DFF0300C25612 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75976239DFF0200C25612 /* RefreshableScrollView.swift */; };
-		8CD759B9239ED9A400C25612 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759B8239ED9A400C25612 /* PromiseKit */; };
 		8CD759C2239F744000C25612 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759C1239F743F00C25612 /* DownloadManager.swift */; };
 		8CD759C4239F85E000C25612 /* DownloadButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759C3239F85E000C25612 /* DownloadButtonView.swift */; };
 		8CD759C823A023DD00C25612 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD759C723A023DA00C25612 /* NotificationManager.swift */; };
-		8CD759CB23A2CC4A00C25612 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759CA23A2CC4A00C25612 /* URLImage */; };
-		8CD759D823A44B8400C25612 /* FileKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD759D723A44B8400C25612 /* FileKit */; };
 		8CD75A3C23A4959300C25612 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A3B23A4959300C25612 /* LibraryView.swift */; };
 		8CD75A3F23A495CF00C25612 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A3E23A495CF00C25612 /* HomeView.swift */; };
 		8CD75A6523A49DC700C25612 /* ErrorsToThrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6423A49DC700C25612 /* ErrorsToThrow.swift */; };
 		8CD75A6823A4A67400C25612 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6723A4A67400C25612 /* Published.swift */; };
 		8CD75A6B23A5663D00C25612 /* BookHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6A23A5663D00C25612 /* BookHeader.swift */; };
 		8CD75A6D23A566A200C25612 /* BookSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A6C23A566A200C25612 /* BookSummary.swift */; };
-		8CD75A7123A5E18100C25612 /* GRDBCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD75A7023A5E18100C25612 /* GRDBCombine */; };
 		8CD75A7323A61D9400C25612 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD75A7223A61D9300C25612 /* Triangle.swift */; };
-		8CD75A7623A638F200C25612 /* Fuse in Frameworks */ = {isa = PBXBuildFile; productRef = 8CD75A7523A638F200C25612 /* Fuse */; };
 		8CDE745D2396AA8E006611AA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE745C2396AA8E006611AA /* AppRootView.swift */; };
 		8CF69E8A239792B30023ADF4 /* BookCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF69E89239792B30023ADF4 /* BookCover.swift */; };
 /* End PBXBuildFile section */
@@ -166,16 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CD75962239828E800C25612 /* Fuzzy in Frameworks */,
-				8CD75A7123A5E18100C25612 /* GRDBCombine in Frameworks */,
-				8CD759B9239ED9A400C25612 /* PromiseKit in Frameworks */,
-				8CD75A7623A638F200C25612 /* Fuse in Frameworks */,
-				8CD759D823A44B8400C25612 /* FileKit in Frameworks */,
-				8C839D4223976F6600B786C4 /* Macduff in Frameworks */,
-				8CD7596D23996AED00C25612 /* Reachability in Frameworks */,
-				8CD7596A2399540F00C25612 /* EasyStash in Frameworks */,
-				8CD759CB23A2CC4A00C25612 /* URLImage in Frameworks */,
-				8CB3CDF02393BE47008B30F6 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,16 +471,16 @@
 			);
 			name = CalibreSync3;
 			packageProductDependencies = (
-				8CB3CDEF2393BE47008B30F6 /* GRDB */,
-				8C839D4123976F6600B786C4 /* Macduff */,
-				8CD75961239828E800C25612 /* Fuzzy */,
-				8CD759692399540F00C25612 /* EasyStash */,
-				8CD7596C23996AED00C25612 /* Reachability */,
-				8CD759B8239ED9A400C25612 /* PromiseKit */,
-				8CD759CA23A2CC4A00C25612 /* URLImage */,
-				8CD759D723A44B8400C25612 /* FileKit */,
-				8CD75A7023A5E18100C25612 /* GRDBCombine */,
-				8CD75A7523A638F200C25612 /* Fuse */,
+				8CB3CDEF2393BE47008B30F6 /* XCSwiftPackageProductDependency */,
+				8C839D4123976F6600B786C4 /* XCSwiftPackageProductDependency */,
+				8CD75961239828E800C25612 /* XCSwiftPackageProductDependency */,
+				8CD759692399540F00C25612 /* XCSwiftPackageProductDependency */,
+				8CD7596C23996AED00C25612 /* XCSwiftPackageProductDependency */,
+				8CD759B8239ED9A400C25612 /* XCSwiftPackageProductDependency */,
+				8CD759CA23A2CC4A00C25612 /* XCSwiftPackageProductDependency */,
+				8CD759D723A44B8400C25612 /* XCSwiftPackageProductDependency */,
+				8CD75A7023A5E18100C25612 /* XCSwiftPackageProductDependency */,
+				8CD75A7523A638F200C25612 /* XCSwiftPackageProductDependency */,
 			);
 			productName = CalibreSync3;
 			productReference = 8CB3CDB4239397FD008B30F6 /* CalibreSync3.app */;
@@ -548,6 +528,7 @@
 		8CB3CDAC239397FD008B30F6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = io.technologystrategy;
 				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Sumanth Peddamatham";
@@ -575,16 +556,16 @@
 			);
 			mainGroup = 8CB3CDAB239397FD008B30F6;
 			packageReferences = (
-				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
-				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */,
-				8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */,
-				8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference "EasyStash" */,
-				8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference "Reachability.swift" */,
-				8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference "PromiseKit" */,
-				8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference "url-image" */,
-				8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */,
-				8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference "GRDBCombine" */,
-				8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference "fuse-swift" */,
+				8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference */,
+				8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference */,
+				8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference */,
+				8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference */,
+				8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference */,
+				8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference */,
+				8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference */,
+				8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference */,
+				8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference */,
+				8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference */,
 			);
 			productRefGroup = 8CB3CDB5239397FD008B30F6 /* Products */;
 			projectDirPath = "";
@@ -1010,7 +991,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */ = {
+		8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/malt03/Macduff.git";
 			requirement = {
@@ -1018,7 +999,7 @@
 				minimumVersion = 0.0.2;
 			};
 		};
-		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+		8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
 			requirement = {
@@ -1026,7 +1007,7 @@
 				minimumVersion = 4.6.2;
 			};
 		};
-		8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */ = {
+		8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/khoi/fuzzy-swift";
 			requirement = {
@@ -1034,7 +1015,7 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference "EasyStash" */ = {
+		8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onmyway133/EasyStash.git";
 			requirement = {
@@ -1042,7 +1023,7 @@
 				minimumVersion = 1.1.1;
 			};
 		};
-		8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+		8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift.git";
 			requirement = {
@@ -1050,7 +1031,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+		8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/PromiseKit.git";
 			requirement = {
@@ -1058,7 +1039,7 @@
 				minimumVersion = 6.12.0;
 			};
 		};
-		8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference "url-image" */ = {
+		8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
 			requirement = {
@@ -1066,7 +1047,7 @@
 				minimumVersion = 0.9.9;
 			};
 		};
-		8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */ = {
+		8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nvzqz/FileKit.git";
 			requirement = {
@@ -1074,7 +1055,7 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference "GRDBCombine" */ = {
+		8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDBCombine.git";
 			requirement = {
@@ -1082,7 +1063,7 @@
 				minimumVersion = 0.7.1;
 			};
 		};
-		8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference "fuse-swift" */ = {
+		8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krisk/fuse-swift.git";
 			requirement = {
@@ -1093,54 +1074,54 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8C839D4123976F6600B786C4 /* Macduff */ = {
+		8C839D4123976F6600B786C4 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference "Macduff" */;
+			package = 8C839D4023976F6600B786C4 /* XCRemoteSwiftPackageReference */;
 			productName = Macduff;
 		};
-		8CB3CDEF2393BE47008B30F6 /* GRDB */ = {
+		8CB3CDEF2393BE47008B30F6 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			package = 8CB3CDEE2393BE47008B30F6 /* XCRemoteSwiftPackageReference */;
 			productName = GRDB;
 		};
-		8CD75961239828E800C25612 /* Fuzzy */ = {
+		8CD75961239828E800C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference "fuzzy-swift" */;
+			package = 8CD75960239828E800C25612 /* XCRemoteSwiftPackageReference */;
 			productName = Fuzzy;
 		};
-		8CD759692399540F00C25612 /* EasyStash */ = {
+		8CD759692399540F00C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference "EasyStash" */;
+			package = 8CD759682399540F00C25612 /* XCRemoteSwiftPackageReference */;
 			productName = EasyStash;
 		};
-		8CD7596C23996AED00C25612 /* Reachability */ = {
+		8CD7596C23996AED00C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference "Reachability.swift" */;
+			package = 8CD7596B23996AED00C25612 /* XCRemoteSwiftPackageReference */;
 			productName = Reachability;
 		};
-		8CD759B8239ED9A400C25612 /* PromiseKit */ = {
+		8CD759B8239ED9A400C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			package = 8CD759B7239ED9A200C25612 /* XCRemoteSwiftPackageReference */;
 			productName = PromiseKit;
 		};
-		8CD759CA23A2CC4A00C25612 /* URLImage */ = {
+		8CD759CA23A2CC4A00C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference "url-image" */;
+			package = 8CD759C923A2CC4800C25612 /* XCRemoteSwiftPackageReference */;
 			productName = URLImage;
 		};
-		8CD759D723A44B8400C25612 /* FileKit */ = {
+		8CD759D723A44B8400C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference "FileKit" */;
+			package = 8CD759D623A44B8300C25612 /* XCRemoteSwiftPackageReference */;
 			productName = FileKit;
 		};
-		8CD75A7023A5E18100C25612 /* GRDBCombine */ = {
+		8CD75A7023A5E18100C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference "GRDBCombine" */;
+			package = 8CD75A6F23A5E18000C25612 /* XCRemoteSwiftPackageReference */;
 			productName = GRDBCombine;
 		};
-		8CD75A7523A638F200C25612 /* Fuse */ = {
+		8CD75A7523A638F200C25612 /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference "fuse-swift" */;
+			package = 8CD75A7423A638F100C25612 /* XCRemoteSwiftPackageReference */;
 			productName = Fuse;
 		};
 /* End XCSwiftPackageProductDependency section */
