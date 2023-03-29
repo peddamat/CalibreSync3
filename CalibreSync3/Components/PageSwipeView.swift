@@ -9,37 +9,37 @@
 import SwiftUI
 
 struct PageSwipeView: View {
-    var body: some View {
-        ZStack {
-            Page2()
-            Page1()
-                .background(Color.red)
-                .offset(x:0, y:10)
-
-        }
+  var body: some View {
+    ZStack {
+      Page2()
+      Page1()
+        .background(Color.red)
+        .offset(x: 0, y: 10)
 
     }
+
+  }
 }
 
 struct Page1: View {
-    var body: some View {
-        ZStack {
-            Text("Page 1")
-        }
+  var body: some View {
+    ZStack {
+      Text("Page 1")
     }
+  }
 }
 
 struct Page2: View {
-    var body: some View {
-        ZStack {
-            Text("Page 2")
-        }
-        .background(Color.blue)
+  var body: some View {
+    ZStack {
+      Text("Page 2")
     }
+    .background(Color.blue)
+  }
 }
 
 struct PageSwipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        PageSwipeView()
-    }
+  static var previews: some View {
+    PageSwipeView()
+  }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 enum GridSize: Int, Codable {
-    case small = 70
-    case medium = 85
-    case large = 110
+  case small = 70
+  case medium = 85
+  case large = 110
 }

@@ -7,71 +7,71 @@
 //
 
 import Foundation
-import GRDB
 import Fuse
+import GRDB
 
 // Author
 struct DiskBook {
-    var id: Int64
-    var title: String
-    var timestamp: Date
-    var pubdate: Date
-    var path: String
-    var has_cover: Bool
-    var author_sort: String
-    var uuid: String
-    
-    // Custom columns
-    var downloaded: Bool?
-    
-    static let databaseTableName = "Books"
+  var id: Int64
+  var title: String
+  var timestamp: Date
+  var pubdate: Date
+  var path: String
+  var has_cover: Bool
+  var author_sort: String
+  var uuid: String
+
+  // Custom columns
+  var downloaded: Bool?
+
+  static let databaseTableName = "Books"
 }
 
 extension DiskBook: Fuseable {
-    var properties: [FuseProperty] {
-        return [
-            FuseProperty(name: title, weight: 0.7),
-            FuseProperty(name: author_sort, weight: 0.3),
-        ]
-    }
+  var properties: [FuseProperty] {
+    return [
+      FuseProperty(name: title, weight: 0.7),
+      FuseProperty(name: author_sort, weight: 0.3),
+    ]
+  }
 }
 
 enum DiskBookColumns: String, ColumnExpression {
-    case title
-    case timestamp
-    case pubdate
-    case author_sort
+  case title
+  case timestamp
+  case pubdate
+  case author_sort
 }
 
-extension DiskBook: Hashable { }
+extension DiskBook: Hashable {}
 
 // MARK: - Persistence
 
 extension DiskBook: Codable, Identifiable, MutablePersistableRecord {
-    private enum Columns {
-        static let id = Column(CodingKeys.id)
-        static let title = Column(CodingKeys.title)
-        static let path = Column(CodingKeys.path)
-//        static let format = Column(CodingKeys.format)
-        static let has_cover = Column(CodingKeys.has_cover)
-        static let author = Column(CodingKeys.author_sort)
-        static let uuid = Column(CodingKeys.uuid)
-    }
+  private enum Columns {
+    static let id = Column(CodingKeys.id)
+    static let title = Column(CodingKeys.title)
+    static let path = Column(CodingKeys.path)
+    //        static let format = Column(CodingKeys.format)
+    static let has_cover = Column(CodingKeys.has_cover)
+    static let author = Column(CodingKeys.author_sort)
+    static let uuid = Column(CodingKeys.uuid)
+  }
 }
 
 // MARK: - Persistence
 
 extension DiskBook {
-    static func orderedByName() -> QueryInterfaceRequest<DiskBook> {
-        return DiskBook.order(Columns.title)
-    }
+  static func orderedByName() -> QueryInterfaceRequest<DiskBook> {
+    return DiskBook.order(Columns.title)
+  }
 }
 
 // MARK: - Associations
 
 extension DiskBook: TableRecord, FetchableRecord, EncodableRecord {
-    static let comments = hasMany(DiskBookComment.self)
-    var comments: QueryInterfaceRequest<DiskBookComment> {
-        return request(for: DiskBook.comments)
-    }
+  static let comments = hasMany(DiskBookComment.self)
+  var comments: QueryInterfaceRequest<DiskBookComment> {
+    return request(for: DiskBook.comments)
+  }
 }

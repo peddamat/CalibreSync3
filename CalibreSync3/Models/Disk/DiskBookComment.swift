@@ -10,29 +10,29 @@ import GRDB
 
 // Book
 struct DiskBookComment {
-    
-    var id: Int64
-    var text: String
 
-    static let databaseTableName = "Comments"
+  var id: Int64
+  var text: String
+
+  static let databaseTableName = "Comments"
 }
 
-extension DiskBookComment: Hashable { }
+extension DiskBookComment: Hashable {}
 
 // MARK: - Persistence
 
 extension DiskBookComment: Codable, Identifiable, MutablePersistableRecord {
-    private enum Columns {
-        static let id = Column(CodingKeys.id)
-        static let text = Column(CodingKeys.text)
-    }
+  private enum Columns {
+    static let id = Column(CodingKeys.id)
+    static let text = Column(CodingKeys.text)
+  }
 }
 
 // MARK: - Associations
 
 extension DiskBookComment: TableRecord, FetchableRecord, EncodableRecord {
-    static let book = belongsTo(DiskBook.self, using: ForeignKey(["book"]))
-    var book: QueryInterfaceRequest<DiskBook> {
-        return request(for: DiskBookComment.book)
-    }
+  static let book = belongsTo(DiskBook.self, using: ForeignKey(["book"]))
+  var book: QueryInterfaceRequest<DiskBook> {
+    return request(for: DiskBookComment.book)
+  }
 }

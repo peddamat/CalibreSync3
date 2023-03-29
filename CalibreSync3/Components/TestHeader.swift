@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct TestHeader: View {
-    var offset: CGPoint
-    @Binding var loading: Bool
-    
-    var body: some View {
-        Text("\(offset.x)")
-    }
+  var offset: CGPoint
+  @Binding var loading: Bool
+
+  var body: some View {
+    Text("\(offset.x)")
+  }
 }
 
 //struct TestHeader_Previews: PreviewProvider {

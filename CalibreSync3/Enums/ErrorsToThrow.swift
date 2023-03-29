@@ -9,8 +9,8 @@
 import Foundation
 
 enum ErrorsToThrow: Error {
-    case calibrePathNotSet
-    case calibrePathNotResolving
-    case documentsDirectoryMissing
-    case calibreLocalDatabaseMissing
+  case calibrePathNotSet
+  case calibrePathNotResolving
+  case documentsDirectoryMissing
+  case calibreLocalDatabaseMissing
 }
