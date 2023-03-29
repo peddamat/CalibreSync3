@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 import GRDB
 //import Grid
-import Fuzzy
+//import Fuzzy
 
 struct SlideMenuView: View {
     @ObservedObject var store = Store.shared

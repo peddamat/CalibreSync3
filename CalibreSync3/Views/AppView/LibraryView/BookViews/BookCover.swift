@@ -24,32 +24,32 @@ struct BookCover: View {
                         .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT, alignment: .center)
                 } else {
                 
-                    URLImage(fetchURL,
-                             delay: 0.25,
-                             processors:[  Resize(size: CGSize(width: BOOK_WIDTH, height: BOOK_HEIGHT), scale: UIScreen.main.scale) ],
-                             placeholder: {
-                                 ProgressView($0) { progress in
-                                     ZStack {
-                                         if progress > 0.0 {
-                                             // The download has started. CircleProgressView displays the progress.
-                                             ProgressView2(progress: progress)
-                                         }
-                                         else {
-                                             // The download has not yet started. CircleActivityView is animated activity indicator that suits this case.
-                                             ProgressView2(progress: progress)
-                                         }
-                                     }
-                                 }
-                                     .frame(width: 50.0, height: 50.0)
-                             },
-                             content: {
-                                $0.image
-                                    .resizable()                     // Make image resizable
-                                    .aspectRatio(contentMode: .fit) // Fill the frame
-                                    .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
-                                }
-                             )
-                        .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
+//                    URLImage(fetchURL,
+//                             delay: 0.25,
+//                             processors:[  Resize(size: CGSize(width: BOOK_WIDTH, height: BOOK_HEIGHT), scale: UIScreen.main.scale) ],
+//                             placeholder: {
+//                                 ProgressView($0) { progress in
+//                                     ZStack {
+//                                         if progress > 0.0 {
+//                                             // The download has started. CircleProgressView displays the progress.
+//                                             ProgressView2(progress: progress)
+//                                         }
+//                                         else {
+//                                             // The download has not yet started. CircleActivityView is animated activity indicator that suits this case.
+//                                             ProgressView2(progress: progress)
+//                                         }
+//                                     }
+//                                 }
+//                                     .frame(width: 50.0, height: 50.0)
+//                             },
+//                             content: {
+//                                $0.image
+//                                    .resizable()                     // Make image resizable
+//                                    .aspectRatio(contentMode: .fit) // Fill the frame
+//                                    .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
+//                                }
+//                             )
+//                        .frame(width: BOOK_WIDTH, height: BOOK_HEIGHT)
                     
 //                    RemoteImage(
 //                        with: fetchURL,

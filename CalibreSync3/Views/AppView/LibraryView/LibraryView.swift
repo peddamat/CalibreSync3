@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Fuzzy
+//import Fuzzy
 import Fuse
 //import WaterfallGrid
 
@@ -36,53 +36,7 @@ struct LibraryView: View  {
         ZStack {
             Color.init(red: 244/255.0, green: 236/255.0, blue: 230/255.0)
             .edgesIgnoringSafeArea(.all)
-            VStack {
-                // TODO: Enable sorting
-                Grid(self.books.filter({ return search(needle: self.store.searchString, haystack:$0.title) }).prefix(scrollOffset)) { book in
-//                WaterfallGrid(self.books.filter({ return search(needle: self.store.searchString, haystack:$0.title) }).prefix(scrollOffset)) { book in
-                    
-                    NavigationLink(destination: BookDetail(book: book, bookCache: self.bookCache, calibreDB: self.getCalibreDB()).environmentObject(self.store)) {
-                                                
-                        BookCover(title: book.title, downloaded: book.downloaded ?? false, fetchURL: self.bookCache.getCover(forBook: book))
-                            .contextMenu {
-                                Button(action: {
-                                    // delete the selected restaurant
-                                }) {
-                                    HStack {
-                                        Text("Delete")
-                                        Image(systemName: "trash")
-                                    }
-                                }
-                        }
-                        
-        //                BookCover(title: "1", fetchURL: URL(string:"https://picsum.photos/120/140")!)
-        //
-        //                Card(title: book.title, fetchURL: self.calibreDB.getCalibrePath().appendingPathComponent("/").appendingPathComponent(book.path).appendingPathComponent("cover.jpg"))
-                        
-                    }.buttonStyle(PlainButtonStyle())
-                }
-//                .gridStyle(
-//                  columnsInPortrait: 3,
-//                  columnsInLandscape: 6
-//                )
-                .gridStyle(self.style)
-                .onAppear {
-                    self.bookCache.getBooks(calibreDB: self.getCalibreDB())
-                    
-                    NotificationCenter.default.addObserver(forName: .refreshBookCache, object: nil, queue: .main) { (notification) in
-                        self.bookCache.getBooks(calibreDB: self.getCalibreDB())
-                        self.scrollOffset = 55
-                    }
-                    
-                    NotificationCenter.default.addObserver(forName: .loadMoreBookCache, object: nil, queue: .main) { (notification) in
-                        self.scrollOffset += self.store.itemsPerScreen
-                    }
-                }
-                .onReceive(self.bookCache.didChange) { books in
-                    self.books = books
-                    NSLog("Ping")
-                }
-        }
+            
         }
         
     }
