@@ -14,7 +14,6 @@ target 'CalibreSync3' do
   pod 'PromiseKit'
   pod 'Reachability'
   pod 'EasyStash'
-  pod 'Fuzzy'
 
   target 'CalibreSync3Tests' do
     inherit! :search_paths
